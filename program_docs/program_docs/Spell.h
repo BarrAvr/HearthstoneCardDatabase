@@ -5,9 +5,11 @@ class Spell {
 public:
 	static enum ClassType { NEUTRAL, DRUID, HUNTER, MAGE, PALADIN, PRIEST, ROGUE, SHAMAN, WARLOCK, WARRIOR };
 	static enum Rarity { COMMON, RARE, EPIC, LEGENDARY };
+	static enum key { NAME, MANA, CLASS, RARITY };
 private:
 	std::string name;
 	int manaCost;
+	int key;
 	ClassType cardClass;
 	Rarity rarity;
 	std::string description;

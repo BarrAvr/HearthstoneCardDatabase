@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Spell.h"
-
+enum key = {MANA, ATTACK, HEALTH}
 class Minion : public Spell {
 private:
 	int attackValue;
