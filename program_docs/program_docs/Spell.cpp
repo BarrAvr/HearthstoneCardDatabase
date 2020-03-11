@@ -119,10 +119,22 @@ bool Spell::operator==(const Spell& card) const {
 	return this->name == card.getName() && this->manaCost == card.getManaCost() && this->cardClass == card.getClass() && this->rarity == card.getRarity() && this->description == card.getDescription();
 }
 
-friend std::istream& operator>>(std::istream& in, Spell& toRead) {
+std::istream& operator>>(std::istream& in, Spell& toRead) {
 
 }
 
-friend std::ostream& operator<<(std::ostream& out, const Spell& toPrint) {
+friend std::istream& operator>>(std::istream& in, Spell&* toRead) {
+	if (toRead->getCardType() == "Spell") {
+
+	}
+	else if (toRead->getCardType() == "Minion") {
+
+	}
+	else {
+
+	}
+}
+
+std::ostream& operator<<(std::ostream& out, const Spell& toPrint) {
 
 }

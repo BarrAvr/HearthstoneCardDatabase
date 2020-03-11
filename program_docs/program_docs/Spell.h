@@ -44,6 +44,8 @@ public:
 	bool operator==(const Spell&) const;
 	
 	friend std::istream& operator>>(std::istream& in, Spell& toRead);
+
+	friend std::istream& operator>>(std::istream& in, Spell&* toRead);
 	
 	friend std::ostream& operator<<(std::ostream& out, const Spell& toPrint);
 };
