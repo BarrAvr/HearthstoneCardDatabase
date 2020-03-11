@@ -5,11 +5,11 @@ class Spell {
 public:
 	static enum ClassType { NEUTRAL, DRUID, HUNTER, MAGE, PALADIN, PRIEST, ROGUE, SHAMAN, WARLOCK, WARRIOR };
 	static enum Rarity { COMMON, RARE, EPIC, LEGENDARY };
-	static enum key { NAME, MANA, CLASS, RARITY };
+	static enum key { NAME, MANA, CLASS, RARITY, DESCRIPTION };
 private:
 	std::string name;
 	int manaCost;
-	int key;
+	key sortKey;
 	ClassType cardClass;
 	Rarity rarity;
 	std::string description;
@@ -17,7 +17,7 @@ private:
 public:
 	//Constructors
 	Spell();
-	Spell(std::string, int, ClassType, Rarity, std::string, std::string);
+	Spell(std::string, int, ClassType, Rarity, std::string, std::string, key);
 	//Destructor
 	~Spell();
 	//getters
@@ -25,6 +25,7 @@ public:
 	int getManaCost();
 	ClassType getClass();
 	Rarity getRarity();
+	key getKey();
 	std::string getDescription();
 	std::string getFlavorText();
 	virtual std::string getCardType() { return "Spell"; };
