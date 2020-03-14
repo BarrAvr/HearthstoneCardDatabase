@@ -41,8 +41,7 @@ LinkNode<T>::LinkNode(LinkNode<T>* n, T* v) {
 //Pre: LinkNode Object exists
 //Post: value is returned
 template<class T>
-T* LinkNode<T>::getVal()
-{
+T* LinkNode<T>::getVal() {
 	return val;
 }
 
@@ -50,8 +49,7 @@ T* LinkNode<T>::getVal()
 //Pre: LinkNode Object exists
 //Post: value is returned
 template<class T>
-LinkNode<T>* LinkNode<T>::getNext()
-{
+LinkNode<T>* LinkNode<T>::getNext() {
 	return next;
 }
 
@@ -59,8 +57,7 @@ LinkNode<T>* LinkNode<T>::getNext()
 //Pre: LinkNode Object exists
 //Post: next is set
 template<class T>
-void LinkNode<T>::setNext(LinkNode<T>* n)
-{
+void LinkNode<T>::setNext(LinkNode<T>* n) {
 	next = n;
 }
 
@@ -68,8 +65,7 @@ void LinkNode<T>::setNext(LinkNode<T>* n)
 //Pre: LinkNode Object exists
 //Post: value is set
 template<class T>
-void LinkNode<T>::setVal(T* v)
-{
+void LinkNode<T>::setVal(T* v) {
 	val = v;
 }
 

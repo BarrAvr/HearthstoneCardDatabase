@@ -152,8 +152,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Minion.cpp" />
+    <ClCompile Include="Spell.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BST.h" />
+    <ClInclude Include="BSTNode.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="LinkNode.h" />
     <ClInclude Include="Minion.h" />
