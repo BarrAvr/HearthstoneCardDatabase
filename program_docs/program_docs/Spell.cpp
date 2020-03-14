@@ -123,16 +123,32 @@ std::istream& operator>>(std::istream& in, Spell& toRead) {
 
 }
 
-friend std::istream& operator>>(std::istream& in, Spell&* toRead) {
-	if (toRead->getCardType() == "Spell") {
+std::istream& operator>>(std::istream& in, Spell&* toRead) {
+	////incomplete code
+	//if (toRead->getCardType() == "Spell") {
 
-	}
-	else if (toRead->getCardType() == "Minion") {
+	//}
+	//else if (toRead->getCardType() == "Minion") {
 
-	}
-	else {
+	//}
+	//else {
 
-	}
+	//}
+	/*
+	CardType: Spell
+	Mana Cost: X 
+	Name: Joe Moose
+	ClassType: Hunter
+
+	Description:
+	Random words.
+
+	Flavor Text:
+	Random words.
+
+	Attack/Health: X/X
+	Attack/Durability: X/X
+	*/
 }
 
 std::ostream& operator<<(std::ostream& out, const Spell& toPrint) {

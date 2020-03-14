@@ -9,7 +9,7 @@ private:
 public:
 	//Constructors
 	Minion();
-	Minion(std::string, int, ClassType, Rarity, std::string, std::string, int, int);
+	Minion(std::string, int, ClassType, Rarity, std::string, std::string, int, int, key);
 	//Destructor
 	~Minion();
 	//getters
