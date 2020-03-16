@@ -135,7 +135,6 @@ std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 			<< "Name: " << toPrint->getName() << std::endl
 			<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
 			<< "Description: " << toPrint->getDescription() << std::endl << std::endl
-			<< "Flavor Text: " << toPrint->getFlavorText() << std::endl;
 	}
 	else if (toPrint->getCardType() == "Minion") {
 		out << "CardType: Minion\n" <<
@@ -143,7 +142,6 @@ std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 			<< "Name: " << toPrint->getName() << std::endl
 			<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
 			<< "Description: " << toPrint->getDescription() << std::endl << std::endl
-			<< "Flavor Text: " << toPrint->getFlavorText() << std::endl << std::endl
 			<< "Attack/Health: " << toPrint->getAttackValue() << "/" << toPrint->getDurability() << std::endl;
 	}
 
