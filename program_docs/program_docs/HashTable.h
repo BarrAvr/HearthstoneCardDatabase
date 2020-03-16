@@ -19,7 +19,7 @@ class HashTable
 		~HashTable();
 		
 		int getSize() const;
-		// int getMaxNodes();
+		int getMaxNodes();
 		SinglyLinkedList<T>* operator[](int index) const;
 		
 		void add(const T* const);
@@ -78,6 +78,25 @@ SinglyLinkedList<T>* HashTable<T>::operator[](int index) const {
 	if (index < 0 || index >= SIZE) throw "ERROR: Index out of bounds";
 	return table[index];
 }
+
+/* Getter method for HashTable
+ * Pre: HashTable object exists
+ * Post: Returns the maximum length of a linked list used for collision resolution
+ */
+template<class T>
+int HashTable<T>::getMaxNodes() {
+	int currMax;
+	int max = 0;
+	for (int i = 0; i < size; i++) {
+		if (table[i] != nullptr) {
+			currMax = table[i]->getCount();
+			if (currMax > max) max = currMax;
+		}
+		
+	}
+	return max;
+}
+
 
 /* Hashing algorithm for hash table that uses a pseudorandom approach
  * Pre: Valid object is passed in
