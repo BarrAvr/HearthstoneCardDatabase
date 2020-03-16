@@ -108,26 +108,35 @@ void addCard(fstream& file) {
 		<< rarity << "\n";
 
 	//take variables and create a Card object
+
+	if (type == "Spell") {
+		Spell s = Spell(name, cost, classType, rarity)
+	}
+
 	//add Card object to database
 	cout << "Card Sucessfully added" << endl;
 
 }
 
-//Infinite loop which picks random cards from the hashtable until a card matching the specified rarity is found
-//Pre: Hashtable exists, rarity is chosen
-//Post: A card with the chosen rarity is returned
 Spell* getRandomSpell(HashTable<Spell> table, Spell::Rarity rarity) {
 	srand(time(0));
-	int randIndex;
-	int randDepth;
+	int randIndex = rand() % table.getSize();
+	int randDepth = rand() % table.getMaxNodes();
 	Spell* randomSpell;
 	for (;;) {
-		randIndex = rand() % table.getSize();
-		randDepth = rand() % table[randIndex]->getCount();
 		if (table[randIndex] != nullptr) {
 			randomSpell = table[randIndex]->find(randDepth)->getVal();
 			if (randomSpell->getRarity() == rarity) break;
+			else {
+				randIndex = rand() % table.getSize();
+				randDepth = rand() % table.getMaxNodes();
+			}
 		}
+		else {
+			randIndex = rand() % table.getSize();
+			randDepth = rand() % table.getMaxNodes();
+		}
+		
 	}
 	return randomSpell;
 }
@@ -161,6 +170,7 @@ void readFileToDatabase(fstream & file) {
 	string t;
 	string r;
 	string c;
+	string d;
 	while (getline(file, n, ',')) {
 		name = n;
 		getline(file, ct, ',');
