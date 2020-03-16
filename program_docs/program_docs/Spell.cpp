@@ -124,6 +124,32 @@ std::istream& operator>>(std::istream& in, Spell& toRead) {
 }
 
 std::istream& operator>>(std::istream& in, Spell&* toRead) {
+
+}
+
+std::ostream& operator<<(std::ostream& out, const Spell&* toPrint) {
+
+	if (toPrint->getCardType() == "Spell") {
+		out << "CardType: Spell\n" <<
+			"Mana Cost: " << toPrint->getManaCost() << endl
+			<< "Name: " << toPrint->getName() << endl
+			<< "ClassType: " << toPrint->getClass() << endl << endl
+			<< "Description: " << toPrint->getDescription() << endl << endl
+			<< "Flavor Text: " << toPrint->getFlavorText() << endl;
+	}
+	else if (toPrint->getCardType() == "Minion") {
+		out << "CardType: Minion\n" <<
+			"Mana Cost: " << toPrint->getManaCost() << endl
+			<< "Name: " << toPrint->getName() << endl
+			<< "ClassType: " << toPrint->getClass() << endl << endl
+			<< "Description: " << toPrint->getDescription() << endl << endl
+			<< "Flavor Text: " << toPrint->getFlavorText() << endl << endl
+			<< "Attack/Health: " << toPrint->getAttackValue() << "/" << toPrint->getDurability() << endl;
+	}
+
+
+
+
 	////incomplete code
 	//if (toRead->getCardType() == "Spell") {
 
@@ -131,12 +157,12 @@ std::istream& operator>>(std::istream& in, Spell&* toRead) {
 	//else if (toRead->getCardType() == "Minion") {
 
 	//}
-	//else {
+	//else { 
 
 	//}
 	/*
 	CardType: Spell
-	Mana Cost: X 
+	Mana Cost: X
 	Name: Joe Moose
 	ClassType: Hunter
 
@@ -149,8 +175,4 @@ std::istream& operator>>(std::istream& in, Spell&* toRead) {
 	Attack/Health: X/X
 	Attack/Durability: X/X
 	*/
-}
-
-std::ostream& operator<<(std::ostream& out, const Spell& toPrint) {
-
 }
