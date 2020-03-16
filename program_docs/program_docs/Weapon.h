@@ -13,9 +13,9 @@ public:
 	//Destructor
 	~Weapon();
 	//getters
-	int getAttackValue();
-	int getDurability();
-	std::string getCardType() { return "Weapon"; };
+	int getAttackValue()const;
+	int getDurability()const;
+	std::string getCardType() const { return "Weapon"; };
 	//setters
 	void setAttackValue(int);
 	void setDurability(int);

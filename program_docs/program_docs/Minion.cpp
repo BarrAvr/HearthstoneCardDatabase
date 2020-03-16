@@ -18,10 +18,10 @@ Minion::~Minion() {
 
 }
 //getters
-int Minion::getAttackValue() {
+int Minion::getAttackValue() const {
 	return attackValue;
 }
-int Minion::getHealthValue() {
+int Minion::getHealthValue() const {
 	return durability;
 }
 //std::string getCardType() { return "Weapon"; };

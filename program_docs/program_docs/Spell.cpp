@@ -25,25 +25,25 @@ Spell::~Spell() {
 
 }
 //getters
-std::string Spell::getName() {
+std::string Spell::getName() const {
 	return name;
 }
-int Spell::getManaCost() {
+int Spell::getManaCost() const {
 	return manaCost;
 }
-Spell::ClassType Spell::getClass() {
+Spell::ClassType Spell::getClass() const {
 	return cardClass;
 }
-Spell::Rarity Spell::getRarity() {
+Spell::Rarity Spell::getRarity() const {
 	return rarity;
 }
-Spell::key Spell::getKey() {
+Spell::key Spell::getKey() const {
 	return sortKey;
 }
-std::string Spell::getDescription() {
+std::string Spell::getDescription() const {
 	return description;
 }
-std::string Spell::getFlavorText() {
+std::string Spell::getFlavorText() const {
 	return flavorText;
 }
 //virtual std::string getCardType() { return "Spell"; };

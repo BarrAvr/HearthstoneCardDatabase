@@ -22,14 +22,14 @@ public:
 	//Destructor
 	~Spell();
 	//getters
-	std::string getName();
-	int getManaCost();
-	ClassType getClass();
-	Rarity getRarity();
-	key getKey();
-	std::string getDescription();
-	std::string getFlavorText();
-	virtual std::string getCardType() { return "Spell"; };
+	std::string getName() const;
+	int getManaCost() const;
+	ClassType getClass() const;
+	Rarity getRarity() const;
+	key getKey() const;
+	std::string getDescription() const;
+	std::string getFlavorText() const;
+	virtual std::string getCardType() const { return "Spell"; };
 	//setters
 	void setName(std::string);
 	void setManaCost(int);
