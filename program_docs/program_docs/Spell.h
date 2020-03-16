@@ -7,7 +7,7 @@ public:
 	static enum ClassType { NEUTRAL, DRUID, HUNTER, MAGE, PALADIN, PRIEST, ROGUE, SHAMAN, WARLOCK, WARRIOR };
 	static enum Rarity { COMMON, RARE, EPIC, LEGENDARY };
 	static enum key { NAME, MANA, CLASS, RARITY, DESCRIPTION };
-private:
+protected:
 	std::string name;
 	int manaCost;
 	key sortKey;

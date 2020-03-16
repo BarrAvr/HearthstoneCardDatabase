@@ -4,9 +4,8 @@
 
 //Constructors
 Minion::Minion()
-	: name(""), manaCost(0), cardClass(0), rarity(0), description(""), flavorText(""), sortKey(0), attackValue(0), healthValue(0)
 {
-
+	name = "";
 }
 Minion::Minion(std::string name, int cost, ClassType cardClass, Rarity rarity, std::string description, std::string flavor, int attack, int health, key sortKey)
 	: name(name), manaCost(cost), cardClass(cardClass), rarity(rarity), description(description), flavorText(flavor), attackValue(attack), healthValue(health), sortKey(sortKey)

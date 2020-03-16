@@ -21,6 +21,7 @@ public:
 	~SinglyLinkedList();
 	
 	LinkNode<T>* find(const T&) const;
+	LinkNode<T>* find(int) const;
 	LinkNode<T>* findPrev(const T&) const;
 	bool compare(const T&, const T&) const;
 	void add(const T* const);
@@ -166,7 +167,21 @@ LinkNode<T>* SinglyLinkedList<T>::find(const T& value) const {
 		found = found->getNext();
 	}
 	return found;
+}
 
+//Returns a node at the specified position, 0 being the head
+//Pre: List exists
+//Post: Returns the node containing the specified value or nullptr if it is not found
+template<class T>
+LinkNode<T>* SinglyLinkedList<T>::find(int index) const
+{
+	if (i < 0 || i >= count) return nullptr;
+	LinkNode<T>* curr = head;
+	for (int i = 0; i < index; i++)
+	{
+		curr = curr->getNext();
+	}
+	return curr;
 }
 
 //Returns the node before the one which contains the specified value
