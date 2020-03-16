@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 class Spell {
 public:
@@ -47,5 +48,5 @@ public:
 
 	friend std::istream& operator>>(std::istream& in, Spell& toRead);
 	
-	friend std::ostream& operator<<(std::ostream& out, const Spell& toPrint);
+	friend std::ostream& operator<<(std::ostream& out, Spell& toPrint);
 };
