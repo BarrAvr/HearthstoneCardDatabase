@@ -33,21 +33,22 @@ int Minion::getAttackValue() const {
 	return attackValue;
 }
 int Minion::getHealthValue() const {
-	return durability;
+	return healthValue;
 }
 //std::string getCardType() { return "Weapon"; };
 //setters
 void Minion::setAttackValue(int newAttack) {
 	attackValue = newAttack;
 }
-void Minion::setHealthValue(int newDurability) {
-	durability = newDurability;
+void Minion::setHealthValue(int newHealthValue) {
+	healthValue = newHealthValue;
 }
 
-std::istream& operator>>(std::istream& in, Minion& toRead) {
-
-}
-
-std::ostream& operator<<(std::ostream& out, const Minion& toPrint) {
-
+void Minion::print(std::ostream& out) {
+	out << "CardType: Minion\n" <<
+		"Mana Cost: " << this->getManaCost() << std::endl
+		<< "Name: " << this->getName() << std::endl
+		<< "ClassType: " << this->getClass() << std::endl << std::endl
+		<< "Description: " << this->getDescription() << std::endl << std::endl
+		<< "Attack/Health: " << this->getAttackValue() << "/" << this->getHealthValue() << std::endl;
 }

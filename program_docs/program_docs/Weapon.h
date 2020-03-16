@@ -19,8 +19,6 @@ public:
 	//setters
 	void setAttackValue(int);
 	void setDurability(int);
-
-	friend std::istream& operator>>(std::istream& in, Weapon& toRead);
-
-	friend std::ostream& operator<<(std::ostream& out, const Weapon& toPrint);
+	//misc
+	void print(std::ostream& out);
 };

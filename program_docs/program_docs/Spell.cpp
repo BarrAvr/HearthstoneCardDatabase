@@ -1,4 +1,7 @@
 #include "Spell.h"
+#include "Minion.h"
+#include "Weapon.h"
+
 /*
 	std::string name;
 	int manaCost;
@@ -119,34 +122,39 @@ bool Spell::operator==(Spell& card) const {
 	return this->name == card.getName() && this->manaCost == card.getManaCost() && this->cardClass == card.getClass() && this->rarity == card.getRarity() && this->description == card.getDescription();
 }
 
-std::istream& operator>>(std::istream& in, Spell& toRead) {
-
-}
-
-std::istream& operator>>(std::istream& in, Spell*& toRead) {
-
+void Spell::print(std::ostream& out) {
+	out << "CardType: Spell\n" <<
+		"Mana Cost: " << this->getManaCost() << std::endl
+		<< "Name: " << this->getName() << std::endl
+		<< "ClassType: " << this->getClass() << std::endl << std::endl
+		<< "Description: " << this->getDescription() << std::endl << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
-
 	if (toPrint->getCardType() == "Spell") {
-		out << "CardType: Spell\n" <<
-			"Mana Cost: " << toPrint->getManaCost() << std::endl
-			<< "Name: " << toPrint->getName() << std::endl
-			<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
-			<< "Description: " << toPrint->getDescription() << std::endl << std::endl
+		toPrint->print(out);
 	}
 	else if (toPrint->getCardType() == "Minion") {
-		out << "CardType: Minion\n" <<
-			"Mana Cost: " << toPrint->getManaCost() << std::endl
-			<< "Name: " << toPrint->getName() << std::endl
-			<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
-			<< "Description: " << toPrint->getDescription() << std::endl << std::endl
-			<< "Attack/Health: " << toPrint->getAttackValue() << "/" << toPrint->getDurability() << std::endl;
+		dynamic_cast<Minion&>(*toPrint).print(out);
 	}
-
-
-
+	else {
+		dynamic_cast<Weapon&>(*toPrint).print(out);
+	}
+	//if (toPrint->getCardType() == "Spell") {
+	//	out << "CardType: Spell\n" <<
+	//		"Mana Cost: " << toPrint->getManaCost() << std::endl
+	//		<< "Name: " << toPrint->getName() << std::endl
+	//		<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
+	//		<< "Description: " << toPrint->getDescription() << std::endl << std::endl;
+	//}
+	//else if (toPrint->getCardType() == "Minion") {
+	//	out << "CardType: Minion\n" <<
+	//		"Mana Cost: " << toPrint->getManaCost() << std::endl
+	//		<< "Name: " << toPrint->getName() << std::endl
+	//		<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
+	//		<< "Description: " << toPrint->getDescription() << std::endl << std::endl
+	//		<< "Attack/Health: " << toPrint->getAttackValue() << "/" << toPrint->getDurability() << std::endl;
+	//}
 
 	////incomplete code
 	//if (toRead->getCardType() == "Spell") {

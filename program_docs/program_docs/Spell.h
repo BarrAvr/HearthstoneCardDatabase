@@ -34,16 +34,14 @@ public:
 	void setClass(ClassType);
 	void setRarity(Rarity);
 	void setDescription(std::string);
+	//misc
+	virtual void print(std::ostream& out);
 	//overloads
 	bool operator>(Spell&) const;
 
 	bool operator<(Spell&) const;
 
 	bool operator==(Spell&) const;
-	
-	friend std::istream& operator>>(std::istream& in, Spell& toRead);
-
-	friend std::istream& operator>>(std::istream& in, Spell& toRead);
 	
 	friend std::ostream& operator<<(std::ostream& out, Spell*& toPrint);
 };

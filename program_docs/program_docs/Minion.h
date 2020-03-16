@@ -22,8 +22,6 @@ class Minion : public Spell
 		//setters
 		void setAttackValue(int);
 		void setHealthValue(int);
-
-		friend std::istream& operator>>(std::istream& in, Minion& toRead);
-
-		friend std::ostream& operator<<(std::ostream& out, const Minion& toPrint);
+		//misc
+		void print(std::ostream& out);
 };

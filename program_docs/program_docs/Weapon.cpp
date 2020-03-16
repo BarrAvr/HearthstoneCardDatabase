@@ -34,7 +34,7 @@ int Weapon::getAttackValue() const {
 int Weapon::getDurability() const {
 	return durability;
 }
-//std::string getCardType() { return "Weapon"; };
+
 //setters
 void Weapon::setAttackValue(int newAttack) {
 	attackValue = newAttack;
@@ -43,10 +43,12 @@ void Weapon::setDurability(int newDurability) {
 	durability = newDurability;
 }
 
-std::istream& operator>>(std::istream& in, Weapon& toRead) {
-
-}
-
-std::ostream& operator<<(std::ostream& out, const Weapon& toPrint) {
-
+//misc
+void Weapon::print(std::ostream& out) {
+	out << "CardType: Weapon\n" <<
+		"Mana Cost: " << this->getManaCost() << std::endl
+		<< "Name: " << this->getName() << std::endl
+		<< "ClassType: " << this->getClass() << std::endl << std::endl
+		<< "Description: " << this->getDescription() << std::endl << std::endl
+		<< "Attack/Health: " << this->getAttackValue() << "/" << this->getDurability() << std::endl;
 }
