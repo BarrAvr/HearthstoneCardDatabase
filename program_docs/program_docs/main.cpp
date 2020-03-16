@@ -15,9 +15,14 @@ void deleteCard(HashTable<Spell>);
 void printHashTable(HashTable<Spell>);
 void printSorted(HashTable<Spell>);
 void printIndentedTree(BST<Spell>);
+<<<<<<< Updated upstream
 void cardCompare(HashTable<Spell>);
 void readFileToDatabase(ifstream& file);
 int getCount(ifstream&);
+=======
+void packOpening(HashTable<Spell>);
+void readFileToDatabase(ifstream file);
+>>>>>>> Stashed changes
 
 int main() {
 	int size = 67;
@@ -39,7 +44,7 @@ int main() {
 		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
 		else if (selection == "5" || selection == "PRINTSORT") printSorted(cardHashtable);
 		else if (selection == "6" || selection == "PRINTTREE") printIndentedTree(cardTree);
-		else if (selection == "7" || selection == "COMPARE") cardCompare(cardHashtable);
+		else if (selection == "7" || selection == "COMPARE") packOpening(cardHashtable);
 		else if (selection == "8" || selection == "HELP") displayMenu();
 		else if (selection == "9" || selection == "EXIT") {
 			cout << "Press 0 and enter to confirm you want to exit or any other key to continue" << endl;
@@ -96,10 +101,18 @@ void addCard(fstream& file) {
 
 }
 
+<<<<<<< Updated upstream
 void readFileToDatabase(ifstream& file) {
+=======
+void packOpening(HashTable<Spell>)
+{
+
+}
+
+void readFileToDatabase(ifstream file) {
+>>>>>>> Stashed changes
 	string name, classType, type, rarity;
 	int cost;
-
 	string n;
 	string ct;
 	string t;
@@ -130,7 +143,7 @@ void displayMenu()
 	cout << "(4) PRINTHASH - print all data from the hashtable " << endl;
 	cout << "(5) PRINTSORT - print all data sorted by a key attribute " << endl;
 	cout << "(6) PRINTTREE - print the indented BST " << endl;
-	cout << "(7) COMPARE - print the indented BST " << endl;
+	cout << "(7) PACK - Simulate a random card pack opening " << endl;
 	cout << "(8) HELP - display menu once again " << endl;
 	cout << "(9) EXIT - exit the program " << endl;
 }
