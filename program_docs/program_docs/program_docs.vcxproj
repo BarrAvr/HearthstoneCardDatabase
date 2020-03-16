@@ -162,6 +162,7 @@
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="LinkNode.h" />
     <ClInclude Include="Minion.h" />
+    <ClInclude Include="SinglyLinkedList.h" />
     <ClInclude Include="Spell.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

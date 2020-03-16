@@ -1,14 +1,15 @@
 #pragma once
 
 #include "LinkNode.h"
+#include "SinglyLinkedList.h"
 #include <string>
 
 template<class T>
 class HashTable
 {
-	// Underlying array of card node pointers
-	// Nodes because of linked list resolution
-	LinkNode<T>** table;
+	// Underlying array of singly linked list pointers
+	// lists because of linked list resolution
+	SinglyLinkedList<T>** table;
 	const int SIZE; // Member that is depended on load factor
 	const double LOAD_FACTOR; // Intended ratio of max # of elements in hash table to size of hash table
 	int hashFunc(const T&) const;
@@ -19,7 +20,7 @@ class HashTable
 		
 		int getSize() const;
 		// int getMaxNodes();
-		const LinkNode<T>* operator[](int index) const;
+		SinglyLinkedList<T>* operator[](int index) const;
 		
 		void add(const T* const);
 		int find(const T&) const;
@@ -38,35 +39,29 @@ HashTable<T>::HashTable(int count)
 {
 	LOAD_FACTOR = 0.75;
 	SIZE = abs(count) / LOAD_FACTOR;
-	table = new LinkNode<T>*[SIZE];
+	table = new SinglyLinkedList<T>*[SIZE];
 }
 
 
 /* Destructor for HashTable
- * Pre: HashTable object exists when called
+ * Pre: None
  * Post: All dynamically allocated memory of HashTable is released
  */
 template<class T>
 HashTable<T>::~HashTable()
 {
-	LinkNode<T>* curr;
-	LinkNode<T>* prev;
-	for (int i = 0; i < SIZE; i++)
-	{
+	SinglyLinkedList<T>*& curr;
+
+	for (int i = 0; i < SIZE; i++) {
 		curr = table[i];
-		while (curr != nullptr)
-		{
-			prev = curr;
-			curr = curr->getNext();
-			delete prev;
-		}
-		table[i] = nullptr;
+		if (curr != nullptr) curr->empty();
+		curr = nullptr;
 	}
 	delete [] table;
 }
 
 /* Getter method for HashTable
- * Pre: HashTable object exists
+ * Pre: None
  * Post: Returns the size/length of the underlying array in the hash table
  */
 template<class T>
@@ -75,17 +70,18 @@ int HashTable<T>::getSize() const {
 }
 
 /* Overloaded subscript operator for HashTable
- * Pre: HashTable object exists and valid index is passed in
- * Post: Returns pointer to the head const Node of the linked list at the index position in the hash table
+ * Pre: Valid index is passed in
+ * Post: Returns pointer to the const linked list at the index position in the hash table
  */
 template<class T>
-const LinkNode<T>* HashTable<T>::operator[](int index) const {
+SinglyLinkedList<T>* HashTable<T>::operator[](int index) const {
 	if (index < 0 || index >= SIZE) throw "ERROR: Index out of bounds";
 	return table[index];
 }
 
-/* Hashing algorithm for hash table
- * Pre: Valid object 
+/* Hashing algorithm for hash table that uses a pseudorandom approach
+ * Pre: Valid object is passed in
+ * Post: An integer corresponding to an array position is returned
  */
 template<class T>
 int HashTable<T>::hashFunc(const T& obj) const
@@ -96,53 +92,54 @@ int HashTable<T>::hashFunc(const T& obj) const
 	return (13 * sum + 29) % SIZE;
 }
 
+/* Hashing algorithm for hash table
+ * Pre: Valid object address to be added is passed in
+ * Post: A node containing the object address is added to the hash table
+ *       Collisions are handled by appending the node to the end of the linked list at the collision
+			-Linked List Resolution
+ */
 template<class T>
 void HashTable<T>::add(const T* const obj)
 {
 	int index = hashFunc(*obj);
-	LinkNode<T>* curr = table[index];
+	SinglyLinkedList<T>* curr = table[index];
 	LinkNode<T>* addNode = new LinkNode<T>(nullptr, obj);
-	if (curr == nullptr) table[index] = addNode;
-	else {
-		while (curr->getNext() != nullptr)
-			curr = curr->getNext();
-		curr->setNext(addNode);
-	}
+	if (curr == nullptr) 
+		table[index] = new SinglyLinkedList<T>(UNSORTED, addNode);
+	else
+		curr->add(addNode);
 }
 
+/* Find method for Hash Table
+ * Pre: Valid object to be found is passed in
+ * Post: An integer corresponding to the underlying array position where the object is found is returned, -1 if not found
+ */
 template<class T>
 int HashTable<T>::find(const T& obj) const
 {
 	int index = hashFunc(obj);
-	LinkNode<T>* curr = table[index];
-	while (curr != nullptr) {
-		if (*(curr->getVal()) == obj) return index;
-		curr = curr->getNext();
-	}
-	return -1;
+	SinglyLinkedList<T>* curr = table[index];
+	if (curr == nullptr || curr->find(obj) == nullptr) 
+		index = -1
+	return index;
 }
 
+/* Remove method for Hash Table
+ * Pre: Valid object is passed in
+ * Post: If the object is removed, true is returned, false otherwise
+ */
 template<class T>
 bool HashTable<T>::remove(const T& obj)
 {
 	int index = hashFunc(obj);
-	LinkNode<T>* curr = table[index];
-	LinkNode<T>* prev;
+	SinglyLinkedList<T>*& curr = table[index];
 	
-	while (curr != nullptr) 
-	{
-		if (*(curr->getVal()) == obj) {
-			prev = curr;
-			curr = curr->getNext();
-			delete prev;
-			while (curr != nullptr) {
-				prev = curr;
-				curr = curr->getNext();
-			}
-			prev = curr;
-			return true;
-		}
-		curr = curr->getNext();
+	if (curr != nullptr || curr->find(obj) == nullptr) return false;
+	if (curr->getCount() == 1) {
+		curr->empty();
+		curr = nullptr;
 	}
-	return false;
+	else curr->remove(obj);
+
+	return true;
 }
