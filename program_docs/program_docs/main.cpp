@@ -5,7 +5,7 @@
 #include "Spell.h"
 #include "Weapon.h"
 #include "Minion.h"
-
+#include "BST.h"
 
 using namespace std;
 
@@ -16,14 +16,15 @@ void printHashTable(HashTable<Spell>);
 void printSorted(HashTable<Spell>);
 void printIndentedTree(BST<Spell>);
 void cardCompare(HashTable<Spell>);
-void readFileToDatabase(ifstream file);
+void readFileToDatabase(ifstream& file);
+int getCount(ifstream&);
 
 int main() {
-	int size = 50;
+	int size = 67;
 	string selection;
 	HashTable<Spell> cardHashtable = HashTable<Spell>(size);
 	cout << "Hearthstone Database" << endl;
-	fstream inputFile;
+	ifstream inputFile;
 	inputFile.open("HearthstoneCards.txt");
 	readFileToDatabase(inputFile);
 	
@@ -95,7 +96,7 @@ void addCard(fstream& file) {
 
 }
 
-void readFileToDatabase(ifstream file) {
+void readFileToDatabase(ifstream& file) {
 	string name, classType, type, rarity;
 	int cost;
 
@@ -119,7 +120,8 @@ void readFileToDatabase(ifstream file) {
 	}
 }
 
-void displayMenu() {
+void displayMenu() 
+{
 	cout << "\nMenu: " << endl;
 	cout << "Type the number OR the name of the command in caps verbatim. " << endl;
 	cout << "(1) ADD - add a value to both BSTs " << endl;
