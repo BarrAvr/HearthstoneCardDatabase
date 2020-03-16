@@ -123,9 +123,7 @@ std::istream& operator>>(std::istream& in, Spell& toRead) {
 
 }
 
-std::istream& operator>>(std::istream& in, Spell&* toRead) {
 
-}
 
 std::ostream& operator<<(std::ostream& out, const Spell&* toPrint) {
 
@@ -137,8 +135,8 @@ std::ostream& operator<<(std::ostream& out, const Spell&* toPrint) {
 			<< "Description: " << toPrint->getDescription() << endl << endl
 			<< "Flavor Text: " << toPrint->getFlavorText() << endl;
 	}
-	else if (toPrint->getCardType() == "Minion") {
-		out << "CardType: Minion\n" <<
+	else if (toPrint->getCardType() == "Minion" || toPrint->getCardType() == "Minion") {
+		out << "CardType: " << toPrint->getCardType() << endl <<
 			"Mana Cost: " << toPrint->getManaCost() << endl
 			<< "Name: " << toPrint->getName() << endl
 			<< "ClassType: " << toPrint->getClass() << endl << endl
