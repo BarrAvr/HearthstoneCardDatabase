@@ -16,6 +16,7 @@ class HashTable
 		HashTable(int);
 		~HashTable();
 		int getSize();
+		int getMaxNodes();
 		T* operator[](int index);
 		
 		void add(T*);

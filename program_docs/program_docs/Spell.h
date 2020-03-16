@@ -48,5 +48,5 @@ public:
 
 	friend std::istream& operator>>(std::istream& in, Spell& toRead);
 	
-	friend std::ostream& operator<<(std::ostream& out, Spell& toPrint);
+	friend std::ostream& operator<<(std::ostream& out, Spell*& toPrint);
 };

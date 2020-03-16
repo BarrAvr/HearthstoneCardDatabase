@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stdlib.h>
+#include <time.h>
 #include "HashTable.h"
 #include "Spell.h"
 #include "Weapon.h"
@@ -18,6 +20,8 @@ void printIndentedTree(BST<Spell>);
 void cardCompare(HashTable<Spell>);
 void readFileToDatabase(fstream& file);
 int getCount(fstream& file);
+Spell* getRandomSpell(HashTable<Spell>, Spell::Rarity);
+Spell::Rarity getRandomCardRarity();
 void packOpening(HashTable<Spell>);
 
 int main() {
@@ -81,7 +85,7 @@ void addCard(fstream& file) {
 	cout << "Please enter the card's Type:" << endl;
 	cin >> type;
 
-	cout << "PLease enter the rarity of the card:" << endl;
+	cout << "Please enter the rarity of the card:" << endl;
 	cin >> rarity;
 
 
@@ -98,20 +102,35 @@ void addCard(fstream& file) {
 
 }
 
+Spell* getRandomSpell(HashTable<Spell> table, Spell::Rarity rarity) {
+	srand(time(0));
+	int randIndex = rand() % table.getSize();
+	int randLinkedListDepth = rand() % table.getMaxNodes();
+	for (;;) {
+
+
+	}
+}
+
+Spell::Rarity getRandomCardRarity() {
+	srand(time(0)); 
+	int randomNum = rand()%100;
+	if (randomNum <= 49) return Spell::COMMON;
+	if (randomNum > 49 && randomNum <= 74) return Spell::RARE;
+	if (randomNum > 74 && randomNum <= 94) return Spell::EPIC;
+	if (randomNum > 94 && randomNum <= 99) return Spell::LEGENDARY;
+
+}
 void packOpening(HashTable<Spell> table)
 {
-	int commonCount = 0;
-	int rareCount = 0;
-	int epicCount = 0;
-	int legendaryCount = 0;
-	common
-	for (int i = 0; i < table.getSize(), i++) {
-		if (table[i] != nullptr) {
-			if (table[i]->getRarity() == Spell::COMMON) {
+	int randomGeneration;
+	Spell** packArray;
+	packArray[0] = getRandomSpell(table, Spell::RARE);
+	packArray[1] = getRandomSpell(table, getRandomCardRarity());
+	packArray[2] = getRandomSpell(table, getRandomCardRarity());
+	packArray[3] = getRandomSpell(table, getRandomCardRarity());
+	packArray[4] = getRandomSpell(table, getRandomCardRarity());
 
-			}
-		}
-	}
 }
 
 void readFileToDatabase(fstream & file) {
