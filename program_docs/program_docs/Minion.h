@@ -16,9 +16,9 @@ class Minion : public Spell
 		//Destructor
 		~Minion();
 		//getters
-		int getAttackValue();
-		int getHealthValue();
-		std::string getCardType() { return "Minion"; };
+		int getAttackValue()const;
+		int getHealthValue()const;
+		std::string getCardType() const { return "Minion"; };
 		//setters
 		void setAttackValue(int);
 		void setHealthValue(int);

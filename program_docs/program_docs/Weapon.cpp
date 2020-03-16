@@ -18,10 +18,10 @@ Weapon::~Weapon() {
 
 }
 //getters
-int Weapon::getAttackValue() {
+int Weapon::getAttackValue() const {
 	return attackValue;
 }
-int Weapon::getDurability() {
+int Weapon::getDurability() const {
 	return durability;
 }
 //std::string getCardType() { return "Weapon"; };
