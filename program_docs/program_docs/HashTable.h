@@ -15,13 +15,27 @@ class HashTable
 	public:
 		HashTable(int);
 		~HashTable();
+		int getSize();
+		T* operator[](int index);
 		
 		void add(T*);
 		//Returns index in hash table
 		int find(T&);
 		//Returns whether remove was sucessful
 		bool remove(T&);
+
 };
+
+template<class T>
+int HashTable<T>::getSize() {
+	return size;
+}
+template<class T>
+T* HashTable<T>::operator[](int index) {
+	return table[index];
+}
+
+
 
 template<class T>
 HashTable<T>::HashTable(int s)

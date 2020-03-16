@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 class Spell {
 public:
@@ -37,15 +38,15 @@ public:
 	void setDescription(std::string);
 	void setFlavorText(std::string);
 	//overloads
-	bool operator>(const Spell&) const;
+	bool operator>(Spell&) const;
 
-	bool operator<(const Spell&) const;
+	bool operator<(Spell&) const;
 
-	bool operator==(const Spell&) const;
+	bool operator==(Spell&) const;
 	
 	friend std::istream& operator>>(std::istream& in, Spell& toRead);
 
 	friend std::istream& operator>>(std::istream& in, Spell& toRead);
 	
-	friend std::ostream& operator<<(std::ostream& out, const Spell& toPrint);
+	friend std::ostream& operator<<(std::ostream& out, Spell& toPrint);
 };

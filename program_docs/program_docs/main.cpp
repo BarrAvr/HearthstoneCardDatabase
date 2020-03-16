@@ -15,21 +15,18 @@ void deleteCard(HashTable<Spell>);
 void printHashTable(HashTable<Spell>);
 void printSorted(HashTable<Spell>);
 void printIndentedTree(BST<Spell>);
-<<<<<<< Updated upstream
 void cardCompare(HashTable<Spell>);
-void readFileToDatabase(ifstream& file);
-int getCount(ifstream&);
-=======
+void readFileToDatabase(fstream& file);
+int getCount(fstream& file);
 void packOpening(HashTable<Spell>);
-void readFileToDatabase(ifstream file);
->>>>>>> Stashed changes
 
 int main() {
 	int size = 67;
 	string selection;
 	HashTable<Spell> cardHashtable = HashTable<Spell>(size);
+	BST<Spell> cardTree = BST<Spell>();
 	cout << "Hearthstone Database" << endl;
-	ifstream inputFile;
+	fstream inputFile;
 	inputFile.open("HearthstoneCards.txt");
 	readFileToDatabase(inputFile);
 	
@@ -101,16 +98,23 @@ void addCard(fstream& file) {
 
 }
 
-<<<<<<< Updated upstream
-void readFileToDatabase(ifstream& file) {
-=======
-void packOpening(HashTable<Spell>)
+void packOpening(HashTable<Spell> table)
 {
+	int commonCount = 0;
+	int rareCount = 0;
+	int epicCount = 0;
+	int legendaryCount = 0;
+	common
+	for (int i = 0; i < table.getSize(), i++) {
+		if (table[i] != nullptr) {
+			if (table[i]->getRarity() == Spell::COMMON) {
 
+			}
+		}
+	}
 }
 
-void readFileToDatabase(ifstream file) {
->>>>>>> Stashed changes
+void readFileToDatabase(fstream & file) {
 	string name, classType, type, rarity;
 	int cost;
 	string n;
