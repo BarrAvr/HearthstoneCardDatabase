@@ -11,7 +11,7 @@
 
 //Constructors
 Spell::Spell() 
-	: name(""), manaCost(0), cardClass(0), rarity(0), description(""), flavorText(""), sortKey(0)
+	: name(""), manaCost(0), cardClass(Spell::NEUTRAL), rarity(Spell::COMMON), description(""), flavorText(""), sortKey(Spell::MANA)
 {
 
 }
@@ -31,13 +31,13 @@ std::string Spell::getName() {
 int Spell::getManaCost() {
 	return manaCost;
 }
-ClassType Spell::getClass() {
+Spell::ClassType Spell::getClass() {
 	return cardClass;
 }
-Rarity Spell::getRarity() {
+Spell::Rarity Spell::getRarity() {
 	return rarity;
 }
-key Spell::getKey() {
+Spell::key Spell::getKey() {
 	return sortKey;
 }
 std::string Spell::getDescription() {
