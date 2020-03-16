@@ -116,11 +116,24 @@ void addCard(fstream& file) {
 Spell* getRandomSpell(HashTable<Spell> table, Spell::Rarity rarity) {
 	srand(time(0));
 	int randIndex = rand() % table.getSize();
-	int randLinkedListDepth = rand() % table.getMaxNodes();
+	int randDepth = rand() % table.getMaxNodes();
+	Spell* randomSpell;
 	for (;;) {
-
-
+		if (table[randIndex] != nullptr) {
+			randomSpell = table[randIndex]->find(randDepth)->getVal();
+			if (randomSpell->getRarity() == rarity) break;
+			else {
+				randIndex = rand() % table.getSize();
+				randDepth = rand() % table.getMaxNodes();
+			}
+		}
+		else {
+			randIndex = rand() % table.getSize();
+			randDepth = rand() % table.getMaxNodes();
+		}
+		
 	}
+	return randomSpell;
 }
 
 Spell::Rarity getRandomCardRarity() {
