@@ -173,11 +173,12 @@ LinkNode<T>* SinglyLinkedList<T>::find(const T& value) const {
 //Pre: List exists
 //Post: Returns the node containing the specified value or nullptr if it is not found
 template<class T>
-LinkNode<T>* SinglyLinkedList<T>::find(int index) const
+LinkNode<T>* SinglyLinkedList<T>::find(int depth) const
 {
-	if (i < 0 || i >= count) return nullptr;
+	if (depth < 0) return nullptr;
+	if (depth > count) depth = count;
 	LinkNode<T>* curr = head;
-	for (int i = 0; i < index; i++)
+	for (int i = 0; i < depth; i++)
 	{
 		curr = curr->getNext();
 	}
