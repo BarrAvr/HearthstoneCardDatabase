@@ -11,11 +11,11 @@
 
 //Constructors
 Spell::Spell() 
-	: name(""), manaCost(0), cardClass(Spell::NEUTRAL), rarity(Spell::COMMON), description(""), flavorText(""), sortKey(Spell::MANA)
+	: name(""), manaCost(0), cardClass(Spell::NEUTRAL), rarity(Spell::COMMON), description(""), sortKey(Spell::MANA)
 {
 
 }
-Spell::Spell(std::string name, int cost, ClassType cardClass, Rarity rarity, std::string description, std::string flavor, key sortKey) 
+Spell::Spell(std::string name, int cost, ClassType cardClass, Rarity rarity, std::string description, key sortKey) 
 	: name(name), manaCost(cost), cardClass(cardClass), rarity(rarity), description(description), flavorText(flavor), sortKey(sortKey)
 {
 
@@ -142,7 +142,7 @@ std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 			<< "Name: " << toPrint->getName() << std::endl
 			<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
 			<< "Description: " << toPrint->getDescription() << std::endl << std::endl
-			<< "Attack/Health: " << toPrint->getAttackValue() << "/" << toPrint->getDurability() << std::endl;
+			//<< "Attack/Health: " << toPrint->getAttackValue() << "/" << toPrint->getDurability() << std::endl;
 	}
 
 

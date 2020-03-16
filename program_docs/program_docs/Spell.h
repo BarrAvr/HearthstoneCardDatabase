@@ -18,7 +18,7 @@ protected:
 public:
 	//Constructors
 	Spell();
-	Spell(std::string, int, ClassType, Rarity, std::string, std::string, key);
+	Spell(std::string, int, ClassType, Rarity, std::string, key);
 	//Destructor
 	~Spell();
 	//getters
