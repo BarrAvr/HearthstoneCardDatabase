@@ -113,25 +113,21 @@ void addCard(fstream& file) {
 
 }
 
+//Infinite loop which picks random cards from the hashtable until a card matching the specified rarity is found
+//Pre: Hashtable exists, rarity is chosen
+//Post: A card with the chosen rarity is returned
 Spell* getRandomSpell(HashTable<Spell> table, Spell::Rarity rarity) {
 	srand(time(0));
-	int randIndex = rand() % table.getSize();
-	int randDepth = rand() % table.getMaxNodes();
+	int randIndex;
+	int randDepth;
 	Spell* randomSpell;
 	for (;;) {
+		randIndex = rand() % table.getSize();
+		randDepth = rand() % table[randIndex]->getCount();
 		if (table[randIndex] != nullptr) {
 			randomSpell = table[randIndex]->find(randDepth)->getVal();
 			if (randomSpell->getRarity() == rarity) break;
-			else {
-				randIndex = rand() % table.getSize();
-				randDepth = rand() % table.getMaxNodes();
-			}
 		}
-		else {
-			randIndex = rand() % table.getSize();
-			randDepth = rand() % table.getMaxNodes();
-		}
-		
 	}
 	return randomSpell;
 }
