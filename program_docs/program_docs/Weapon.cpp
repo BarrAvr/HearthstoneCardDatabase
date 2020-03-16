@@ -3,15 +3,25 @@
 #include <string>
 
 //Constructors
-Weapon::Weapon() 
-	: name(""), manaCost(0), cardClass(0), rarity(0), description(""), flavorText(""), sortKey(0), attackValue(0), durability(0)
-{
-
+Weapon::Weapon() {
+	name = "";
+	manaCost = 0;
+	cardClass = Spell::NEUTRAL;
+	rarity = Spell::COMMON;
+	description = "";
+	sortKey = Spell::NAME;
+	attackValue = 0;
+	durability = 0;
 }
-Weapon::Weapon(std::string name, int cost, ClassType cardClass, Rarity rarity, std::string description, std::string flavor, int attack, int durability, key sortKey)
-	: name(name), manaCost(cost), cardClass(cardClass), rarity(rarity), description(description), flavorText(flavor), attackValue(attack), durability(durability), sortKey(sortKey)
-{
-
+Weapon::Weapon(std::string newName, int cost, ClassType newClass, Rarity newRarity, std::string newDescription, int attack, int newDurability, key sortKey) {
+	name = newName;
+	manaCost = cost;
+	cardClass = newClass;
+	rarity = newRarity;
+	description = newDescription;
+	sortKey = sortKey;
+	attackValue = attack;
+	durability = newDurability;
 }
 //Destructor
 Weapon::~Weapon() {

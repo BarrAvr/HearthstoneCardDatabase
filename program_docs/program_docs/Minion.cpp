@@ -6,11 +6,23 @@
 Minion::Minion()
 {
 	name = "";
+	manaCost = 0;
+	cardClass = Spell::NEUTRAL;
+	rarity = Spell::COMMON;
+	description = "";
+	sortKey = Spell::NAME;
+	attackValue = 0;
+	healthValue = 0;
 }
-Minion::Minion(std::string name, int cost, ClassType cardClass, Rarity rarity, std::string description, std::string flavor, int attack, int health, key sortKey)
-	: name(name), manaCost(cost), cardClass(cardClass), rarity(rarity), description(description), flavorText(flavor), attackValue(attack), healthValue(health), sortKey(sortKey)
-{
-
+Minion::Minion(std::string newName, int cost, ClassType newClass, Rarity newRarity, std::string newDescription, int attack, int newHealth, key newSortKey) {
+	name = newName;
+	manaCost = cost;
+	cardClass = newClass;
+	rarity = newRarity;
+	description = newDescription;
+	sortKey = newSortKey;
+	attackValue = attack;
+	healthValue = newHealth;
 }
 //Destructor
 Minion::~Minion() {

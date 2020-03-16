@@ -14,11 +14,10 @@ protected:
 	ClassType cardClass;
 	Rarity rarity;
 	std::string description;
-	std::string flavorText;
 public:
 	//Constructors
 	Spell();
-	Spell(std::string, int, ClassType, Rarity, std::string, std::string, key);
+	Spell(std::string, int, ClassType, Rarity, std::string, key);
 	//Destructor
 	~Spell();
 	//getters
@@ -28,7 +27,6 @@ public:
 	Rarity getRarity() const;
 	key getKey() const;
 	std::string getDescription() const;
-	std::string getFlavorText() const;
 	virtual std::string getCardType() const { return "Spell"; };
 	//setters
 	void setName(std::string);
@@ -36,7 +34,6 @@ public:
 	void setClass(ClassType);
 	void setRarity(Rarity);
 	void setDescription(std::string);
-	void setFlavorText(std::string);
 	//overloads
 	bool operator>(Spell&) const;
 

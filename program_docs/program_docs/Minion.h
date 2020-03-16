@@ -12,7 +12,7 @@ class Minion : public Spell
 	public:
 		//Constructors
 		Minion();
-		Minion(std::string, int, ClassType, Rarity, std::string, std::string, int, int, key);
+		Minion(std::string, int, ClassType, Rarity, std::string, int, int, key);
 		//Destructor
 		~Minion();
 		//getters

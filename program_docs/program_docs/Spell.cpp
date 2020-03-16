@@ -10,15 +10,21 @@
 */
 
 //Constructors
-Spell::Spell() 
-	: name(""), manaCost(0), cardClass(Spell::NEUTRAL), rarity(Spell::COMMON), description(""), flavorText(""), sortKey(Spell::MANA)
-{
-
+Spell::Spell() {
+	name = "";
+	manaCost = 0;
+	cardClass = Spell::NEUTRAL;
+	rarity = Spell::COMMON;
+	description = "";
+	sortKey = Spell::NAME;
 }
-Spell::Spell(std::string name, int cost, ClassType cardClass, Rarity rarity, std::string description, std::string flavor, key sortKey) 
-	: name(name), manaCost(cost), cardClass(cardClass), rarity(rarity), description(description), flavorText(flavor), sortKey(sortKey)
-{
-
+Spell::Spell(std::string newName, int cost, ClassType newClass, Rarity newRarity, std::string newDescription, key newSortKey) {
+	name = newName;
+	manaCost = cost;
+	cardClass = newClass;
+	rarity = newRarity;
+	description = newDescription;
+	sortKey = newSortKey;
 }
 //Destructor
 Spell::~Spell() {
@@ -43,9 +49,6 @@ Spell::key Spell::getKey() const {
 std::string Spell::getDescription() const {
 	return description;
 }
-std::string Spell::getFlavorText() const {
-	return flavorText;
-}
 //virtual std::string getCardType() { return "Spell"; };
 //setters
 void Spell::setName(std::string newName) {
@@ -62,9 +65,6 @@ void Spell::setRarity(Rarity newRarity) {
 }
 void Spell::setDescription(std::string newDescription) {
 	description = newDescription;
-}
-void Spell::setFlavorText(std::string newText) {
-	flavorText = newText;
 }
 //overloads
 bool Spell::operator>(Spell& card) const {

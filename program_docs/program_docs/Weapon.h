@@ -9,7 +9,7 @@ private:
 public:
 	//Constructors
 	Weapon();
-	Weapon(std::string, int, ClassType, Rarity, std::string, std::string, int, int, key);
+	Weapon(std::string, int, ClassType, Rarity, std::string, int, int, key);
 	//Destructor
 	~Weapon();
 	//getters
