@@ -78,8 +78,19 @@ void addCard(fstream& file) {
 	cout << "PLease enter the Class of the card:" << endl;
 	cin >> classType;
 
-	cout << "Please enter the card's Type:" << endl;
-	cin >> type;
+	bool finding = true;
+	
+	while(finding){
+		cout << "Please enter the card's Type:" << endl;
+		cin >> type;
+
+		if (type == "Spell" || type == "Minion" || type == "Weapon") {
+			finding = false;
+		}
+		else {
+			cout << "Ivalid Type, please try again. " << endl;
+		}
+	}
 
 	cout << "PLease enter the rarity of the card:" << endl;
 	cin >> rarity;
