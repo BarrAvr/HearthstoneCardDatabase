@@ -16,7 +16,7 @@ Spell::Spell()
 
 }
 Spell::Spell(std::string name, int cost, ClassType cardClass, Rarity rarity, std::string description, key sortKey) 
-	: name(name), manaCost(cost), cardClass(cardClass), rarity(rarity), description(description), flavorText(flavor), sortKey(sortKey)
+	: name(name), manaCost(cost), cardClass(cardClass), rarity(rarity), description(description), sortKey(sortKey)
 {
 
 }

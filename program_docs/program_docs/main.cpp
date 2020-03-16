@@ -110,7 +110,7 @@ void addCard(fstream& file) {
 	//take variables and create a Card object
 
 	if (type == "Spell") {
-		//Spell s = Spell(name, cost, classType, rarity)
+		Spell s = Spell(name, cost, classType, rarity)
 	}
 
 	//add Card object to database
@@ -170,6 +170,7 @@ void readFileToDatabase(fstream & file) {
 	string t;
 	string r;
 	string c;
+	string d;
 	while (getline(file, n, ',')) {
 		name = n;
 		getline(file, ct, ',');
