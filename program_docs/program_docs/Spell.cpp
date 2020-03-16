@@ -67,7 +67,7 @@ void Spell::setFlavorText(std::string newText) {
 	flavorText = newText;
 }
 //overloads
-bool Spell::operator>(const Spell& card) const {
+bool Spell::operator>(Spell& card) const {
 	bool isGreater;
 	if (this->sortKey != card.getKey()) {
 		//throw error
@@ -91,7 +91,7 @@ bool Spell::operator>(const Spell& card) const {
 	return isGreater;
 }
 
-bool Spell::operator<(const Spell& card) const {
+bool Spell::operator<(Spell& card) const {
 	bool isLessThan;
 	if (this->sortKey != card.getKey()) {
 		//throw error
@@ -115,7 +115,7 @@ bool Spell::operator<(const Spell& card) const {
 	return isLessThan;
 }
 
-bool Spell::operator==(const Spell& card) const {
+bool Spell::operator==(Spell& card) const {
 	return this->name == card.getName() && this->manaCost == card.getManaCost() && this->cardClass == card.getClass() && this->rarity == card.getRarity() && this->description == card.getDescription();
 }
 
@@ -123,28 +123,28 @@ std::istream& operator>>(std::istream& in, Spell& toRead) {
 
 }
 
-std::istream& operator>>(std::istream& in, Spell&* toRead) {
+std::istream& operator>>(std::istream& in, Spell*& toRead) {
 
 }
 
-std::ostream& operator<<(std::ostream& out, const Spell&* toPrint) {
+std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 
 	if (toPrint->getCardType() == "Spell") {
 		out << "CardType: Spell\n" <<
-			"Mana Cost: " << toPrint->getManaCost() << endl
-			<< "Name: " << toPrint->getName() << endl
-			<< "ClassType: " << toPrint->getClass() << endl << endl
-			<< "Description: " << toPrint->getDescription() << endl << endl
-			<< "Flavor Text: " << toPrint->getFlavorText() << endl;
+			"Mana Cost: " << toPrint->getManaCost() << std::endl
+			<< "Name: " << toPrint->getName() << std::endl
+			<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
+			<< "Description: " << toPrint->getDescription() << std::endl << std::endl
+			<< "Flavor Text: " << toPrint->getFlavorText() << std::endl;
 	}
 	else if (toPrint->getCardType() == "Minion") {
 		out << "CardType: Minion\n" <<
-			"Mana Cost: " << toPrint->getManaCost() << endl
-			<< "Name: " << toPrint->getName() << endl
-			<< "ClassType: " << toPrint->getClass() << endl << endl
-			<< "Description: " << toPrint->getDescription() << endl << endl
-			<< "Flavor Text: " << toPrint->getFlavorText() << endl << endl
-			<< "Attack/Health: " << toPrint->getAttackValue() << "/" << toPrint->getDurability() << endl;
+			"Mana Cost: " << toPrint->getManaCost() << std::endl
+			<< "Name: " << toPrint->getName() << std::endl
+			<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
+			<< "Description: " << toPrint->getDescription() << std::endl << std::endl
+			<< "Flavor Text: " << toPrint->getFlavorText() << std::endl << std::endl
+			<< "Attack/Health: " << toPrint->getAttackValue() << "/" << toPrint->getDurability() << std::endl;
 	}
 
 

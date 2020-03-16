@@ -37,11 +37,11 @@ public:
 	void setDescription(std::string);
 	void setFlavorText(std::string);
 	//overloads
-	bool operator>(const Spell&) const;
+	bool operator>(Spell&) const;
 
-	bool operator<(const Spell&) const;
+	bool operator<(Spell&) const;
 
-	bool operator==(const Spell&) const;
+	bool operator==(Spell&) const;
 	
 	friend std::istream& operator>>(std::istream& in, Spell& toRead);
 
