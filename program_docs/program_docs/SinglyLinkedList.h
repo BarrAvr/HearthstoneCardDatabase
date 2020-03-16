@@ -175,8 +175,7 @@ LinkNode<T>* SinglyLinkedList<T>::find(const T& value) const {
 template<class T>
 LinkNode<T>* SinglyLinkedList<T>::find(int depth) const
 {
-	if (depth < 0) return nullptr;
-	if (depth > count) depth = count;
+	if (depth < 0 || depth >= count) return nullptr;
 	LinkNode<T>* curr = head;
 	for (int i = 0; i < depth; i++)
 	{
