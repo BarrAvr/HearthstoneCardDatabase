@@ -23,5 +23,6 @@ class Minion : public Spell
 		void setAttackValue(int);
 		void setHealthValue(int);
 		//misc
-		void print(std::ostream& out);
+		void print(std::ostream& out) const;
+		friend std::ostream& operator<<(std::ostream& out, const Minion& toPrint);
 };

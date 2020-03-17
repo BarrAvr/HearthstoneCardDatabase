@@ -44,11 +44,16 @@ void Weapon::setDurability(int newDurability) {
 }
 
 //misc
-void Weapon::print(std::ostream& out) {
+void Weapon::print(std::ostream& out) const {
 	out << "CardType: Weapon\n" <<
 		"Mana Cost: " << this->getManaCost() << std::endl
 		<< "Name: " << this->getName() << std::endl
 		<< "ClassType: " << this->getClass() << std::endl << std::endl
 		<< "Description: " << this->getDescription() << std::endl << std::endl
 		<< "Attack/Health: " << this->getAttackValue() << "/" << this->getDurability() << std::endl;
+}
+
+std::ostream& operator<<(std::ostream& out, const Weapon& toPrint) {
+	toPrint.print(out);
+	return out;
 }
