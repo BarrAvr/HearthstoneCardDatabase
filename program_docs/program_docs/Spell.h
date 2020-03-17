@@ -41,7 +41,7 @@ public:
 
 	bool operator<(Spell&) const;
 
-	bool operator==(Spell&) const;
+	bool operator==(const Spell&) const;
 	
-	friend std::ostream& operator<<(std::ostream& out, Spell*& toPrint);
+	friend std::ostream& operator<<(std::ostream& out, const Spell& toPrint);
 };

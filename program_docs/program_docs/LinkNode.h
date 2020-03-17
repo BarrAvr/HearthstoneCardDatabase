@@ -9,7 +9,7 @@ private:
 
 public:
 	LinkNode();
-	LinkNode(const LinkNode<T>* const, const T* const);
+	LinkNode(LinkNode<T>* const, T* const);
 
 	T* getVal() const;
 	LinkNode* getNext() const;
@@ -30,7 +30,7 @@ LinkNode<T>::LinkNode() {
 //Pre: none
 //Post: LinkedNode object created with specified values
 template<class T>
-LinkNode<T>::LinkNode(const LinkNode<T>* const n, const T* const v) {
+LinkNode<T>::LinkNode(LinkNode<T>* const n, T* const v) {
 	next = n;
 	val = v;
 }

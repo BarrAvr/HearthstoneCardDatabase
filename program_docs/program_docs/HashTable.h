@@ -24,7 +24,7 @@ class HashTable
 		template<class U>
 		friend std::ostream& operator<<(std::ostream& out, const HashTable<U>& list);
 		
-		void add(const T* const);
+		void add(T* const);
 		int find(const T&) const;
 		bool remove(const T&);
 
@@ -134,7 +134,7 @@ int HashTable<T>::hashFunc(const T& obj) const
 			-Linked List Resolution
  */
 template<class T>
-void HashTable<T>::add(const T* const obj)
+void HashTable<T>::add(T* const obj)
 {
 	int index = hashFunc(*obj);
 	SinglyLinkedList<T>* curr = table[index];

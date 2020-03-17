@@ -16,7 +16,7 @@ protected:
 public:
 	SinglyLinkedList();
 	SinglyLinkedList(int);
-	SinglyLinkedList(int, const T* const);
+	SinglyLinkedList(int, T* const);
 	SinglyLinkedList(int, const T* const, const T* const);
 	~SinglyLinkedList();
 	
@@ -60,7 +60,7 @@ SinglyLinkedList<T>::SinglyLinkedList(int x) {
 //Pre: none
 //Post: Empty SinglyLinkedList object created with specified sort characteristic and specified value
 template<class T>
-SinglyLinkedList<T>::SinglyLinkedList(int x, const T* const h) {
+SinglyLinkedList<T>::SinglyLinkedList(int x, T* const h) {
 	count = 0;
 	sort = x;
 	head = new LinkNode<T>(nullptr, h);
@@ -230,7 +230,7 @@ std::ostream& operator<<(std::ostream& out, const SinglyLinkedList<T>& list) {
 	}
 	LinkNode<T>* print = list.head;
 	for (int i = 0; i < list.count; i++) {
-		out << *(print->getVal());
+		out << print->getVal();
 		print = print->getNext();
 	}
 	return out;
