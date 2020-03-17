@@ -61,7 +61,7 @@ SinglyLinkedList<T>::SinglyLinkedList(int x) {
 //Post: Empty SinglyLinkedList object created with specified sort characteristic and specified value
 template<class T>
 SinglyLinkedList<T>::SinglyLinkedList(int x, T* h) {
-	count = 0;
+	count = 1;
 	sort = x;
 	head = new LinkNode<T>(nullptr, h);
 	tail = head;
@@ -72,7 +72,7 @@ SinglyLinkedList<T>::SinglyLinkedList(int x, T* h) {
 //Post: Empty SinglyLinkedList object created with specified sort characteristic and specified values
 template<class T>
 SinglyLinkedList<T>::SinglyLinkedList(int x, T* h, T* t) {
-	count = 0;
+	count = 1;
 	sort = x;
 	head = new LinkNode<T>(nullptr, h);
 	tail = new LinkNode<T>(nullptr, t);
@@ -230,7 +230,7 @@ std::ostream& operator<<(std::ostream& out, const SinglyLinkedList<T>& list) {
 	}
 	LinkNode<T>* print = list.head;
 	for (int i = 0; i < list.count; i++) {
-		out << print->getVal();
+		out << *(print->getVal());
 		print = print->getNext();
 	}
 	return out;

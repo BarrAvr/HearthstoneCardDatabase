@@ -32,7 +32,7 @@ void packOpening(HashTable<Spell>);
 fstream outputFile;
 
 int main() {
-	int size = 67;
+	int size = 50;
 	string selection;
 	HashTable<Spell> cardHashtable = HashTable<Spell>(size);
 	BST<Spell*> cardTree = BST<Spell*>();
