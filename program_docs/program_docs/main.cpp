@@ -271,6 +271,27 @@ void packOpening(HashTable<Spell> table)
 	packArray[3] = getRandomSpell(table, getRandomCardRarity());
 	packArray[4] = getRandomSpell(table, getRandomCardRarity());
 
+	cout << "Card 1 is ..." << endl;
+	_sleep(5);
+	cout << packArray[0] << endl;
+	cout << "Press space for next card" << endl;
+	cout << "Card 2 is ..." << endl;
+	_sleep(5);
+	cout << packArray[1] << endl;
+	cout << "Press space for next card" << endl;
+	cout << "Card 3 is ..." << endl;
+	_sleep(5);
+	cout << packArray[2] << endl;
+	cout << "Press space for next card" << endl;
+	cout << "Card 4 is ..." << endl;
+	_sleep(5);
+	cout << packArray[3] << endl;
+	cout << "Press space for next card" << endl;
+	cout << "Card 5 is ..." << endl;
+	_sleep(5);
+	cout << packArray[4] << endl;
+	
+
 }
 
 void promptToDelete(fstream& file, BST<Spell>& tree, HashTable<Spell>& hash) {
@@ -350,11 +371,11 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& has
 			getline(file, h, ',');
 			health = stoi(h);
 
-			Minion m = Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
-			Minion *mptr;
+			
+			Spell *mptr;
 			mptr = new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
-			tree.addNode(new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA));
-			hash.add(mptr);
+			tree.addNode(mptr);
+			hash.add(&mptr);
 
 
 		}
