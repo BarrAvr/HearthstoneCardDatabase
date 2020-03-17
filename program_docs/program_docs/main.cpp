@@ -39,7 +39,7 @@ int main() {
 	cout << "Hearthstone Database" << endl;
 	fstream inputFile;
 
-	inputFile.open("HearthstoneCards.txt");
+	inputFile.open("input.csv");
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	cout << cardHashtable << endl;
 	displayMenu();
