@@ -39,9 +39,10 @@ int main() {
 	cout << "Hearthstone Database" << endl;
 	fstream inputFile;
 
-	inputFile.open("input.txt");
+	inputFile.open("input.tsv");
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	cout << cardHashtable << endl;
+	cardTree.inOrderTraversalPrint(cout);
 	displayMenu();
 	while (true)
 	{
@@ -477,14 +478,14 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 	string h;
 
 	bool failed = false;
-	while (getline(file, n, ',')) {
+	while (getline(file, n, '\t')) {
 		failed = false;
 		name = n;
 
-		getline(file, c, ',');
+		getline(file, c, '\t');
 		cost = stoi(c);
 
-		getline(file, ct, ',');
+		getline(file, ct, '\t');
 		Spell::ClassType clt;
 		classType = ct;
 		if (classType == "Neutral") {
@@ -521,10 +522,10 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 			failed = true;
 		}
 
-		getline(file, t, ',');
+		getline(file, t, '\t');
 		type = t;
 
-		getline(file, r, ',');
+		getline(file, r, '\t');
 		rarity = r;
 
 		Spell::Rarity rar;
@@ -544,13 +545,13 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 			failed = true;
 		}
 
-		getline(file, d, ',');
+		getline(file, d, '\t');
 
 
 		if (type == "Minion") {
-			getline(file, a, ',');
+			getline(file, a, '\t');
 			attack = stoi(a);
-			getline(file, h, ',');
+			getline(file, h, '\n');
 			health = stoi(h);
 
 			if (!failed) {
@@ -561,9 +562,9 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 			}
 		}
 		else if (type == "Weapon") {
-			getline(file, a, ',');
+			getline(file, a, '\t');
 			attack = stoi(a);
-			getline(file, h, ',');
+			getline(file, h, '\n');
 			health = stoi(h);
 
 			if (!failed) {
@@ -577,6 +578,7 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 			Spell* sptr;
 
 			if (!failed) {
+				getline(file, h, '\n');
 				sptr = new Spell(name, cost, clt, rar, d, Spell::MANA);
 				tree.addNode(sptr);
 				hash.add(sptr);
