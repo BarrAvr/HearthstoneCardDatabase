@@ -440,6 +440,10 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 }
 
 
+void readDataToFile(fstream& file, HashTable<Spell*>& hash) {
+	
+}
+
 
 
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
