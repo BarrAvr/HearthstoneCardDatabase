@@ -22,7 +22,7 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 //void printIndentedTree(BST<Spell*>);
 void cardCompare(HashTable<Spell>);
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
-void readDataToFile(fstream& file, HashTable<Spell>& hash);
+void readDataToFile(fstream& file, BST<Spell*>& tree);
 int getCount(fstream& file);
 Spell* getRandomSpell(HashTable<Spell>, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
@@ -41,7 +41,7 @@ int main() {
 
 	inputFile.open("HearthstoneCards.txt");
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
-
+	cout << cardHashtable << endl;
 	displayMenu();
 	while (true)
 	{
@@ -455,7 +455,7 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 		hash.remove(wptr);
 	}
 	
-	readDataToFile(outputFile, hash);
+	readDataToFile(outputFile, tree);
 
 }
 

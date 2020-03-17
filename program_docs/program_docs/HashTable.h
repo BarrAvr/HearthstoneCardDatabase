@@ -41,6 +41,9 @@ HashTable<T>::HashTable(int count)
 {
 	size = abs(count) / LOAD_FACTOR;
 	table = new SinglyLinkedList<T>*[size];
+	for (int i = 0; i < size; i++) {
+		table[i] = nullptr;
+	}
 }
 
 
