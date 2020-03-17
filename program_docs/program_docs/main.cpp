@@ -33,7 +33,7 @@ int main() {
 	fstream inputFile;
 	inputFile.open("HearthstoneCards.txt");
 	readFileToDatabase(inputFile);
-	
+
 	displayMenu();
 	while (true)
 	{
@@ -57,7 +57,7 @@ int main() {
 		}
 	}
 
-	
+
 
 	system("pause");
 	return 0;
@@ -260,13 +260,13 @@ Spell* getRandomSpell(HashTable<Spell> table, Spell::Rarity rarity) {
 			randIndex = rand() % table.getSize();
 			randDepth = rand() % table.getMaxNodes();
 		}
-		
+
 	}
 	return randomSpell;
 }
 
 Spell::Rarity getRandomCardRarity() {
-	srand(time(0)); 
+	srand(time(0));
 	int randomNum = rand()%100;
 	if (randomNum <= 49) return Spell::COMMON;
 	if (randomNum > 49 && randomNum <= 74) return Spell::RARE;
@@ -283,6 +283,27 @@ void packOpening(HashTable<Spell> table)
 	packArray[2] = getRandomSpell(table, getRandomCardRarity());
 	packArray[3] = getRandomSpell(table, getRandomCardRarity());
 	packArray[4] = getRandomSpell(table, getRandomCardRarity());
+
+	cout << "Card 1 is ..." << endl;
+	_sleep(5);
+	cout << packArray[0] << endl;
+	cout << "Press space for next card" << endl;
+	cout << "Card 2 is ..." << endl;
+	_sleep(5);
+	cout << packArray[1] << endl;
+	cout << "Press space for next card" << endl;
+	cout << "Card 3 is ..." << endl;
+	_sleep(5);
+	cout << packArray[2] << endl;
+	cout << "Press space for next card" << endl;
+	cout << "Card 4 is ..." << endl;
+	_sleep(5);
+	cout << packArray[3] << endl;
+	cout << "Press space for next card" << endl;
+	cout << "Card 5 is ..." << endl;
+	_sleep(5);
+	cout << packArray[4] << endl;
+
 
 }
 
@@ -515,6 +536,7 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& has
 			getline(file, h, ',');
 			health = stoi(h);
 
+
 			Spell *mptr;
 			mptr = new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
 			tree.addNode(new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA));
@@ -546,7 +568,7 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& has
 	}
 }
 
-void displayMenu() 
+void displayMenu()
 {
 	cout << "\nMenu: " << endl;
 	cout << "Type the number OR the name of the command in caps verbatim. " << endl;
@@ -560,4 +582,3 @@ void displayMenu()
 	cout << "(8) HELP - display menu once again " << endl;
 	cout << "(9) EXIT - exit the program " << endl;
 }
-
