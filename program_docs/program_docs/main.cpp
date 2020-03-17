@@ -14,12 +14,12 @@
 using namespace std;
 
 void displayMenu();
-void addCard(fstream& file);
-void searchCard(HashTable<Spell>);
+void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell> hash);
+//void searchCard(HashTable<Spell>);
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
-void printHashTable(HashTable<Spell>);
-void printSorted(HashTable<Spell>);
-void printIndentedTree(BST<Spell*>);
+//void printHashTable(HashTable<Spell>);
+//void printSorted(HashTable<Spell>);
+//void printIndentedTree(BST<Spell*>);
 void cardCompare(HashTable<Spell>);
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void readDataToFile(fstream& file, HashTable<Spell>& hash);
@@ -32,7 +32,7 @@ void packOpening(HashTable<Spell>);
 fstream outputFile;
 
 int main() {
-	/*int size = 67;
+	int size = 67;
 	string selection;
 	HashTable<Spell> cardHashtable = HashTable<Spell>(size);
 	BST<Spell*> cardTree = BST<Spell*>();
@@ -47,12 +47,12 @@ int main() {
 	{
 		cout << "\nCommand: ";
 		getline(cin, selection);
-		if (selection == "1" || selection == "ADD") addCard(inputFile);
+		if (selection == "1" || selection == "ADD") addCard(inputFile, cardTree, cardHashtable);
 		else if (selection == "2" || selection == "DELETE") deleteCard(inputFile, cardTree, cardHashtable);
-		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
+		/*else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
 		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
 		else if (selection == "5" || selection == "PRINTSORT") printSorted(cardHashtable);
-		else if (selection == "6" || selection == "PRINTTREE") printIndentedTree(cardTree);
+		else if (selection == "6" || selection == "PRINTTREE") printIndentedTree(cardTree);*/
 		else if (selection == "7" || selection == "COMPARE") packOpening(cardHashtable);
 		else if (selection == "8" || selection == "HELP") displayMenu();
 		else if (selection == "9" || selection == "EXIT") {
@@ -65,7 +65,7 @@ int main() {
 		}
 	}
 
-	system("pause");*/
+	system("pause");
 	return 0;
 }
 
