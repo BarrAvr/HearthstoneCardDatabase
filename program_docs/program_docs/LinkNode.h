@@ -14,7 +14,7 @@ public:
 	T* getVal() const;
 	LinkNode* getNext() const;
 	void setVal(const T* const);
-	void setNext(const LinkNode<T>* const);
+	void setNext(LinkNode<T>*);
 };
 
 //Creates an empty LinkNode object 
@@ -57,7 +57,7 @@ LinkNode<T>* LinkNode<T>::getNext() const {
 //Pre: LinkNode Object exists
 //Post: next is set
 template<class T>
-void LinkNode<T>::setNext(const LinkNode<T>* const n) {
+void LinkNode<T>::setNext(LinkNode<T>* n) {
 	next = n;
 }
 

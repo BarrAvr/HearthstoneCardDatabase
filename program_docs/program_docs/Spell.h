@@ -37,9 +37,9 @@ public:
 	//misc
 	virtual void print(std::ostream& out) const;
 	//overloads
-	bool operator>(Spell&) const;
+	bool operator>(const Spell&) const;
 
-	bool operator<(Spell&) const;
+	bool operator<(const Spell&) const;
 
 	bool operator==(const Spell&) const;
 	

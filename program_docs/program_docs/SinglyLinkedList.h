@@ -16,7 +16,7 @@ protected:
 public:
 	SinglyLinkedList();
 	SinglyLinkedList(int);
-	SinglyLinkedList(int, T* const);
+	SinglyLinkedList(int, T*);
 	SinglyLinkedList(int, const T* const, const T* const);
 	~SinglyLinkedList();
 	
@@ -24,7 +24,7 @@ public:
 	LinkNode<T>* find(int) const;
 	LinkNode<T>* findPrev(const T&) const;
 	bool compare(const T&, const T&) const;
-	void add(const T* const);
+	void add(T*);
 	int getCount() const;
 	bool remove(const T&);
 	void empty();
@@ -100,7 +100,7 @@ int SinglyLinkedList<T>::getCount() const {
 //Pre: List exists
 //Post: A new element is added to the list
 template<class T>
-void SinglyLinkedList<T>::add(const T* const value){
+void SinglyLinkedList<T>::add(T* value){
 	LinkNode<T>* newNode = new LinkNode<T>(nullptr, value);
 
 	if (count == 0) {

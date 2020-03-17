@@ -279,7 +279,7 @@ Spell::Rarity getRandomCardRarity() {
 void packOpening(HashTable<Spell> table)
 {
 	int randomGeneration;
-	Spell** packArray;
+	Spell* packArray[5];
 	packArray[0] = getRandomSpell(table, Spell::RARE);
 	packArray[1] = getRandomSpell(table, getRandomCardRarity());
 	packArray[2] = getRandomSpell(table, getRandomCardRarity());

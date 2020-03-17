@@ -70,7 +70,7 @@ void Spell::setDescription(std::string newDescription) {
 	description = newDescription;
 }
 //overloads
-bool Spell::operator>(Spell& card) const {
+bool Spell::operator>(const Spell& card) const {
 	bool isGreater;
 	if (this->sortKey != card.getKey()) {
 		//throw error
@@ -94,7 +94,7 @@ bool Spell::operator>(Spell& card) const {
 	return isGreater;
 }
 
-bool Spell::operator<(Spell& card) const {
+bool Spell::operator<(const Spell& card) const {
 	bool isLessThan;
 	if (this->sortKey != card.getKey()) {
 		//throw error
