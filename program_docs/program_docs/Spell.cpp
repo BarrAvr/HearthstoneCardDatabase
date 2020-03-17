@@ -131,9 +131,9 @@ void Spell::print(std::ostream& out) {
 }
 
 
-std::ostream& operator>>(std::istream& in, Spell* toRead) {
-
-}
+//std::istream& operator>>(std::istream& in, Spell* toRead) {
+//	return in;
+//}
 
 std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 	if (toPrint->getCardType() == "Spell") {
@@ -163,6 +163,7 @@ std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 			<< dynamic_cast<Weapon&>(*toPrint).getAttackValue() << std::endl;
 
 	}
+	return out;
 	//if (toPrint->getCardType() == "Spell") {
 	//	out << "CardType: Spell\n" <<
 	//		"Mana Cost: " << toPrint->getManaCost() << std::endl
