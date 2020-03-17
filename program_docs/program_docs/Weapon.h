@@ -20,5 +20,6 @@ public:
 	void setAttackValue(int);
 	void setDurability(int);
 	//misc
-	void print(std::ostream& out);
+	void print(std::ostream& out) const;
+	friend std::ostream& operator<<(std::ostream& out, const Weapon& toPrint);
 };

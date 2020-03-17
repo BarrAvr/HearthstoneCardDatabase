@@ -126,6 +126,9 @@ public:
 	Return: true if found, false otherwise
 	*/
 	bool deleteNode(T);
+
+	void update();
+
 	/* for void addNode(T)
 
 	Pre: data - data to be added

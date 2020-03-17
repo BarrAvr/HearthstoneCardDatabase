@@ -122,7 +122,7 @@ bool Spell::operator==(Spell& card) const {
 	return this->name == card.getName() && this->manaCost == card.getManaCost() && this->cardClass == card.getClass() && this->rarity == card.getRarity() && this->description == card.getDescription();
 }
 
-void Spell::print(std::ostream& out) {
+void Spell::print(std::ostream& out) const {
 	out << "CardType: Spell\n" <<
 		"Mana Cost: " << this->getManaCost() << std::endl
 		<< "Name: " << this->getName() << std::endl

@@ -35,7 +35,7 @@ public:
 	void setRarity(Rarity);
 	void setDescription(std::string);
 	//misc
-	virtual void print(std::ostream& out);
+	virtual void print(std::ostream& out) const;
 	//overloads
 	bool operator>(Spell&) const;
 
