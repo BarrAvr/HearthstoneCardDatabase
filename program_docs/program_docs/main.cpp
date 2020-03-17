@@ -15,18 +15,18 @@ using namespace std;
 
 void displayMenu();
 void addCard(fstream& file);
-void searchCard(HashTable<Spell*>);
-void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash);
-void printHashTable(HashTable<Spell*>);
-void printSorted(HashTable<Spell*>);
+void searchCard(HashTable<Spell>);
+void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
+void printHashTable(HashTable<Spell>);
+void printSorted(HashTable<Spell>);
 void printIndentedTree(BST<Spell*>);
-void cardCompare(HashTable<Spell*>);
-void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash);
-void readDataToFile(fstream& file, HashTable<Spell*>& hash);
+void cardCompare(HashTable<Spell>);
+void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
+void readDataToFile(fstream& file, HashTable<Spell>& hash);
 int getCount(fstream& file);
 Spell* getRandomSpell(HashTable<Spell>, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
-void packOpening(HashTable<Spell*>);
+void packOpening(HashTable<Spell>);
 
 //TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
 fstream outputFile;
@@ -34,7 +34,7 @@ fstream outputFile;
 int main() {
 	int size = 67;
 	string selection;
-	HashTable<Spell*> cardHashtable = HashTable<Spell*>(size);
+	HashTable<Spell> cardHashtable = HashTable<Spell>(size);
 	BST<Spell*> cardTree = BST<Spell*>();
 	cout << "Hearthstone Database" << endl;
 	fstream inputFile;
@@ -69,7 +69,7 @@ int main() {
 	return 0;
 }
 
-void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*> hash) {
+void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell> hash) {
 
 	//Storing information from the user into tempory variables
 	string name, classType, type, rarity, description;
@@ -184,8 +184,8 @@ void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*> hash) {
 	if (type == "Spell") {
 		Spell* sptr;
 		sptr = new Spell(name, cost, ct, r, description, Spell::MANA);
-		tree.addNode(new Spell(name, cost, ct, r, description, Spell::MANA));
-		hash.add(&sptr);
+		tree.addNode(sptr);
+		hash.add(sptr);
 		file << name << ", "
 			<< cost << ", "
 			<< classType << ", "
@@ -205,8 +205,8 @@ void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*> hash) {
 
 		Spell* mptr;
 		mptr = new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA);
-		tree.addNode(new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA));
-		hash.add(&mptr);
+		tree.addNode(mptr);
+		hash.add(mptr);
 
 		file << name << ", "
 			<< cost << ", "
@@ -229,8 +229,8 @@ void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*> hash) {
 
 		Spell* wptr;
 		wptr = new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
-		tree.addNode(new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA));
-		hash.add(&wptr);
+		tree.addNode(wptr);
+		hash.add(wptr);
 
 		file << name << ", "
 			<< cost << ", "
@@ -309,7 +309,7 @@ void packOpening(HashTable<Spell> table)
 
 }
 
-void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
+void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	string name, classType, type, rarity, description;
 	int cost;
 
@@ -421,9 +421,8 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 
 	if (type == "Spell") {
 
-		Spell* sptr;
-		sptr = new Spell(name, cost, ct, r, description, Spell::MANA);
-		tree.deleteNode(new Spell(name, cost, ct, r, description, Spell::MANA));
+		Spell sptr = Spell(name, cost, ct, r, description, Spell::MANA);
+		tree.deleteNode(&sptr);
 		hash.remove(sptr);
 	}
 	else if (type == "Minion") {
@@ -436,9 +435,8 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 		cout << "Please enter the health value for the Minion:" << endl;
 		cin >> defense;
 
-		Spell* mptr;
-		mptr = new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA);
-		tree.deleteNode(new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA));
+		Spell mptr = Minion(name, cost, ct, r, description, attack, defense, Minion::MANA);
+		tree.deleteNode(&mptr);
 		hash.remove(mptr);
 
 	}
@@ -452,9 +450,8 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 		cout << "Please enter the defense value for the Minion:" << endl;
 		cin >> defense;
 
-		Spell* wptr;
-		wptr = new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
-		tree.deleteNode(new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA));
+		Spell wptr = Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
+		tree.deleteNode(&wptr);
 		hash.remove(wptr);
 	}
 	
@@ -463,13 +460,13 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 }
 
 
-void readDataToFile(fstream& file, HashTable<Spell*>& hash) {
+void readDataToFile(fstream& file, HashTable<Spell>& hash) {
 	file << hash;
 }
 
 //test
 
-void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
+void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	string name, classType, type, rarity;
 	int cost, attack, health;
 	string n;
@@ -545,8 +542,8 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& has
 
 			Spell *mptr;
 			mptr = new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
-			tree.addNode(new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA));
-			hash.add(&mptr);
+			tree.addNode(mptr);
+			hash.add(mptr);
 
 
 		}
@@ -558,15 +555,15 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& has
 
 			Spell* wptr;
 			wptr = new Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA);
-			tree.addNode(new Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA));
-			hash.add(&wptr);
+			tree.addNode(wptr);
+			hash.add(wptr);
 		}
 		else {
 			Spell* sptr;
 
 			sptr = new Spell(name, cost, clt, rar, d, Spell::MANA);
-			tree.addNode(new Spell(name, cost, clt, rar, d, Spell::MANA));
-			hash.add(&sptr);
+			tree.addNode(sptr);
+			hash.add(sptr);
 
 		}
 		//create person object from variables

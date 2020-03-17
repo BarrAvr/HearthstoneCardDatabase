@@ -87,7 +87,7 @@ SinglyLinkedList<T>* HashTable<T>::operator[](int index) const {
 template<class U>
 std::ostream& operator<<(std::ostream& out, const HashTable<U>& table)
 {
-	for (int i = 0; i < table.getsize(); i++) {
+	for (int i = 0; i < table.getSize(); i++) {
 		if (table[i] == nullptr)
 			out << "Empty Position " << std::endl;
 		else
@@ -138,11 +138,10 @@ void HashTable<T>::add(const T* const obj)
 {
 	int index = hashFunc(*obj);
 	SinglyLinkedList<T>* curr = table[index];
-	LinkNode<T>* addNode = new LinkNode<T>(nullptr, obj);
 	if (curr == nullptr) 
-		table[index] = new SinglyLinkedList<T>(UNSORTED, addNode);
+		table[index] = new SinglyLinkedList<T>(UNSORTED, obj);
 	else
-		curr->add(addNode);
+		curr->add(obj);
 }
 
 /* Find method for Hash Table

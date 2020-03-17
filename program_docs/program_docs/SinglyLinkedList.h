@@ -11,7 +11,7 @@ protected:
 	LinkNode<T>* head;
 	LinkNode<T>* tail;
 	int count;
-	const int SORT;
+	int sort;
 
 public:
 	SinglyLinkedList();
@@ -39,41 +39,41 @@ public:
 template<class T>
 SinglyLinkedList<T>::SinglyLinkedList() {
 	count = 0;
-	SORT = UNSORTED;
+	sort = UNSORTED;
 	head = nullptr;
 	tail = nullptr;
 
 }
 
-//Creates an empty SinglyLinkedList object with specified SORT characteristic
+//Creates an empty SinglyLinkedList object with specified sort characteristic
 //Pre: none
-//Post: Empty SinglyLinkedList object created with specified SORT characteristic
+//Post: Empty SinglyLinkedList object created with specified sort characteristic
 template<class T>
 SinglyLinkedList<T>::SinglyLinkedList(int x) {
 	count = 0;
-	SORT = x;
+	sort = x;
 	head = nullptr;
 	tail = nullptr;
 }
 
-//Creates an empty SinglyLinkedList object with specified SORT characteristic and specified value
+//Creates an empty SinglyLinkedList object with specified sort characteristic and specified value
 //Pre: none
-//Post: Empty SinglyLinkedList object created with specified SORT characteristic and specified value
+//Post: Empty SinglyLinkedList object created with specified sort characteristic and specified value
 template<class T>
 SinglyLinkedList<T>::SinglyLinkedList(int x, const T* const h) {
 	count = 0;
-	SORT = x;
+	sort = x;
 	head = new LinkNode<T>(nullptr, h);
-	tail = h;
+	tail = head;
 }
 
-//Creates an empty SinglyLinkedList object with specified SORT characteristic and specified values
+//Creates an empty SinglyLinkedList object with specified sort characteristic and specified values
 //Pre: none
-//Post: Empty SinglyLinkedList object created with specified SORT characteristic and specified values
+//Post: Empty SinglyLinkedList object created with specified sort characteristic and specified values
 template<class T>
 SinglyLinkedList<T>::SinglyLinkedList(int x, const T* const h, const T* const t) {
 	count = 0;
-	SORT = x;
+	sort = x;
 	head = new LinkNode<T>(nullptr, h);
 	tail = new LinkNode<T>(nullptr, t);
 	head->setNext(tail);
@@ -96,7 +96,7 @@ int SinglyLinkedList<T>::getCount() const {
 	return count;
 }
 
-//Adds a new value to the list based on its SORTing behavior
+//Adds a new value to the list based on its sorting behavior
 //Pre: List exists
 //Post: A new element is added to the list
 template<class T>
@@ -108,7 +108,7 @@ void SinglyLinkedList<T>::add(const T* const value){
 		tail = newNode;
 	}
 	else {
-		if (SORT == UNSORTED) {
+		if (sort == UNSORTED) {
 			tail->setNext(newNode);
 			tail = newNode;
 		}
@@ -209,11 +209,11 @@ bool SinglyLinkedList<T>::compare(const T& nodeVal, const T& val) const
 {
 	bool comp = false;
 
-	if (SORT == UNSORTED)
+	if (sort == UNSORTED)
 		comp = (val == nodeVal);
-	else if (SORT == ASCENDING)
+	else if (sort == ASCENDING)
 		comp = (nodeVal > val || nodeVal == val);
-	else if (SORT == DESCENDING)
+	else if (sort == DESCENDING)
 		comp = (nodeVal < val || nodeVal == val);
 
 	return comp;
