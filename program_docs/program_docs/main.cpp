@@ -3,6 +3,8 @@
 #include <fstream>
 #include <stdlib.h>
 #include <time.h>
+#include <thread>
+#include <chrono>
 #include "HashTable.h"
 #include "Spell.h"
 #include "Weapon.h"
@@ -11,18 +13,19 @@
 
 using namespace std;
 
+void displayMenu();
 void addCard(fstream& file);
-void searchCard(HashTable<Spell>);
+void searchCard(HashTable<Spell*>);
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash);
-void printHashTable(HashTable<Spell>);
-void printSorted(HashTable<Spell>);
-void printIndentedTree(BST<Spell>);
+void printHashTable(HashTable<Spell*>);
+void printSorted(HashTable<Spell*>);
+void printIndentedTree(BST<Spell*>);
 void cardCompare(HashTable<Spell>);
 void readFileToDatabase(fstream& file);
 int getCount(fstream& file);
 Spell* getRandomSpell(HashTable<Spell>, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
-void packOpening(HashTable<Spell>);
+void packOpening(HashTable<Spell*>);
 
 //TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
 fstream outputFile;
@@ -289,23 +292,23 @@ void packOpening(HashTable<Spell> table)
 	packArray[4] = getRandomSpell(table, getRandomCardRarity());
 
 	cout << "Card 1 is ..." << endl;
-	_sleep(5);
+	std::this_thread::sleep_for(std::chrono::seconds(3));
 	cout << packArray[0] << endl;
 	cout << "Press space for next card" << endl;
 	cout << "Card 2 is ..." << endl;
-	_sleep(5);
+	std::this_thread::sleep_for(std::chrono::seconds(3));
 	cout << packArray[1] << endl;
 	cout << "Press space for next card" << endl;
 	cout << "Card 3 is ..." << endl;
-	_sleep(5);
+	std::this_thread::sleep_for(std::chrono::seconds(3));
 	cout << packArray[2] << endl;
 	cout << "Press space for next card" << endl;
 	cout << "Card 4 is ..." << endl;
-	_sleep(5);
+	std::this_thread::sleep_for(std::chrono::seconds(3));
 	cout << packArray[3] << endl;
 	cout << "Press space for next card" << endl;
 	cout << "Card 5 is ..." << endl;
-	_sleep(5);
+	std::this_thread::sleep_for(std::chrono::seconds(3));
 	cout << packArray[4] << endl;
 
 
