@@ -14,7 +14,7 @@
 using namespace std;
 
 void displayMenu();
-void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell> hash);
+void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 //void searchCard(HashTable<Spell>);
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 //void printHashTable(HashTable<Spell>);
@@ -24,9 +24,10 @@ void cardCompare(HashTable<Spell>);
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void readDataToFile(fstream& file, BST<Spell*>& tree);
 int getCount(fstream& file);
-Spell* getRandomSpell(HashTable<Spell>, Spell::Rarity);
+Spell* getRandomSpell(HashTable<Spell>&, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
-void packOpening(HashTable<Spell>);
+void packOpening(HashTable<Spell>&);
+bool isInArray(Spell** arr, Spell* check, int size);
 
 //TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
 fstream outputFile;
@@ -41,8 +42,8 @@ int main() {
 
 	inputFile.open("input.tsv");
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
-	cout << cardHashtable << endl;
-	cardTree.inOrderTraversalPrint(cout);
+	//cout << cardHashtable << endl;
+	//cardTree.inOrderTraversalPrint(cout);
 	displayMenu();
 	while (true)
 	{
@@ -70,7 +71,7 @@ int main() {
 	return 0;
 }
 
-void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell> hash) {
+void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 
 	//Storing information from the user into tempory variables
 	string name, classType, type, rarity, description;
@@ -245,25 +246,21 @@ void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell> hash) {
 	cout << "Card Sucessfully added" << endl;
 }
 
-Spell* getRandomSpell(HashTable<Spell> table, Spell::Rarity rarity) {
+Spell* getRandomSpell(HashTable<Spell>& table, Spell::Rarity rarity) {
 	srand(time(0));
-	int randIndex = rand() % table.getSize();
-	int randDepth = rand() % table.getMaxNodes();
+	int randIndex, randDepth;
+	int size = table.getSize();
 	Spell* randomSpell;
 	for (;;) {
+		randIndex = rand() % size;
 		if (table[randIndex] != nullptr) {
+			randDepth = rand() % table[randIndex]->getCount();
 			randomSpell = table[randIndex]->find(randDepth)->getVal();
-			if (randomSpell->getRarity() == rarity) break;
-			else {
-				randIndex = rand() % table.getSize();
-				randDepth = rand() % table.getMaxNodes();
-			}
-		}
-		else {
-			randIndex = rand() % table.getSize();
-			randDepth = rand() % table.getMaxNodes();
-		}
+			if (randomSpell->getRarity() == rarity) {
+				size += 0;
+				break; }
 
+		}
 	}
 	return randomSpell;
 }
@@ -277,34 +274,56 @@ Spell::Rarity getRandomCardRarity() {
 	if (randomNum > 94 && randomNum <= 99) return Spell::LEGENDARY;
 
 }
-void packOpening(HashTable<Spell> table)
+bool isInArray(Spell** arr, Spell* check, int size) {
+	for (int i = 0; i < size; i++) {
+		if (arr[i] == check) return true;
+	}
+	return false;
+}
+void packOpening(HashTable<Spell>& table)
 {
 	int randomGeneration;
+	string temp;
 	Spell* packArray[5];
 	packArray[0] = getRandomSpell(table, Spell::RARE);
-	packArray[1] = getRandomSpell(table, getRandomCardRarity());
-	packArray[2] = getRandomSpell(table, getRandomCardRarity());
-	packArray[3] = getRandomSpell(table, getRandomCardRarity());
-	packArray[4] = getRandomSpell(table, getRandomCardRarity());
+	do {
+		packArray[1] = getRandomSpell(table, getRandomCardRarity());
+	} while (isInArray(packArray, packArray[1], 1) == true);
+	do {
+		packArray[2] = getRandomSpell(table, getRandomCardRarity());
+	} while (isInArray(packArray, packArray[2], 2) == true);
+	do {
+		packArray[3] = getRandomSpell(table, getRandomCardRarity());
+	} while (isInArray(packArray, packArray[3], 3) == true);
+	do {
+		packArray[4] = getRandomSpell(table, getRandomCardRarity());
+	} while (isInArray(packArray, packArray[4], 4) == true);
+
 
 	cout << "Card 1 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(3));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	cout << "..." << endl;
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << packArray[0] << endl;
-	cout << "Press space for next card" << endl;
 	cout << "Card 2 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(3));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	cout << "..." << endl;
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << packArray[1] << endl;
-	cout << "Press space for next card" << endl;
 	cout << "Card 3 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(3));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	cout << "..." << endl;
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << packArray[2] << endl;
-	cout << "Press space for next card" << endl;
 	cout << "Card 4 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(3));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	cout << "..." << endl;
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << packArray[3] << endl;
-	cout << "Press space for next card" << endl;
 	cout << "Card 5 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(3));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	cout << "..." << endl;
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << packArray[4] << endl;
 
 
