@@ -9,11 +9,11 @@ private:
 
 public:
 	LinkNode();
-	LinkNode(LinkNode<T>* const, T* const);
+	LinkNode(LinkNode<T>*, T*);
 
 	T* getVal() const;
 	LinkNode* getNext() const;
-	void setVal(const T* const);
+	void setVal(T*);
 	void setNext(LinkNode<T>*);
 };
 
@@ -30,7 +30,7 @@ LinkNode<T>::LinkNode() {
 //Pre: none
 //Post: LinkedNode object created with specified values
 template<class T>
-LinkNode<T>::LinkNode(LinkNode<T>* const n, T* const v) {
+LinkNode<T>::LinkNode(LinkNode<T>* n, T* v) {
 	next = n;
 	val = v;
 }
@@ -65,7 +65,7 @@ void LinkNode<T>::setNext(LinkNode<T>* n) {
 //Pre: LinkNode Object exists
 //Post: value is set
 template<class T>
-void LinkNode<T>::setVal(const T* const v) {
+void LinkNode<T>::setVal(T* v) {
 	val = v;
 }
 

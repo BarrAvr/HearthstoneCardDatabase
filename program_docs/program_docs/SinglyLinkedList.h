@@ -17,7 +17,7 @@ public:
 	SinglyLinkedList();
 	SinglyLinkedList(int);
 	SinglyLinkedList(int, T*);
-	SinglyLinkedList(int, const T* const, const T* const);
+	SinglyLinkedList(int, T*, T*);
 	~SinglyLinkedList();
 	
 	LinkNode<T>* find(const T&) const;
@@ -60,7 +60,7 @@ SinglyLinkedList<T>::SinglyLinkedList(int x) {
 //Pre: none
 //Post: Empty SinglyLinkedList object created with specified sort characteristic and specified value
 template<class T>
-SinglyLinkedList<T>::SinglyLinkedList(int x, T* const h) {
+SinglyLinkedList<T>::SinglyLinkedList(int x, T* h) {
 	count = 0;
 	sort = x;
 	head = new LinkNode<T>(nullptr, h);
@@ -71,7 +71,7 @@ SinglyLinkedList<T>::SinglyLinkedList(int x, T* const h) {
 //Pre: none
 //Post: Empty SinglyLinkedList object created with specified sort characteristic and specified values
 template<class T>
-SinglyLinkedList<T>::SinglyLinkedList(int x, const T* const h, const T* const t) {
+SinglyLinkedList<T>::SinglyLinkedList(int x, T* h, T* t) {
 	count = 0;
 	sort = x;
 	head = new LinkNode<T>(nullptr, h);
