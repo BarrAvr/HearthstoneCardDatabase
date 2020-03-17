@@ -15,17 +15,17 @@ using namespace std;
 
 void displayMenu();
 void addCard(fstream& file);
-void searchCard(HashTable<Spell>);
+void searchCard(HashTable<Spell*>);
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
-void printHashTable(HashTable<Spell>);
-void printSorted(HashTable<Spell>);
+void printHashTable(HashTable<Spell*>);
+void printSorted(HashTable<Spell*>);
 void printIndentedTree(BST<Spell*>);
-void cardCompare(HashTable<Spell>);
-void readFileToDatabase(fstream& file);
+void cardCompare(HashTable<Spell*>);
+void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash);
 int getCount(fstream& file);
 Spell* getRandomSpell(HashTable<Spell>, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
-void packOpening(HashTable<Spell>);
+void packOpening(HashTable<Spell*>);
 
 //TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
 fstream outputFile;
@@ -33,13 +33,13 @@ fstream outputFile;
 int main() {
 	int size = 67;
 	string selection;
-	HashTable<Spell> cardHashtable = HashTable<Spell>(size);
+	HashTable<Spell*> cardHashtable = HashTable<Spell*>(size);
 	BST<Spell*> cardTree = BST<Spell*>();
 	cout << "Hearthstone Database" << endl;
 	fstream inputFile;
 
 	inputFile.open("HearthstoneCards.txt");
-	readFileToDatabase(inputFile);
+	readFileToDatabase(inputFile, cardTree, cardHashtable);
 
 	displayMenu();
 	while (true)
@@ -64,13 +64,7 @@ int main() {
 		}
 	}
 
-
-
 	system("pause");
-	return 0;
-
-
-
 	return 0;
 }
 
