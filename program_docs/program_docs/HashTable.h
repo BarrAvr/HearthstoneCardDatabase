@@ -10,8 +10,8 @@ class HashTable
 	// Underlying array of singly linked list pointers
 	// lists because of linked list resolution
 	SinglyLinkedList<T>** table;
-	const int SIZE; // Member that is depended on load factor
-	const double LOAD_FACTOR; // Intended ratio of max # of elements in hash table to size of hash table
+	int size; // Member that is depended on load factor
+	const double LOAD_FACTOR = 0.75; // Intended ratio of max # of elements in hash table to size of hash table
 	int hashFunc(const T&) const;
 
 	public:
@@ -39,9 +39,8 @@ class HashTable
 template<class T>
 HashTable<T>::HashTable(int count)
 {
-	LOAD_FACTOR = 0.75;
-	SIZE = abs(count) / LOAD_FACTOR;
-	table = new SinglyLinkedList<T>*[SIZE];
+	size = abs(count) / LOAD_FACTOR;
+	table = new SinglyLinkedList<T>*[size];
 }
 
 
@@ -52,9 +51,9 @@ HashTable<T>::HashTable(int count)
 template<class T>
 HashTable<T>::~HashTable()
 {
-	SinglyLinkedList<T>*& curr;
+	SinglyLinkedList<T>*& curr = table[i];
 
-	for (int i = 0; i < SIZE; i++) {
+	for (int i = 0; i < size; i++) {
 		curr = table[i];
 		if (curr != nullptr) curr->empty();
 		curr = nullptr;
@@ -68,7 +67,7 @@ HashTable<T>::~HashTable()
  */
 template<class T>
 int HashTable<T>::getSize() const {
-	return SIZE;
+	return size;
 }
 
 /* Overloaded subscript operator for HashTable
@@ -77,7 +76,7 @@ int HashTable<T>::getSize() const {
  */
 template<class T>
 SinglyLinkedList<T>* HashTable<T>::operator[](int index) const {
-	if (index < 0 || index >= SIZE) throw "ERROR: Index out of bounds";
+	if (index < 0 || index >= size) throw "ERROR: Index out of bounds";
 	return table[index];
 }
 
@@ -88,7 +87,7 @@ SinglyLinkedList<T>* HashTable<T>::operator[](int index) const {
 template<class U>
 std::ostream& operator<<(std::ostream& out, const HashTable<U>& table)
 {
-	for (int i = 0; i < table.getSize(); i++) {
+	for (int i = 0; i < table.getsize(); i++) {
 		if (table[i] == nullptr)
 			out << "Empty Position " << std::endl;
 		else
@@ -104,7 +103,7 @@ template<class T>
 int HashTable<T>::getMaxNodes() {
 	int currMax;
 	int max = 0;
-	for (int i = 0; i < SIZE; i++) {
+	for (int i = 0; i < size; i++) {
 		if (table[i] != nullptr) {
 			currMax = table[i]->getCount();
 			if (currMax > max) max = currMax;
@@ -125,7 +124,7 @@ int HashTable<T>::hashFunc(const T& obj) const
 	std::string name = obj.getName();
 	int sum = 0;
 	for (char c : name) sum += c;
-	return (13 * sum + 29) % SIZE;
+	return (13 * sum + 29) % size;
 }
 
 /* Hashing algorithm for hash table

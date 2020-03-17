@@ -138,14 +138,14 @@ std::ostream& operator>>(std::istream& in, Spell* toRead) {
 std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 	if (toPrint->getCardType() == "Spell") {
 		out << toPrint->getName() << "," << toPrint->getManaCost()
-			<< "," << toPrint->getClass << ","
+			<< "," << toPrint->getClass() << ","
 			<< toPrint->getCardType() << ","
 			<< toPrint->getRarity() << ","
 			<< toPrint->getDescription() << std::endl;
 	}
 	else if (toPrint->getCardType() == "Minion") {
 		out << toPrint->getName() << "," << toPrint->getManaCost()
-			<< "," << toPrint->getClass << ","
+			<< "," << toPrint->getClass() << ","
 			<< toPrint->getCardType() << ","
 			<< toPrint->getRarity() << ","
 			<< toPrint->getDescription() << ","
@@ -155,7 +155,7 @@ std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 	}
 	else {
 		out << toPrint->getName() << "," << toPrint->getManaCost()
-			<< "," << toPrint->getClass << ","
+			<< "," << toPrint->getClass() << ","
 			<< toPrint->getCardType() << ","
 			<< toPrint->getRarity() << ","
 			<< toPrint->getDescription() << ","
