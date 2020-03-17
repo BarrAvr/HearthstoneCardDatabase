@@ -158,6 +158,7 @@ std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 			<< dynamic_cast<Weapon&>(*toPrint).getAttackValue() << std::endl;
 
 	}
+	return out;
 }
 
 std::ostream& operator<<(std::ostream& out, const Spell& toPrint) {

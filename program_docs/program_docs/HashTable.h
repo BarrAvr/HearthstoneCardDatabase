@@ -93,6 +93,7 @@ std::ostream& operator<<(std::ostream& out, const HashTable<U>& table)
 		else
 			out << *(table[i]);
 	}
+	return out;
 }
 
 /* Getter method for HashTable
