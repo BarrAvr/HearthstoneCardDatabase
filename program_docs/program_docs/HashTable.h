@@ -86,9 +86,9 @@ SinglyLinkedList<T>* HashTable<T>::operator[](int index) const {
  * Post: Outputs cards in every linked list line by line from the start to the end of the HashTable
  */
 template<class U>
-std::ostream& operator<<(std::ostream& out, const HashTable<U>& list)
+std::ostream& operator<<(std::ostream& out, const HashTable<U>& table)
 {
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < table.getSize(); i++) {
 		if (table[i] == nullptr)
 			out << "Empty Position " << std::endl;
 		else
@@ -104,7 +104,7 @@ template<class T>
 int HashTable<T>::getMaxNodes() {
 	int currMax;
 	int max = 0;
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < SIZE; i++) {
 		if (table[i] != nullptr) {
 			currMax = table[i]->getCount();
 			if (currMax > max) max = currMax;
@@ -155,8 +155,8 @@ int HashTable<T>::find(const T& obj) const
 {
 	int index = hashFunc(obj);
 	SinglyLinkedList<T>* curr = table[index];
-	if (curr == nullptr || curr->find(obj) == nullptr) 
-		index = -1
+	if (curr == nullptr || curr->find(obj) == nullptr)
+		index = -1;
 	return index;
 }
 
