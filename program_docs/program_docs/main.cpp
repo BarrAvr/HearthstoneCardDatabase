@@ -460,11 +460,9 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 }
 
 
-void readDataToFile(fstream& file, HashTable<Spell>& hash) {
-	file << hash;
+void readDataToFile(fstream& file, BST<Spell*>& tree){
+	tree.inOrderTraversalPrint(file);
 }
-
-//test
 
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	string name, classType, type, rarity;
@@ -477,7 +475,10 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 	string d;
 	string a;
 	string h;
+
+	bool failed = false;
 	while (getline(file, n, ',')) {
+		failed = false;
 		name = n;
 		getline(file, ct, ',');
 		Spell::ClassType clt;
@@ -512,6 +513,9 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 		else if (classType == "Warrior") {
 			clt = Spell::WARRIOR;
 		}
+		else {
+			failed = true;
+		}
 		getline(file, t, ',');
 		type = t;
 		getline(file, r, ',');
@@ -530,6 +534,9 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 		else if (rarity == "Legendary") {
 			rar = Spell::LEGENDARY;
 		}
+		else {
+			failed = true;
+		}
 		getline(file, c, ',');
 		cost = stoi(c);
 
@@ -539,13 +546,12 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 			getline(file, h, ',');
 			health = stoi(h);
 
-
-			Spell *mptr;
-			mptr = new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
-			tree.addNode(mptr);
-			hash.add(mptr);
-
-
+			if (!failed) {
+				Spell* mptr;
+				mptr = new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
+				tree.addNode(mptr);
+				hash.add(mptr);
+			}
 		}
 		else if (type == "Weapon") {
 			getline(file, a, ',');
@@ -553,21 +559,22 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 			getline(file, h, ',');
 			health = stoi(h);
 
-			Spell* wptr;
-			wptr = new Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA);
-			tree.addNode(wptr);
-			hash.add(wptr);
+			if (!failed) {
+				Spell* wptr;
+				wptr = new Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA);
+				tree.addNode(wptr);
+				hash.add(wptr);
+			}
 		}
-		else {
+		else if (type == "Spell"){
 			Spell* sptr;
 
-			sptr = new Spell(name, cost, clt, rar, d, Spell::MANA);
-			tree.addNode(sptr);
-			hash.add(sptr);
-
+			if (!failed) {
+				sptr = new Spell(name, cost, clt, rar, d, Spell::MANA);
+				tree.addNode(sptr);
+				hash.add(sptr);
+			}
 		}
-		//create person object from variables
-		//add person object to database
 	}
 }
 
