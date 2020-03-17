@@ -67,11 +67,12 @@ int main() {
 	return 0;
 }
 
-void addCard(fstream& file) {
+void addCard(fstream& file, BST<Spell>& tree) {
 
 	//Storing information from the user into tempory variables
-	string name, classType, type, rarity;
+	string name, classType, type, rarity, description;
 	int cost;
+
 	//We should probably add input validation
 	cout << "Please enter the name for the card:" << endl;
 	cin >> name;
@@ -79,38 +80,148 @@ void addCard(fstream& file) {
 	cout << "Please enter the Mana Cost for the card:" << endl;
 	cin >> cost;
 
-	cout << "PLease enter the Class of the card:" << endl;
-	cin >> classType;
+	bool findingCT = true;
+	Spell::ClassType ct;
+	while (findingCT) {
+		cout << "PLease enter the Class of the card:" << endl;
+		cin >> classType;
 
-	bool finding = true;
-	
-	while(finding){
+		if (classType == "Neutral") {
+			ct = Spell::NEUTRAL;
+			findingCT = false;
+		}
+		else if (classType == "Druid") {
+			ct = Spell::DRUID;
+			findingCT = false;
+		}
+		else if (classType == "Hunter") {
+			ct = Spell::HUNTER;
+			findingCT = false;
+		}
+		else if (classType == "Mage") {
+			ct = Spell::MAGE;
+			findingCT = false;
+		}
+		else if (classType == "Paladin") {
+			ct = Spell::PALADIN;
+			findingCT = false;
+		}
+		else if (classType == "Priest") {
+			ct = Spell::PRIEST;
+			findingCT = false;
+		}
+		else if (classType == "Rogue") {
+			ct = Spell::ROGUE;
+			findingCT = false;
+		}
+		else if (classType == "Shaman") {
+			ct = Spell::SHAMAN;
+			findingCT = false;
+		}
+		else if (classType == "Warlock") {
+			ct = Spell::WARLOCK;
+			findingCT = false;
+		}
+		else if (classType == "Warrior") {
+			ct = Spell::WARRIOR;
+			findingCT = false;
+		}
+		else {
+			cout << "Invalid Class, please try again." << endl;
+		}
+
+	}
+	bool findingT = true;
+
+	while(findingT){
 		cout << "Please enter the card's Type:" << endl;
 		cin >> type;
 
 		if (type == "Spell" || type == "Minion" || type == "Weapon") {
-			finding = false;
+			findingT = false;
 		}
 		else {
 			cout << "Ivalid Type, please try again. " << endl;
 		}
 	}
 
-	cout << "Please enter the rarity of the card:" << endl;
-	cin >> rarity;
+	bool findingr = true;
+	Spell::Rarity r;
+	while (findingr) {
+		cout << "Please enter the rarity of the card:" << endl;
+		cin >> rarity;
+		if (rarity == "Common") {
+			r = Spell::COMMON;
+			findingr = false;
+		}
+		else if (rarity == "Rare") {
+			r = Spell::RARE;
+			findingr = false;
+		}
+		else if (rarity == "Epic") {
+			r = Spell::EPIC;
+			findingr = false;
+		}
+		else if (rarity == "Legendary") {
+			r = Spell::LEGENDARY;
+			findingr = false;
+		}
+		else {
+			cout << "Invalid rarity, please try again." << endl;
+		}
+	}
 
+	cout << "Please enter the description for the card:" << endl;
+	cin >> description;
 
 	//Take the information stored from the user and add to .CSV file
-	file << name << ", "
-		<< cost << ", "
-		<< classType << ", "
-		<< type << ", "
-		<< rarity << "\n";
+
 
 	//take variables and create a Card object
 
 	if (type == "Spell") {
-		Spell s = Spell(name, cost, classType, rarity)
+		Spell s = Spell(name, cost, ct, r, description, Spell::MANA);
+		tree.addNode(s);
+		file << name << ", "
+			<< cost << ", "
+			<< classType << ", "
+			<< type << ", "
+			<< rarity << ", "
+			<< description << "\n";
+	}
+	else if (type == "Minion") {
+		int attack;
+		int defense;
+
+		cout << "Please enter the attack value for the Minion:" << endl;
+		cin >> attack;
+
+		cout << "Please enter the health value for the Minion:" << endl;
+		cin >> defense;
+
+		Minion m = Minion(name, cost, ct, r, description, attack, defense, Minion::MANA); 
+		tree.addNode(m);
+		file << name << ", "
+			<< cost << ", "
+			<< classType << ", "
+			<< type << ", "
+			<< rarity << ", "
+			<< description << ", "
+			<< attack << ", "
+			<< defense << "\n";
+	}
+	else if (type == "Weapon") {
+		int attack;
+		int defense;
+
+		cout << "Please enter the attack value for the Weapon:" << endl;
+		cin >> attack;
+
+		cout << "Please enter the defense value for the Minion:" << endl;
+		cin >> defense;
+
+		Weapon w = Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
+		tree.addNode(w);
 	}
 
 	//add Card object to database
@@ -164,23 +275,91 @@ void packOpening(HashTable<Spell> table)
 
 void readFileToDatabase(fstream & file) {
 	string name, classType, type, rarity;
-	int cost;
+	int cost, attack, health;
 	string n;
 	string ct;
 	string t;
 	string r;
 	string c;
 	string d;
+	string a;
+	string h;
 	while (getline(file, n, ',')) {
 		name = n;
 		getline(file, ct, ',');
+		Spell::ClassType clt;
 		classType = ct;
+		if (classType == "Neutral") {
+			clt = Spell::NEUTRAL;
+		}
+		else if (classType == "Druid") {
+			clt = Spell::DRUID;
+		}
+		else if (classType == "Hunter") {
+			clt = Spell::HUNTER;
+		}
+		else if (classType == "Mage") {
+			clt = Spell::MAGE;
+		}
+		else if (classType == "Paladin") {
+			clt = Spell::PALADIN;
+		}
+		else if (classType == "Priest") {
+			clt = Spell::PRIEST;
+		}
+		else if (classType == "Rogue") {
+			clt = Spell::ROGUE;
+		}
+		else if (classType == "Shaman") {
+			clt = Spell::SHAMAN;
+		}
+		else if (classType == "Warlock") {
+			clt = Spell::WARLOCK;
+		}
+		else if (classType == "Warrior") {
+			clt = Spell::WARRIOR;
+		}
 		getline(file, t, ',');
 		type = t;
 		getline(file, r, ',');
 		rarity = r;
+
+		Spell::Rarity rar;
+		if (rarity == "Common") {
+			rar = Spell::COMMON;
+		}
+		else if (rarity == "Rare") {
+			rar = Spell::RARE;
+		}
+		else if (rarity == "Epic") {
+			rar = Spell::EPIC;
+		}
+		else if (rarity == "Legendary") {
+			rar = Spell::LEGENDARY;
+		}
 		getline(file, c, ',');
 		cost = stoi(c);
+
+		if (type == "Minion") {
+			getline(file, a, ',');
+			attack = stoi(a);
+			getline(file, h, ',');
+			health = stoi(h);
+
+			Minion m = Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
+
+		}
+		else if (type == "Weapon") {
+			getline(file, a, ',');
+			attack = stoi(a);
+			getline(file, h, ',');
+			health = stoi(h);
+
+			Weapon w = Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA);
+		}
+		else {
+			Spell s = Spell(name, cost, clt, rar, d, Spell::MANA);
+		}
 		//create person object from variables
 		//add person object to database
 	}

@@ -130,6 +130,11 @@ void Spell::print(std::ostream& out) {
 		<< "Description: " << this->getDescription() << std::endl << std::endl;
 }
 
+
+std::ostream& operator>>(std::istream& in, Spell* toRead) {
+
+}
+
 std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 	if (toPrint->getCardType() == "Spell") {
 		toPrint->print(out);
