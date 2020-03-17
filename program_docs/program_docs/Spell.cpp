@@ -130,11 +130,6 @@ void Spell::print(std::ostream& out) const {
 		<< "Description: " << this->getDescription() << std::endl << std::endl;
 }
 
-
-std::ostream& operator>>(std::istream& in, Spell* toRead) {
-
-}
-
 std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 	if (toPrint->getCardType() == "Spell") {
 		out << toPrint->getName() << "," << toPrint->getManaCost()
@@ -163,45 +158,9 @@ std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 			<< dynamic_cast<Weapon&>(*toPrint).getAttackValue() << std::endl;
 
 	}
-	//if (toPrint->getCardType() == "Spell") {
-	//	out << "CardType: Spell\n" <<
-	//		"Mana Cost: " << toPrint->getManaCost() << std::endl
-	//		<< "Name: " << toPrint->getName() << std::endl
-	//		<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
-	//		<< "Description: " << toPrint->getDescription() << std::endl << std::endl;
-	//}
-	//else if (toPrint->getCardType() == "Minion") {
-	//	out << "CardType: Minion\n" <<
-	//		"Mana Cost: " << toPrint->getManaCost() << std::endl
-	//		<< "Name: " << toPrint->getName() << std::endl
-	//		<< "ClassType: " << toPrint->getClass() << std::endl << std::endl
-	//		<< "Description: " << toPrint->getDescription() << std::endl << std::endl
-	//		<< "Attack/Health: " << toPrint->getAttackValue() << "/" << toPrint->getDurability() << std::endl;
-	//}
+}
 
-	////incomplete code
-	//if (toRead->getCardType() == "Spell") {
-
-	//}
-	//else if (toRead->getCardType() == "Minion") {
-
-	//}
-	//else { 
-
-	//}
-	/*
-	CardType: Spell
-	Mana Cost: X
-	Name: Joe Moose
-	ClassType: Hunter
-
-	Description:
-	Random words.
-
-	Flavor Text:
-	Random words.
-
-	Attack/Health: X/X
-	Attack/Durability: X/X
-	*/
+std::ostream& operator<<(std::ostream& out, const Spell& toPrint) {
+	toPrint.print(out);
+	return out;
 }

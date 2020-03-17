@@ -127,8 +127,6 @@ public:
 	*/
 	bool deleteNode(T);
 
-	void update();
-
 	/* for void addNode(T)
 
 	Pre: data - data to be added
@@ -245,10 +243,10 @@ bool BST<T>::recursiveDelete(T data, BSTNode<T>*& root) {
 	if (root == nullptr) {
 		return false;
 	}
-	if (data < root->getData()) {
+	if (*data < *(root->getData())) {
 		return recursiveDelete(data, root->getLeftChild());
 	}
-	else if (data > root->getData()) {
+	else if (*data > * (root->getData())) {
 		return recursiveDelete(data, root->getRightChild());
 	}
 	else {
@@ -294,7 +292,7 @@ void BST<T>::recursiveAdd(BSTNode<T>*& root, BSTNode<T>* newNode) {
 	if (root == nullptr) {
 		root = newNode;
 	}
-	else if (newNode->getData() < root->getData()) {
+	else if (*(newNode->getData()) < *(root->getData())) {
 		recursiveAdd(root->getLeftChild(), newNode);
 	}
 	else {
@@ -314,10 +312,10 @@ bool BST<T>::recursiveSearch(BSTNode<T>* root, T data) const {
 	if (root == nullptr) {
 		return false;
 	}
-	if (data < root->getData()) {
+	if (*data < *(root->getData())) {
 		return recursiveSearch(root->getLeftChild(), data);
 	}
-	else if (data > root->getData()) {
+	else if (*data > * (root->getData())) {
 		return recursiveSearch(root->getRightChild(), data);
 	}
 	else {
@@ -339,7 +337,7 @@ void BST<T>::preOrderTraversalPrint(std::ostream& out) const {
 template < class T >
 void BST<T>::recurPreOrder(BSTNode<T>* root, std::ostream& out) const {
 	if (root != nullptr) {
-		out << root->getData();
+		out << *(root->getData());
 		out << std::endl;
 		recurPreOrder(root->getLeftChild(), out);
 		recurPreOrder(root->getRightChild(), out);
@@ -362,7 +360,7 @@ void BST<T>::recurPostOrder(BSTNode<T>* root, std::ostream& out) const {
 	if (root != nullptr) {
 		recurPostOrder(root->getLeftChild(), out);
 		recurPostOrder(root->getRightChild(), out);
-		out << root->getData();
+		out << *(root->getData());
 		out << std::endl;
 	}
 	else {
@@ -385,7 +383,7 @@ template < class T >
 void BST<T>::recurInOrder(BSTNode<T>* root, std::ostream& out) const {
 	if (root != nullptr) {
 		recurInOrder(root->getLeftChild(), out);
-		out << root->getData();
+		out << *(root->getData());
 		out << std::endl;
 		recurInOrder(root->getRightChild(), out);
 	}
@@ -394,7 +392,7 @@ void BST<T>::recurInOrder(BSTNode<T>* root, std::ostream& out) const {
 template < class T >
 void BST<T>::breadthFirstTraversalPrint(std::ostream& out) const {
 	if (rootPtr != nullptr) {
-		out << rootPtr->getData() << std::endl;
+		out << *(rootPtr->getData()) << std::endl;
 		recurBreadthFirst(rootPtr, out);
 	}
 }
@@ -402,11 +400,11 @@ void BST<T>::breadthFirstTraversalPrint(std::ostream& out) const {
 template < class T >
 void BST<T>::recurBreadthFirst(BSTNode<T>* root, std::ostream& out) const {
 	if (root->getLeftChild() != nullptr) {
-		out << root->getLeftChild()->getData();
+		out << *(root->getLeftChild()->getData());
 		out << std::endl;
 	}
 	if (root->getRightChild() != nullptr) {
-		out << root->getRightChild()->getData();
+		out << *(root->getRightChild()->getData());
 		out << std::endl;
 	}
 	if (root->getLeftChild() != nullptr) {
