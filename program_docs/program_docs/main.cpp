@@ -27,6 +27,9 @@ Spell* getRandomSpell(HashTable<Spell>, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
 void packOpening(HashTable<Spell>);
 
+//TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
+fstream outputFile;
+
 int main() {
 	int size = 67;
 	string selection;
@@ -34,6 +37,7 @@ int main() {
 	BST<Spell*> cardTree = BST<Spell*>();
 	cout << "Hearthstone Database" << endl;
 	fstream inputFile;
+
 	inputFile.open("HearthstoneCards.txt");
 	readFileToDatabase(inputFile);
 
@@ -458,17 +462,17 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 		tree.deleteNode(new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA));
 		hash.remove(wptr);
 	}
-
-
+	
+	readDataToFile(outputFile, hash);
 
 }
 
 
 void readDataToFile(fstream& file, HashTable<Spell*>& hash) {
-	
+	file << hash;
 }
 
-
+//test
 
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 	string name, classType, type, rarity;
