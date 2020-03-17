@@ -465,7 +465,7 @@ void readDataToFile(fstream& file, HashTable<Spell*>& hash) {
 	
 }
 
-
+//test
 
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 	string name, classType, type, rarity;
