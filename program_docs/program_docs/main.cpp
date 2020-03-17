@@ -27,8 +27,8 @@ void packOpening(HashTable<Spell>);
 int main() {
 	int size = 67;
 	string selection;
-	HashTable<Spell> cardHashtable = HashTable<Spell>(size);
-	BST<Spell> cardTree = BST<Spell>();
+	HashTable<Spell*> cardHashtable = HashTable<Spell*>(size);
+	BST<Spell*> cardTree = BST<Spell*>();
 	cout << "Hearthstone Database" << endl;
 	fstream inputFile;
 	inputFile.open("HearthstoneCards.txt");
@@ -273,7 +273,11 @@ void packOpening(HashTable<Spell> table)
 
 }
 
-void readFileToDatabase(fstream & file) {
+void promptToDelete(fstream& file, BST<Spell>& tree, HashTable<Spell>& hash) {
+
+}
+
+void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 	string name, classType, type, rarity;
 	int cost, attack, health;
 	string n;
@@ -347,6 +351,11 @@ void readFileToDatabase(fstream & file) {
 			health = stoi(h);
 
 			Minion m = Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
+			Minion *mptr;
+			mptr = new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
+			tree.addNode(new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA));
+			hash.add(mptr);
+
 
 		}
 		else if (type == "Weapon") {
@@ -356,9 +365,11 @@ void readFileToDatabase(fstream & file) {
 			health = stoi(h);
 
 			Weapon w = Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA);
+			tree.addNode(new Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA));
 		}
 		else {
 			Spell s = Spell(name, cost, clt, rar, d, Spell::MANA);
+			tree.addNode(new Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA));
 		}
 		//create person object from variables
 		//add person object to database
