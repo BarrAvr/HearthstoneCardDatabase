@@ -21,6 +21,8 @@ class HashTable
 		int getSize() const;
 		int getMaxNodes();
 		SinglyLinkedList<T>* operator[](int index) const;
+		template<class U>
+		friend std::ostream& operator<<(std::ostream& out, const HashTable<U>& list);
 		
 		void add(const T* const);
 		int find(const T&) const;
@@ -77,6 +79,21 @@ template<class T>
 SinglyLinkedList<T>* HashTable<T>::operator[](int index) const {
 	if (index < 0 || index >= SIZE) throw "ERROR: Index out of bounds";
 	return table[index];
+}
+
+/* Overloaded output operator for HashTable
+ * Pre: Valid ostream and HashTable objects are passed int
+ * Post: Outputs cards in every linked list line by line from the start to the end of the HashTable
+ */
+template<class U>
+std::ostream& operator<<(std::ostream& out, const HashTable<U>& list)
+{
+	for (int i = 0; i < size; i++) {
+		if (table[i] == nullptr)
+			out << "Empty Position " << std::endl;
+		else
+			out << *(table[i]);
+	}
 }
 
 /* Getter method for HashTable
