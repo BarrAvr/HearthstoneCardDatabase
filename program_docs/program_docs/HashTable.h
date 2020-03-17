@@ -51,7 +51,7 @@ HashTable<T>::HashTable(int count)
 template<class T>
 HashTable<T>::~HashTable()
 {
-	SinglyLinkedList<T>*& curr = table[i];
+	SinglyLinkedList<T>*& curr = table[0];
 
 	for (int i = 0; i < size; i++) {
 		curr = table[i];
