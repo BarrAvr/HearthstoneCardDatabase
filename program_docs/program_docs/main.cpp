@@ -39,7 +39,7 @@ int main() {
 	cout << "Hearthstone Database" << endl;
 	fstream inputFile;
 
-	inputFile.open("input.csv");
+	inputFile.open("input.txt");
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	cout << cardHashtable << endl;
 	displayMenu();
@@ -480,6 +480,10 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 	while (getline(file, n, ',')) {
 		failed = false;
 		name = n;
+
+		getline(file, c, ',');
+		cost = stoi(c);
+
 		getline(file, ct, ',');
 		Spell::ClassType clt;
 		classType = ct;
@@ -516,8 +520,10 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 		else {
 			failed = true;
 		}
+
 		getline(file, t, ',');
 		type = t;
+
 		getline(file, r, ',');
 		rarity = r;
 
@@ -537,8 +543,9 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 		else {
 			failed = true;
 		}
-		getline(file, c, ',');
-		cost = stoi(c);
+
+		getline(file, d, ',');
+
 
 		if (type == "Minion") {
 			getline(file, a, ',');
