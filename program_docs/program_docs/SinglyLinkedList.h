@@ -230,7 +230,7 @@ std::ostream& operator<<(std::ostream& out, const SinglyLinkedList<T>& list) {
 	}
 	LinkNode<T>* print = list.head;
 	for (int i = 0; i < list.count; i++) {
-		if (i == 0) out << "******LIST START********" << std::endl;
+		if (i == 0) out << "******LIST START*******" << std::endl;
 		out << *(print->getVal());
 		print = print->getNext();
 		if (i == list.count - 1) out << "----------LIST END----------" << std::endl << std::endl;
