@@ -48,9 +48,9 @@ void Minion::print(std::ostream& out) const {
 	out << "CardType: Minion\n" <<
 		"Mana Cost: " << this->getManaCost() << std::endl
 		<< "Name: " << this->getName() << std::endl
-		<< "ClassType: " << this->getClass() << std::endl << std::endl
-		<< "Description: " << this->getDescription() << std::endl << std::endl
-		<< "Attack/Health: " << this->getAttackValue() << "/" << this->getHealthValue() << std::endl;
+		<< "ClassType: " << this->getClass() << std::endl 
+		<< "Description: " << this->getDescription() << std::endl 
+		<< "Attack/Health: " << this->getAttackValue() << "/" << this->getHealthValue() << std::endl << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& out, const Minion& toPrint) {

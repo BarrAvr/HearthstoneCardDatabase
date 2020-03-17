@@ -126,7 +126,7 @@ void Spell::print(std::ostream& out) const {
 	out << "CardType: Spell\n" <<
 		"Mana Cost: " << this->getManaCost() << std::endl
 		<< "Name: " << this->getName() << std::endl
-		<< "ClassType: " << this->getClass() << std::endl << std::endl
+		<< "ClassType: " << this->getClass() << std::endl
 		<< "Description: " << this->getDescription() << std::endl << std::endl;
 }
 

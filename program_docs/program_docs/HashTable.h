@@ -91,8 +91,9 @@ template<class U>
 std::ostream& operator<<(std::ostream& out, const HashTable<U>& table)
 {
 	for (int i = 0; i < table.getSize(); i++) {
+		out << "[" << i << "] ";
 		if (table[i] == nullptr)
-			out << "Empty Position " << std::endl;
+			out << "Empty Position " << std::endl << std::endl;
 		else
 			out << *(table[i]);
 	}
