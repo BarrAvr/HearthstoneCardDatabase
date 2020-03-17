@@ -137,13 +137,31 @@ std::ostream& operator>>(std::istream& in, Spell* toRead) {
 
 std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 	if (toPrint->getCardType() == "Spell") {
-		toPrint->print(out);
+		out << toPrint->getName() << "," << toPrint->getManaCost()
+			<< "," << toPrint->getClass << ","
+			<< toPrint->getCardType() << ","
+			<< toPrint->getRarity() << ","
+			<< toPrint->getDescription() << std::endl;
 	}
 	else if (toPrint->getCardType() == "Minion") {
-		dynamic_cast<Minion&>(*toPrint).print(out);
+		out << toPrint->getName() << "," << toPrint->getManaCost()
+			<< "," << toPrint->getClass << ","
+			<< toPrint->getCardType() << ","
+			<< toPrint->getRarity() << ","
+			<< toPrint->getDescription() << ","
+			<< dynamic_cast<Minion&>(*toPrint).getAttackValue() << ","
+			<< dynamic_cast<Minion&>(*toPrint).getHealthValue() << std::endl;
+		
 	}
 	else {
-		dynamic_cast<Weapon&>(*toPrint).print(out);
+		out << toPrint->getName() << "," << toPrint->getManaCost()
+			<< "," << toPrint->getClass << ","
+			<< toPrint->getCardType() << ","
+			<< toPrint->getRarity() << ","
+			<< toPrint->getDescription() << ","
+			<< dynamic_cast<Weapon&>(*toPrint).getAttackValue() << ","
+			<< dynamic_cast<Weapon&>(*toPrint).getAttackValue() << std::endl;
+
 	}
 	//if (toPrint->getCardType() == "Spell") {
 	//	out << "CardType: Spell\n" <<

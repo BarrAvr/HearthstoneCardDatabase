@@ -13,7 +13,7 @@ using namespace std;
 
 void addCard(fstream& file);
 void searchCard(HashTable<Spell>);
-void deleteCard(HashTable<Spell>);
+void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash);
 void printHashTable(HashTable<Spell>);
 void printSorted(HashTable<Spell>);
 void printIndentedTree(BST<Spell>);
@@ -33,14 +33,14 @@ int main() {
 	fstream inputFile;
 	inputFile.open("HearthstoneCards.txt");
 	readFileToDatabase(inputFile);
-	
+
 	displayMenu();
 	while (true)
 	{
 		cout << "\nCommand: ";
 		getline(cin, selection);
 		if (selection == "1" || selection == "ADD") addCard(inputFile);
-		else if (selection == "2" || selection == "DELETE") deleteCard(cardHashtable);
+		else if (selection == "2" || selection == "DELETE") deleteCard(inputFile, cardTree, cardHashtable);
 		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
 		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
 		else if (selection == "5" || selection == "PRINTSORT") printSorted(cardHashtable);
@@ -57,7 +57,7 @@ int main() {
 		}
 	}
 
-	
+
 
 	system("pause");
 	return 0;
@@ -67,7 +67,7 @@ int main() {
 	return 0;
 }
 
-void addCard(fstream& file, BST<Spell>& tree) {
+void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*> hash) {
 
 	//Storing information from the user into tempory variables
 	string name, classType, type, rarity, description;
@@ -180,8 +180,10 @@ void addCard(fstream& file, BST<Spell>& tree) {
 	//take variables and create a Card object
 
 	if (type == "Spell") {
-		Spell s = Spell(name, cost, ct, r, description, Spell::MANA);
-		tree.addNode(s);
+		Spell* sptr;
+		sptr = new Spell(name, cost, ct, r, description, Spell::MANA);
+		tree.addNode(new Spell(name, cost, ct, r, description, Spell::MANA));
+		hash.add(&sptr);
 		file << name << ", "
 			<< cost << ", "
 			<< classType << ", "
@@ -199,8 +201,11 @@ void addCard(fstream& file, BST<Spell>& tree) {
 		cout << "Please enter the health value for the Minion:" << endl;
 		cin >> defense;
 
-		Minion m = Minion(name, cost, ct, r, description, attack, defense, Minion::MANA); 
-		tree.addNode(m);
+		Spell* mptr;
+		mptr = new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA);
+		tree.addNode(new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA));
+		hash.add(&mptr);
+
 		file << name << ", "
 			<< cost << ", "
 			<< classType << ", "
@@ -220,13 +225,21 @@ void addCard(fstream& file, BST<Spell>& tree) {
 		cout << "Please enter the defense value for the Minion:" << endl;
 		cin >> defense;
 
-		Weapon w = Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
-		tree.addNode(w);
+		Spell* wptr;
+		wptr = new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
+		tree.addNode(new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA));
+		hash.add(&wptr);
+
+		file << name << ", "
+			<< cost << ", "
+			<< classType << ", "
+			<< type << ", "
+			<< rarity << ", "
+			<< description << ", "
+			<< attack << ", "
+			<< defense << "\n";
 	}
-
-	//add Card object to database
 	cout << "Card Sucessfully added" << endl;
-
 }
 
 Spell* getRandomSpell(HashTable<Spell> table, Spell::Rarity rarity) {
@@ -247,13 +260,13 @@ Spell* getRandomSpell(HashTable<Spell> table, Spell::Rarity rarity) {
 			randIndex = rand() % table.getSize();
 			randDepth = rand() % table.getMaxNodes();
 		}
-		
+
 	}
 	return randomSpell;
 }
 
 Spell::Rarity getRandomCardRarity() {
-	srand(time(0)); 
+	srand(time(0));
 	int randomNum = rand()%100;
 	if (randomNum <= 49) return Spell::COMMON;
 	if (randomNum > 49 && randomNum <= 74) return Spell::RARE;
@@ -290,13 +303,165 @@ void packOpening(HashTable<Spell> table)
 	cout << "Card 5 is ..." << endl;
 	_sleep(5);
 	cout << packArray[4] << endl;
-	
+
 
 }
 
-void promptToDelete(fstream& file, BST<Spell>& tree, HashTable<Spell>& hash) {
+void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
+	string name, classType, type, rarity, description;
+	int cost;
+
+	//We should probably add input validation
+	cout << "Please enter the name for the card:" << endl;
+	cin >> name;
+
+	cout << "Please enter the Mana Cost for the card:" << endl;
+	cin >> cost;
+
+	bool findingCT = true;
+	Spell::ClassType ct;
+	while (findingCT) {
+		cout << "PLease enter the Class of the card:" << endl;
+		cin >> classType;
+
+		if (classType == "Neutral") {
+			ct = Spell::NEUTRAL;
+			findingCT = false;
+		}
+		else if (classType == "Druid") {
+			ct = Spell::DRUID;
+			findingCT = false;
+		}
+		else if (classType == "Hunter") {
+			ct = Spell::HUNTER;
+			findingCT = false;
+		}
+		else if (classType == "Mage") {
+			ct = Spell::MAGE;
+			findingCT = false;
+		}
+		else if (classType == "Paladin") {
+			ct = Spell::PALADIN;
+			findingCT = false;
+		}
+		else if (classType == "Priest") {
+			ct = Spell::PRIEST;
+			findingCT = false;
+		}
+		else if (classType == "Rogue") {
+			ct = Spell::ROGUE;
+			findingCT = false;
+		}
+		else if (classType == "Shaman") {
+			ct = Spell::SHAMAN;
+			findingCT = false;
+		}
+		else if (classType == "Warlock") {
+			ct = Spell::WARLOCK;
+			findingCT = false;
+		}
+		else if (classType == "Warrior") {
+			ct = Spell::WARRIOR;
+			findingCT = false;
+		}
+		else {
+			cout << "Invalid Class, please try again." << endl;
+		}
+
+	}
+	bool findingT = true;
+
+	while (findingT) {
+		cout << "Please enter the card's Type:" << endl;
+		cin >> type;
+
+		if (type == "Spell" || type == "Minion" || type == "Weapon") {
+			findingT = false;
+		}
+		else {
+			cout << "Ivalid Type, please try again. " << endl;
+		}
+	}
+
+	bool findingr = true;
+	Spell::Rarity r;
+	while (findingr) {
+		cout << "Please enter the rarity of the card:" << endl;
+		cin >> rarity;
+		if (rarity == "Common") {
+			r = Spell::COMMON;
+			findingr = false;
+		}
+		else if (rarity == "Rare") {
+			r = Spell::RARE;
+			findingr = false;
+		}
+		else if (rarity == "Epic") {
+			r = Spell::EPIC;
+			findingr = false;
+		}
+		else if (rarity == "Legendary") {
+			r = Spell::LEGENDARY;
+			findingr = false;
+		}
+		else {
+			cout << "Invalid rarity, please try again." << endl;
+		}
+	}
+
+	cout << "Please enter the description for the card:" << endl;
+	cin >> description;
+
+	//Take the information stored from the user and add to .CSV file
+
+
+	//take variables and create a Card object
+
+	if (type == "Spell") {
+
+		Spell* sptr;
+		sptr = new Spell(name, cost, ct, r, description, Spell::MANA);
+		tree.deleteNode(new Spell(name, cost, ct, r, description, Spell::MANA));
+		hash.remove(sptr);
+	}
+	else if (type == "Minion") {
+		int attack;
+		int defense;
+
+		cout << "Please enter the attack value for the Minion:" << endl;
+		cin >> attack;
+
+		cout << "Please enter the health value for the Minion:" << endl;
+		cin >> defense;
+
+		Spell* mptr;
+		mptr = new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA);
+		tree.deleteNode(new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA));
+		hash.remove(mptr);
+
+	}
+	else if (type == "Weapon") {
+		int attack;
+		int defense;
+
+		cout << "Please enter the attack value for the Weapon:" << endl;
+		cin >> attack;
+
+		cout << "Please enter the defense value for the Minion:" << endl;
+		cin >> defense;
+
+		Spell* wptr;
+		wptr = new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
+		tree.deleteNode(new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA));
+		hash.remove(wptr);
+	}
+
+
 
 }
+
+
+
 
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& hash) {
 	string name, classType, type, rarity;
@@ -371,10 +536,10 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& has
 			getline(file, h, ',');
 			health = stoi(h);
 
-			
+
 			Spell *mptr;
 			mptr = new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA);
-			tree.addNode(mptr);
+			tree.addNode(new Minion(name, cost, clt, rar, d, attack, health, Minion::MANA));
 			hash.add(&mptr);
 
 
@@ -385,19 +550,25 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell*>& has
 			getline(file, h, ',');
 			health = stoi(h);
 
-			Weapon w = Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA);
+			Spell* wptr;
+			wptr = new Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA);
 			tree.addNode(new Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA));
+			hash.add(&wptr);
 		}
 		else {
-			Spell s = Spell(name, cost, clt, rar, d, Spell::MANA);
-			tree.addNode(new Weapon(name, cost, clt, rar, d, attack, health, Spell::MANA));
+			Spell* sptr;
+
+			sptr = new Spell(name, cost, clt, rar, d, Spell::MANA);
+			tree.addNode(new Spell(name, cost, clt, rar, d, Spell::MANA));
+			hash.add(&sptr);
+
 		}
 		//create person object from variables
 		//add person object to database
 	}
 }
 
-void displayMenu() 
+void displayMenu()
 {
 	cout << "\nMenu: " << endl;
 	cout << "Type the number OR the name of the command in caps verbatim. " << endl;
@@ -411,4 +582,3 @@ void displayMenu()
 	cout << "(8) HELP - display menu once again " << endl;
 	cout << "(9) EXIT - exit the program " << endl;
 }
-
