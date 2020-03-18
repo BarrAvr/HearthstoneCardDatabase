@@ -274,7 +274,9 @@ void printTree(BST<Spell*>& tree) {
 		}
 		if (wrongCommand == false) break;
 	}
-	
+	cout << "Binary Search Tree Efficiency" << endl;
+	cout << "Number of nodes in tree: " << tree.getCount() << endl;
+	cout << "Average operations for inserting/searching/deleting in tree: " << tree.getAvgOps() << endl;
 }
 
 void addCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {

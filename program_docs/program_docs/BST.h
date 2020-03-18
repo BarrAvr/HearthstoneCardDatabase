@@ -5,6 +5,7 @@
 
 template < class T > class BST {
 private:
+	int count;
 	BSTNode<T>* rootPtr;
 	/* for void recursiveAdd(BSTNode<T>*& root, BSTNode<T>*newNode)
 
@@ -127,6 +128,8 @@ public:
 	BST();
 	~BST();
 	T getRootData() const;
+	int getCount() const;
+	double getAvgOps() const;
 	void setRootData(T);
 	/* for bool deleteNode(T)
 
@@ -232,7 +235,8 @@ public:
 
 template < class T >
 BST<T>::BST() : rootPtr(nullptr) {
-
+	if (rootPtr == nullptr) count = 0;
+	else count = 1;
 }
 
 template < class T >
@@ -243,6 +247,16 @@ BST<T>::~BST() {
 template < class T >
 T BST<T>::getRootData() const {
 	return rootPtr->getData();
+}
+
+template < class T >
+int BST<T>::getCount() const {
+	return count;
+}
+
+template < class T >
+double BST<T>::getAvgOps() const {
+	return log(count);
 }
 
 template < class T >
@@ -257,7 +271,12 @@ void BST<T>::setRootData(T data) {
 
 template < class T >
 bool BST<T>::deleteNode(T data) {
-	return recursiveDelete(data, rootPtr);
+	bool worked = false;
+	if (recursiveDelete(data, rootPtr)) {
+		worked = true;
+		count--;
+	}
+	return worked;
 }
 
 template < class T >
@@ -307,6 +326,7 @@ template < class T >
 void BST<T>::addNode(T data) {
 	BSTNode<T>* newNode = new BSTNode<T>(data);
 	recursiveAdd(rootPtr, newNode);
+	count++;
 }
 
 template < class T >
