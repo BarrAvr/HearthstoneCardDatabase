@@ -162,7 +162,7 @@ int HashTable<T>::hashFunc(const T& obj) const
 	std::string name = obj.getName();
 	int sum = 0;
 	for (char c : name) sum += c;
-	return (13 * sum + 29) % size;
+	return (17 * sum + 29) % size;
 }
 
 /* Hashing algorithm for hash table
