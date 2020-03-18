@@ -46,11 +46,6 @@ int main() {
 
 	inputFile.open("input.tsv");
 	outputFile.open("output.tsv", ios::out);
-	ofstream fout;
-	fout.open("bruh.txt", ios::out);
-	fout.open("bruh.txt", ios::in | ios::out);
-	string x;
-	fout << "bruh" << endl;
 
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	while (true)
@@ -74,7 +69,7 @@ int main() {
 			cout << "\nERROR: Improper command. Enter \'5\' or \'HELP\' to display menu " << endl;
 		}
 	}
-
+	outputFile.close();
 	system("pause");
 	return 0;
 }
@@ -260,12 +255,14 @@ void printTree(BST<Spell*>& tree) {
 		cout << "2: Print Inorder Traversal " << endl;
 		cout << "3: Print Postorder Traversal " << endl;
 		cout << "4: Print Breadth First Traversal " << endl;
+		cout << "5: Print Indented Tree " << endl;
 		cout << "\nCommand: ";
 		getline(cin, selection);
 		if (selection == "1") tree.preOrderTraversalPrint(cout);
 		else if (selection == "2") tree.inOrderTraversalPrint(cout);
 		else if (selection == "3") tree.postOrderTraversalPrint(cout);
 		else if (selection == "4") tree.breadthFirstTraversalPrint(cout);
+		else if (selection == "5") tree.printCardsIndent(cout);
 		else {
 			cout << "Improper command" << endl;
 			wrongCommand = true;
