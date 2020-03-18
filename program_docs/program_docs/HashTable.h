@@ -183,7 +183,7 @@ bool HashTable<T>::remove(const T& obj)
 	int index = hashFunc(obj);
 	SinglyLinkedList<T>*& curr = table[index];
 	
-	if (curr != nullptr || curr->find(obj) == nullptr) return false;
+	if (curr == nullptr || curr->find(obj) == nullptr) return false;
 	if (curr->getCount() == 1) {
 		curr->empty();
 		curr = nullptr;
