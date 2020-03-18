@@ -16,7 +16,7 @@ template<typename T>
 T validateType(T input);
 void displayMenu();
 void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
-//void searchCard(HashTable<Spell>);
+void searchCard(HashTable<Spell>&);
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void printHashTable(HashTable<Spell>&);
 //void printSorted(HashTable<Spell>);
@@ -52,7 +52,7 @@ int main() {
 		getline(cin, selection);
 		if (selection == "1" || selection == "ADD") addCard(outputFile, cardTree, cardHashtable);
 		else if (selection == "2" || selection == "DELETE") deleteCard(inputFile, cardTree, cardHashtable);
-		//else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
+		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
 		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
 		else if (selection == "5" || selection == "PRINTTREE") printTree(cardTree);
 		else if (selection == "6" || selection == "PACK") packOpening(cardHashtable);
@@ -69,6 +69,146 @@ int main() {
 
 	system("pause");
 	return 0;
+}
+Spell* createCard() {
+	string selection, name, type, description, rarity, classType;
+	int cost = 0;
+	Spell::ClassType ct;
+	Spell::Rarity r;
+	bool wrongCommand;
+	Spell* sptr = nullptr;
+
+	//We should probably add input validation
+	cout << "Please enter the name for the card:" << endl;
+	cin >> name;
+
+	cout << "Please enter the Mana Cost for the card:" << endl;
+	cost = validateType(cost);
+
+	while (true) {
+		wrongCommand = false;
+		cout << "Please pick a number corresponding to the Class of the card:" << endl;
+		cout << "1: Neutral" << endl;
+		cout << "2: Druid" << endl;
+		cout << "3: Hunter" << endl;
+		cout << "4: Mage" << endl;
+		cout << "5: Paladin" << endl;
+		cout << "6: Priest" << endl;
+		cout << "7: Rogue" << endl;
+		cout << "8: Shaman" << endl;
+		cout << "9: Warlock" << endl;
+		cout << "10: Warrior" << endl;
+		cout << "\nCommand: ";
+		getline(cin, selection);
+		if (selection == "1") ct = Spell::NEUTRAL;
+		else if (selection == "2") ct = Spell::DRUID;
+		else if (selection == "3") ct = Spell::HUNTER;
+		else if (selection == "4") ct = Spell::MAGE;
+		else if (selection == "5") ct = Spell::PALADIN;
+		else if (selection == "6") ct = Spell::PRIEST;
+		else if (selection == "7") ct = Spell::ROGUE;
+		else if (selection == "8") ct = Spell::SHAMAN;
+		else if (selection == "9") ct = Spell::WARLOCK;
+		else if (selection == "10") ct = Spell::WARRIOR;
+		else {
+			cout << "Improper command" << endl;
+			wrongCommand = true;
+		}
+		if (wrongCommand == false) break;
+	}
+
+	while (true) {
+		wrongCommand = false;
+		cout << "Please pick a number corresponding to the Type of the card:" << endl;
+		cout << "1: Spell" << endl;
+		cout << "2: Minion" << endl;
+		cout << "3: Weapon" << endl;
+		cout << "\nCommand: ";
+		getline(cin, selection);
+		if (selection == "1") type = "Spell";
+		else if (selection == "2") type = "Minion";
+		else if (selection == "3") type = "Weapon";
+		else {
+			cout << "Improper command" << endl;
+			wrongCommand = true;
+		}
+		if (wrongCommand == false) break;
+	}
+
+
+	while (true) {
+		wrongCommand = false;
+		cout << "Please pick a number corresponding to the Rarity of the card:" << endl;
+		cout << "1: Common" << endl;
+		cout << "2: Rare" << endl;
+		cout << "3: Epic" << endl;
+		cout << "4: Legendary" << endl;
+
+		cout << "\nCommand: ";
+		getline(cin, selection);
+		if (selection == "1") {
+			r = Spell::COMMON;
+			rarity = "Common";
+		}
+		else if (selection == "2") {
+			r = Spell::RARE;
+			rarity = "Rare";
+		}
+		else if (selection == "3") {
+			r = Spell::EPIC;
+			rarity = "Epic";
+		}
+		else if (selection == "5") {
+			r = Spell::LEGENDARY;
+			rarity = "Legendary";
+		}
+		else {
+			cout << "Improper command" << endl;
+			wrongCommand = true;
+		}
+		if (wrongCommand == false) break;
+	}
+
+
+	if (type == "Spell") {
+		sptr = new Spell(name, cost, ct, r, description, Spell::MANA);
+
+
+	}
+	else if (type == "Minion") {
+		int attack = 0;
+		int defense = 0;
+
+		cout << "Please enter the attack value for the Minion:" << endl;
+		attack = validateType(attack);
+
+		cout << "Please enter the health value for the Minion:" << endl;
+		defense = validateType(defense);
+
+		sptr = new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA);
+	
+
+	}
+	else if (type == "Weapon") {
+		int attack;
+		int defense;
+
+		cout << "Please enter the attack value for the Weapon:" << endl;
+		cin >> attack;
+
+		cout << "Please enter the defense value for the Minion:" << endl;
+		cin >> defense;
+
+		sptr = new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
+	}
+	return sptr;
+}
+
+void searchCard(HashTable<Spell>& hash) {
+	Spell* card = createCard();
+	if (hash.find(*(card)) == -1) cout << "Element found in database" << endl;
+	else cout << "Element not found in database" << endl;
+
 }
 
 template<typename T>
@@ -121,9 +261,6 @@ void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 
 	cout << "Please enter the Mana Cost for the card:" << endl;
 	cost = validateType(cost);
-
-	
-
 
 	while (true) {
 		wrongCommand = false;
@@ -355,115 +492,15 @@ void packOpening(HashTable<Spell>& table)
 }
 
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
-	string name, classType, type, rarity, description;
-	int cost;
-
+	string name;
+	int cost = 0;
+	
 	//We should probably add input validation
 	cout << "Please enter the name for the card:" << endl;
 	cin >> name;
-
-	cout << "Please enter the Mana Cost for the card:" << endl;
-	cin >> cost;
-
-	bool findingCT = true;
-	Spell::ClassType ct;
-	while (findingCT) {
-		cout << "Please enter the Class of the card:" << endl;
-		cin >> classType;
-
-		if (classType == "Neutral") {
-			ct = Spell::NEUTRAL;
-			findingCT = false;
-		}
-		else if (classType == "Druid") {
-			ct = Spell::DRUID;
-			findingCT = false;
-		}
-		else if (classType == "Hunter") {
-			ct = Spell::HUNTER;
-			findingCT = false;
-		}
-		else if (classType == "Mage") {
-			ct = Spell::MAGE;
-			findingCT = false;
-		}
-		else if (classType == "Paladin") {
-			ct = Spell::PALADIN;
-			findingCT = false;
-		}
-		else if (classType == "Priest") {
-			ct = Spell::PRIEST;
-			findingCT = false;
-		}
-		else if (classType == "Rogue") {
-			ct = Spell::ROGUE;
-			findingCT = false;
-		}
-		else if (classType == "Shaman") {
-			ct = Spell::SHAMAN;
-			findingCT = false;
-		}
-		else if (classType == "Warlock") {
-			ct = Spell::WARLOCK;
-			findingCT = false;
-		}
-		else if (classType == "Warrior") {
-			ct = Spell::WARRIOR;
-			findingCT = false;
-		}
-		else {
-			cout << "Invalid Class, please try again." << endl;
-		}
-
-	}
-	bool findingT = true;
-
-	while (findingT) {
-		cout << "Please enter the card's Type:" << endl;
-		cin >> type;
-
-		if (type == "Spell" || type == "Minion" || type == "Weapon") {
-			findingT = false;
-		}
-		else {
-			cout << "Invalid Type, please try again. " << endl;
-		}
-	}
-
-	bool findingr = true;
-	Spell::Rarity r;
-	while (findingr) {
-		cout << "Please enter the rarity of the card:" << endl;
-		cin >> rarity;
-		if (rarity == "Common") {
-			r = Spell::COMMON;
-			findingr = false;
-		}
-		else if (rarity == "Rare") {
-			r = Spell::RARE;
-			findingr = false;
-		}
-		else if (rarity == "Epic") {
-			r = Spell::EPIC;
-			findingr = false;
-		}
-		else if (rarity == "Legendary") {
-			r = Spell::LEGENDARY;
-			findingr = false;
-		}
-		else {
-			cout << "Invalid rarity, please try again." << endl;
-		}
-	}
-
-	cout << "Please enter the description for the card:" << endl;
-	cin >> description;
-
-	//Take the information stored from the user and add to .CSV file
-
-
-	//take variables and create a Card object
-
+	Spell search = Spell(name, 0, Spell::NEUTRAL, Spell::COMMON, "", Spell::MANA);
+	hash.find(search);
+	
 	if (type == "Spell") {
 
 		Spell sptr = Spell(name, cost, ct, r, description, Spell::MANA);
