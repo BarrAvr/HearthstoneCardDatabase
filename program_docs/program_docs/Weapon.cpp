@@ -13,16 +13,17 @@ Weapon::Weapon() {
 	attackValue = 0;
 	durability = 0;
 }
-Weapon::Weapon(std::string newName, int cost, ClassType newClass, Rarity newRarity, std::string newDescription, int attack, int newDurability, key sortKey) {
+Weapon::Weapon(std::string newName, int cost, ClassType newClass, Rarity newRarity, std::string newDescription, int attack, int newDurability, key newSortKey) {
 	name = newName;
 	manaCost = cost;
 	cardClass = newClass;
 	rarity = newRarity;
 	description = newDescription;
-	sortKey = sortKey;
+	sortKey = newSortKey;
 	attackValue = attack;
 	durability = newDurability;
 }
+
 //Destructor
 Weapon::~Weapon() {
 
