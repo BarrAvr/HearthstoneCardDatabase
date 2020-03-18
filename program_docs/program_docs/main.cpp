@@ -23,8 +23,8 @@ void printHashTable(HashTable<Spell>&);
 void printTree(BST<Spell*>&);
 void printIndentedTree(BST<Spell*>);
 void cardCompare(HashTable<Spell>);
-void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
-void readDataToFile(fstream& file, HashTable<Spell>& hash);
+void readFileToDatabase(ifstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
+void readDataToFile(ofstream& file, HashTable<Spell>& hash);
 int getCount(fstream& file);
 Spell* getRandomSpell(HashTable<Spell>&, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
@@ -39,41 +39,46 @@ int main() {
 	HashTable<Spell> cardHashtable = HashTable<Spell>(size);
 	BST<Spell*> cardTree = BST<Spell*>();
 	cout << "Hearthstone Database" << endl;
-	fstream inputFile;
+	ifstream inputFile;
 	inputFile.open("input.tsv", ios::in);
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	inputFile.close();
 	//inputFile.open("input.tsv", ios::app);
-	inputFile.open("output.txt", ios::app);
-	readDataToFile(inputFile, cardHashtable);
+	ofstream outputFile;
+	outputFile.open("output.txt", ios::app);
+	readDataToFile(outputFile, cardHashtable);
 	cout << "Size of table" << cardHashtable.getNumItems() << endl;
 
-	while (true)
-	{
-		displayMenu();
-		cout << "\nCommand: ";
-		cin >> selection;
-		if (selection == "1" || selection == "ADD") addCard(inputFile, cardTree, cardHashtable);
-		else if (selection == "2" || selection == "DELETE") deleteCard(inputFile, cardTree, cardHashtable);
-		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
-		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
-		else if (selection == "5" || selection == "PRINTTREE") printTree(cardTree);
-		else if (selection == "6" || selection == "PACK") packOpening(cardHashtable);
-		else if (selection == "7" || selection == "HELP") displayMenu();
-		else if (selection == "8" || selection == "EXIT") {
-			cout << "Press 0 and enter to confirm you want to exit or any other key to continue" << endl;
-			cin >> selection;
-			if (selection == "0" ) break;
-		}
-		else {
-			cout << "\nERROR: Improper command. Enter \'5\' or \'HELP\' to display menu " << endl;
-		}
-	}
-	inputFile.close();
-	system("pause");
-	return 0;
+	//while (true)
+	//{
+	//	displayMenu();
+	//	cout << "\nCommand: ";
+	//	cin >> selection;
+	//	if (selection == "1" || selection == "ADD") addCard(inputFile, cardTree, cardHashtable);
+	//	else if (selection == "2" || selection == "DELETE") deleteCard(inputFile, cardTree, cardHashtable);
+	//	else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
+	//	else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
+	//	else if (selection == "5" || selection == "PRINTTREE") printTree(cardTree);
+	//	else if (selection == "6" || selection == "PACK") packOpening(cardHashtable);
+	//	else if (selection == "7" || selection == "HELP") displayMenu();
+	//	else if (selection == "8" || selection == "EXIT") {
+	//		cout << "Press 0 and enter to confirm you want to exit or any other key to continue" << endl;
+	//		cin >> selection;
+	//		if (selection == "0" ) break;
+	//	}
+	//	else {
+	//		cout << "\nERROR: Improper command. Enter \'5\' or \'HELP\' to display menu " << endl;
+	//	}
+	//}
+	//inputFile.close();
+	//system("pause");
+	//return 0;
 }
 
+
+void readDataToFile(ofstream& file, HashTable<Spell>& hash) {
+	hash.printTableInTSVFormat(file);
+}
 
 Spell* createCard() {
 	string selection, name, type, description, rarity, classType;
@@ -349,7 +354,7 @@ void packOpening(HashTable<Spell>& table)
 
 }
 
-void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
+void deleteCard(ofstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	Spell* card = createCard();
 	if (hash.find(*(card)) == -1) cout << "Element found in database" << endl;
 	else {
@@ -362,11 +367,8 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 
 
 
-void readDataToFile(fstream& file, HashTable<Spell>& hash){
-	hash.printTableInTSVFormat(file);
-}
 
-void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
+void readFileToDatabase(ifstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	string name, classType, type, rarity;
 	int cost, attack, health;
 	string n;
