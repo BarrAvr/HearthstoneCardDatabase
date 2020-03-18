@@ -196,6 +196,6 @@ bool HashTable<T>::remove(const T& obj)
 template<class T>
 void HashTable<T>::printTableInTSVFormat(std::ostream& out) {
 	for (int i = 0; i < size; i++) {
-		if (table[i] != nullptr) *(table[i])->printListInTSVFormat(out);
+		if (table[i] != nullptr) (table[i])->printListInTSVFormat(out);
 	}
 }
