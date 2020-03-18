@@ -17,9 +17,10 @@ void displayMenu();
 void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 //void searchCard(HashTable<Spell>);
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
-//void printHashTable(HashTable<Spell>);
+void printHashTable(HashTable<Spell>&);
 //void printSorted(HashTable<Spell>);
-//void printIndentedTree(BST<Spell*>);
+void printTree(BST<Spell*>);
+void printIndentedTree(BST<Spell*>);
 void cardCompare(HashTable<Spell>);
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void readDataToFile(fstream& file, BST<Spell*>& tree);
@@ -42,19 +43,17 @@ int main() {
 
 	inputFile.open("input.tsv");
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
-	//cout << cardHashtable << endl;
-	//cardTree.inOrderTraversalPrint(cout);
-	displayMenu();
 	while (true)
 	{
+		displayMenu();
 		cout << "\nCommand: ";
 		getline(cin, selection);
 		if (selection == "1" || selection == "ADD") addCard(inputFile, cardTree, cardHashtable);
 		else if (selection == "2" || selection == "DELETE") deleteCard(inputFile, cardTree, cardHashtable);
-		/*else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
+		//else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
 		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
-		else if (selection == "5" || selection == "PRINTSORT") printSorted(cardHashtable);
-		else if (selection == "6" || selection == "PRINTTREE") printIndentedTree(cardTree);*/
+		//else if (selection == "5" || selection == "PRINTSORT") printSorted(cardHashtable);
+		else if (selection == "6" || selection == "PRINTTREE") printTree(cardTree);
 		else if (selection == "7" || selection == "COMPARE") packOpening(cardHashtable);
 		else if (selection == "8" || selection == "HELP") displayMenu();
 		else if (selection == "9" || selection == "EXIT") {
@@ -70,7 +69,33 @@ int main() {
 	system("pause");
 	return 0;
 }
+void printHashTable(HashTable<Spell>& table) {
+	cout << table << endl;
+}
 
+void printTree(BST<Spell*> tree) {
+	string selection;
+	bool wrongCommand = false;
+	while (true) {
+		cout << "Binary Search Tree sorted by Mana cost" << endl;
+		cout << "1: Print Preorder Traversal " << endl;
+		cout << "2: Print Inorder Traversal " << endl;
+		cout << "3: Print Postorder Traversal " << endl;
+		cout << "4: Print Breadth First Traversal " << endl;
+		cout << "\nCommand: ";
+		getline(cin, selection);
+		if (selection == "1") tree.preOrderTraversalPrint(cout);
+		else if (selection == "2") tree.inOrderTraversalPrint(cout);
+		else if (selection == "3") tree.postOrderTraversalPrint(cout);
+		else if (selection == "4") tree.breadthFirstTraversalPrint(cout);
+		else {
+			cout << "Improper command" << endl;
+			wrongCommand = true;
+		}
+		if (wrongCommand == false) break;
+	}
+	
+}
 void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 
 	//Storing information from the user into tempory variables
@@ -299,7 +324,6 @@ void packOpening(HashTable<Spell>& table)
 		packArray[4] = getRandomSpell(table, getRandomCardRarity());
 	} while (isInArray(packArray, packArray[4], 4) == true);
 
-
 	cout << "Card 1 is ..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	cout << "..." << endl;
@@ -325,7 +349,6 @@ void packOpening(HashTable<Spell>& table)
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << packArray[4] << endl;
-
 
 }
 
@@ -615,7 +638,7 @@ void displayMenu()
 	cout << "(3) SEARCH - search for a value in both BSTs " << endl;
 	cout << "(4) PRINTHASH - print all data from the hashtable " << endl;
 	cout << "(5) PRINTSORT - print all data sorted by a key attribute " << endl;
-	cout << "(6) PRINTTREE - print the indented BST " << endl;
+	cout << "(6) PRINTTREE - print data from BST " << endl;
 	cout << "(7) PACK - Simulate a random card pack opening " << endl;
 	cout << "(8) HELP - display menu once again " << endl;
 	cout << "(9) EXIT - exit the program " << endl;
