@@ -1,3 +1,37 @@
+/*
+	CIS 22C Final Project
+	By: Santosh Lakshman, Gokul Nair, Barr Avrahamov, Noah Gutierrez
+	Hearthstone Card Database 
+	Program Description:
+	This program sllows you to creae, search, delete and do other interactions with Hearthstone Cards
+	Pseudocode:
+	Read input file
+	Create hashtable based on amount of cards in input file
+	Loop
+		Ask user for menu option
+		If selection is 1
+			ask user for input to add new Card
+			Update file
+		If selection is 2
+			ask user for input to delete a Card
+		If selection is 3
+			ask user for input to search for a Card
+		If selection is 4
+			Print out hashtable
+			Print out hashtable efficiency Stats
+		If selection is 5
+			Ask User for the type of print they want
+			Print out desired traversal of Binary Search Tree
+			Print out BST efficiency Stats
+		If selection is 6
+			Print out random Card Pack opening
+		If selection is 7
+			Print menu again
+		If selection is 8
+			Ask User to confirm they want to exit
+		Exit Loop
+	Exit
+*/
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -49,8 +83,6 @@ int main() {
 		cin >> selection;
 		if (selection == "1" || selection == "ADD") addCard(outputFile, cardTree, cardHashtable);
 		else if (selection == "2" || selection == "DELETE") deleteCard(outputFile, cardTree, cardHashtable);
-		
-
 		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
 		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
 		else if (selection == "5" || selection == "PRINTTREE") printTree(cardTree);
@@ -65,7 +97,6 @@ int main() {
 			cout << "\nERROR: Improper command. Enter \'5\' or \'HELP\' to display menu " << endl;
 		}
 	}
-	
 	system("pause");
 	return 0;
 }
