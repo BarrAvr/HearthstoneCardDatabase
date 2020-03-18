@@ -385,6 +385,17 @@ int getNumItems(ifstream& file) {
 	return items;
 }
 
+
+
+//function to read the CSV file into the bst and hash table
+/*
+
+The info of each card is on a seperate line, with each data value being seperated
+by a tab as the delimeter.
+
+Invalid entries will not be added to the databases, and are disregarded.
+
+*/
 void readFileToDatabase(ifstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	string name, classType, type, rarity;
 	int cost, attack, health;
