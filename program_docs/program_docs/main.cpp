@@ -24,7 +24,7 @@ void printTree(BST<Spell*>&);
 void printIndentedTree(BST<Spell*>);
 void cardCompare(HashTable<Spell>);
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
-void readDataToFile(fstream& file, BST<Spell*>& tree);
+void readDataToFile(fstream& file, HashTable<Spell>& hash);
 int getCount(fstream& file);
 Spell* getRandomSpell(HashTable<Spell>&, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
@@ -49,7 +49,7 @@ int main() {
 	{
 		displayMenu();
 		cout << "\nCommand: ";
-		getline(cin, selection);
+		cin >> selection;
 		if (selection == "1" || selection == "ADD") addCard(inputFile, cardTree, cardHashtable);
 		else if (selection == "2" || selection == "DELETE") deleteCard(inputFile, cardTree, cardHashtable);
 		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
@@ -59,7 +59,7 @@ int main() {
 		else if (selection == "7" || selection == "HELP") displayMenu();
 		else if (selection == "8" || selection == "EXIT") {
 			cout << "Press 0 and enter to confirm you want to exit or any other key to continue" << endl;
-			getline(cin, selection);
+			cin >> selection;
 			if (selection == "0" ) break;
 		}
 		else {
@@ -71,24 +71,7 @@ int main() {
 	return 0;
 }
 
-string rarityEnumToString(Spell::Rarity r) {
-	if (r = Spell::COMMON) return "Common";
-	if (r = Spell::RARE) return "Rare";
-	if (r = Spell::EPIC) return "Epic";
-	if (r = Spell::LEGENDARY) return "Legendary";
-	
-}
-string classEnumToString(Spell::ClassType ct){
-	if (ct = Spell::DRUID) return "Druid";
-	else if (ct = Spell::HUNTER) return "Hunter";
-	else if (ct = Spell::MAGE) return "Mage";
-	else if (ct = Spell::PALADIN) return "Paladin";
-	else if (ct = Spell::PRIEST) return "Priest";
-	else if (ct = Spell::ROGUE) return "Rogue";
-	else if (ct = Spell::SHAMAN) return "Shaman";
-	else if (ct = Spell::WARLOCK) return "Warlock";
-	else if (ct = Spell::WARRIOR) return "Warrior";
-}
+
 Spell* createCard() {
 	string selection, name, type, description, rarity, classType;
 	int cost = 0;
@@ -118,6 +101,7 @@ Spell* createCard() {
 		cout << "9: Warlock" << endl;
 		cout << "10: Warrior" << endl;
 		cout << "\nCommand: ";
+		cin.ignore();
 		getline(cin, selection);
 		if (selection == "1") ct = Spell::NEUTRAL;
 		else if (selection == "2") ct = Spell::DRUID;
@@ -143,7 +127,7 @@ Spell* createCard() {
 		cout << "2: Minion" << endl;
 		cout << "3: Weapon" << endl;
 		cout << "\nCommand: ";
-		getline(cin, selection);
+		cin >> selection;
 		if (selection == "1") type = "Spell";
 		else if (selection == "2") type = "Minion";
 		else if (selection == "3") type = "Weapon";
@@ -164,6 +148,7 @@ Spell* createCard() {
 		cout << "4: Legendary" << endl;
 
 		cout << "\nCommand: ";
+		cin.ignore();
 		getline(cin, selection);
 		if (selection == "1") {
 			r = Spell::COMMON;
@@ -256,7 +241,7 @@ void printTree(BST<Spell*>& tree) {
 		cout << "4: Print Breadth First Traversal " << endl;
 		cout << "5: Print Indented Tree " << endl;
 		cout << "\nCommand: ";
-		getline(cin, selection);
+		cin >> selection;
 		if (selection == "1") tree.preOrderTraversalPrint(cout);
 		else if (selection == "2") tree.inOrderTraversalPrint(cout);
 		else if (selection == "3") tree.postOrderTraversalPrint(cout);
@@ -369,11 +354,13 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 		hash.remove(*(card));
 		cout << "Element successfully deleted" << endl;
 	}
+	readDataToFile(file, hash);
 }
 
 
-void readDataToFile(fstream& file, BST<Spell*>& tree){
-	tree.inOrderTraversalPrint(file);
+
+void readDataToFile(fstream& file, HashTable<Spell>& hash){
+	hash.printTSVFormat(file);
 }
 
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {

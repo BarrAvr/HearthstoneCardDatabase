@@ -137,7 +137,7 @@ std::string Spell::rarityEnumToString(Spell::Rarity r) {
 
 }
 std::string Spell::classEnumToString(Spell::ClassType ct) {
-	if (ct = Spell::DRUID) return "Druid";
+	if (ct == Spell::DRUID) return "Druid";
 	else if (ct == Spell::HUNTER) return "Hunter";
 	else if (ct == Spell::MAGE) return "Mage";
 	else if (ct == Spell::PALADIN) return "Paladin";
