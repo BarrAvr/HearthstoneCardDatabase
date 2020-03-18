@@ -99,6 +99,16 @@ private:
 	Return: nothing
 	*/
 	void recurBreadthFirst(BSTNode<T>*, std::ostream& out) const;
+	/* void recurPrintCardsIndent(BSTNode<T>*, int, std::ostream& out) const
+
+	Pre: root - BSTNode in BST to print.
+	numIndents - the number to indent and then print the root.
+	out - output to print to.
+
+	Post: This recurisively prints the BST indented.
+
+	Return: nothing
+	*/
 	void recurPrintCardsIndent(BSTNode<T>*, int, std::ostream& out) const;
 	/* for void recurEmpty(BSTNode<T>*&)
 
@@ -188,6 +198,16 @@ public:
 	Return: nothing
 	*/
 	void breadthFirstTraversalPrint(std::ostream& out) const;
+	/* for void printCardsIndent(std::ostream& out) const;
+
+	Pre: out - stream to output to.
+
+	Post: calls on the recursive print cards in tree indented function
+	with the parameters rootPtr, 0, and out which will print the cards
+	in the tree indented.
+
+	Return: nothing
+	*/
 	void printCardsIndent(std::ostream& out) const;
 	/* for void empty()
 
