@@ -19,7 +19,7 @@ public:
 	SinglyLinkedList(int, T*);
 	SinglyLinkedList(int, T*, T*);
 	~SinglyLinkedList();
-	void printTSVFormat(std::ostream& out);
+	void printListInTSVFormat(std::ostream& out);
 	LinkNode<T>* find(const T&) const;
 	LinkNode<T>* find(int) const;
 	LinkNode<T>* findPrev(const T&) const;
@@ -239,7 +239,7 @@ std::ostream& operator<<(std::ostream& out, const SinglyLinkedList<T>& list) {
 }
 
 template<class T>
-void SinglyLinkedList<T>::printTSVFormat(std::ostream& out) {
+void SinglyLinkedList<T>::printListInTSVFormat(std::ostream& out) {
 	LinkNode<T>* print = head;
 	for (int i = 0; i < count; i++) {
 		*(print->getVal()).printToTSVFile(out);

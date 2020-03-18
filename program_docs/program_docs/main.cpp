@@ -360,7 +360,7 @@ void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 
 
 void readDataToFile(fstream& file, HashTable<Spell>& hash){
-	hash.printTSVFormat(file);
+	hash.printTableInTSVFormat(file);
 }
 
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {

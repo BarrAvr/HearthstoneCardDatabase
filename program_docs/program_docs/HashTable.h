@@ -25,7 +25,7 @@ class HashTable
 		SinglyLinkedList<T>* operator[](int index) const;
 		template<class U>
 		friend std::ostream& operator<<(std::ostream& out, const HashTable<U>& list);
-		void printTSVFormat(std::ostream& out);
+		void printTableInTSVFormat(std::ostream& out);
 		void add(T*);
 		int find(const T&) const;
 		bool remove(const T&);
@@ -194,8 +194,8 @@ bool HashTable<T>::remove(const T& obj)
 }
 
 template<class T>
-void HashTable<T>::printTSVFormat(std::ostream& out) {
+void HashTable<T>::printTableInTSVFormat(std::ostream& out) {
 	for (int i = 0; i < size; i++) {
-		if (table[i] != nullptr) *(table[i])->printTSVFormat(out);
+		if (table[i] != nullptr) *(table[i])->printListInTSVFormat(out);
 	}
 }
