@@ -50,7 +50,7 @@ int main() {
 	while (true)
 	{
 		
-		cout << "Size of table" << cardHashtable.getNumItems() << endl;
+		
 		displayMenu();
 		cout << "\nCommand: ";
 		cin >> selection;
@@ -247,6 +247,11 @@ T validateType(T input) {
 }
 void printHashTable(HashTable<Spell>& table) {
 	cout << table << endl;
+	cout << "Hashtable Efficiency" << endl;
+	cout << "Size of table: " << table.getNumItems() << endl;
+	cout << "Load Factor: " << table.getLoadFactor() * 100 << "%\n";
+	cout << "Longest Linked List length: " << table.getMaxNodes() << " nodes\n";
+	cout << "Average Linked List length: " << table.getAvgNodes() << " nodes\n";
 }
 
 void printTree(BST<Spell*>& tree) {

@@ -22,6 +22,8 @@ class HashTable
 		int getSize() const;
 		int getMaxNodes() const;
 		int getNumItems() const;
+		double getLoadFactor() const;
+		double getAvgNodes() const;
 		SinglyLinkedList<T>* operator[](int index) const;
 		template<class U>
 		friend std::ostream& operator<<(std::ostream& out, const HashTable<U>& list);
@@ -126,6 +128,28 @@ int HashTable<T>::getMaxNodes() const {
 	}
 	return max;
 }
+
+template<class T>
+double HashTable<T>::getAvgNodes() const {
+	double avg = 0;
+	int filledIndices = 0;
+	for (int i = 0; i < size; i++) {
+		if (table[i] != nullptr) {
+			avg += table[i]->getCount();
+			filledIndices++;
+			
+		}
+
+	}
+	return avg/(double)filledIndices;
+}
+
+template<class T>
+double HashTable<T>::getLoadFactor() const {
+	return (double)numItems/(double)size;
+}
+
+
 
 
 /* Hashing algorithm for hash table that uses a pseudorandom approach
