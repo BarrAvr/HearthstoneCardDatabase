@@ -187,6 +187,7 @@ Spell* createCard() {
 	cout << "Please enter a description for the card: " << endl;
 	getline(cin, description);
 
+	
 	if (type == "Spell") {
 		description += "\t";
 		description += "\t";
@@ -304,7 +305,7 @@ void addCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	Spell* card = createCard();
 	tree.addNode(card);
 	hash.add(card);
-	file.open("input.tsv", ios::out | ios::trunc);
+	file.open("input.tsv", ios::out | ios::app);
 	card->printToTSVFile(file);
 	file.close();
 	cout << "Card Sucessfully added" << endl;

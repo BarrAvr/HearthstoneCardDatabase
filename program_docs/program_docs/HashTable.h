@@ -11,7 +11,7 @@ class HashTable
 	// lists because of linked list resolution
 	SinglyLinkedList<T>** table;
 	int size; // Member that is depended on load factor
-	const double LOAD_FACTOR = 0.75; // Intended ratio of max # of elements in hash table to size of hash table
+	const double LOAD_FACTOR = 0.70; // Intended ratio of max # of elements in hash table to size of hash table
 	int hashFunc(const T&) const;
 	int numItems;
 
