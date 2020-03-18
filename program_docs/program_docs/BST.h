@@ -452,6 +452,6 @@ void BST<T>::recurPrintCardsIndent(BSTNode<T>* root, int numIndents, std::ostrea
 	for (int i = 0; i < numIndents; i++) {
 		out << '\t';
 	}
-	out << root->getName() << endl;
+	out << root->getName() << std::endl;
 	if (root->getLeftChild() != nullptr) recurPrintCardsIndent(root->getLeftChild(), numIndents + 1, out);
 }
