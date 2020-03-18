@@ -46,6 +46,12 @@ int main() {
 
 	inputFile.open("input.tsv");
 	outputFile.open("output.tsv", ios::out);
+	ofstream fout;
+	fout.open("bruh.txt", ios::out);
+	fout.open("bruh.txt", ios::in | ios::out);
+	string x;
+	fout << "bruh" << endl;
+
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	while (true)
 	{
