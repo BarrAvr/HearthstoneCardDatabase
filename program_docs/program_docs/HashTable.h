@@ -189,7 +189,7 @@ bool HashTable<T>::remove(const T& obj)
 		curr = nullptr;
 	}
 	else curr->remove(obj);
-	numItems--;
+	numItems -= 1;
 	return true;
 }
 

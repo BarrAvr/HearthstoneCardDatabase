@@ -30,7 +30,7 @@ Spell* getRandomSpell(HashTable<Spell>&, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
 void packOpening(HashTable<Spell>&);
 bool isInArray(Spell** arr, Spell* check, int size);
-
+void deletePyroblast(ofstream& file, HashTable<Spell>& hash, BST<Spell*>& tree);
 
 //TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
 int main() {
@@ -44,11 +44,13 @@ int main() {
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	inputFile.close();
 	ofstream outputFile;
-	outputFile.open("input.tsv", ios::app);
+	outputFile.open("output.tsv", ios::out|ios::trunc);
 	cout << "Size of table" << cardHashtable.getNumItems() << endl;
 
 	while (true)
 	{
+		deletePyroblast(outputFile, cardHashtable, cardTree);
+		cout << "Size of table" << cardHashtable.getNumItems() << endl;
 		displayMenu();
 		cout << "\nCommand: ";
 		cin >> selection;
@@ -68,11 +70,21 @@ int main() {
 			cout << "\nERROR: Improper command. Enter \'5\' or \'HELP\' to display menu " << endl;
 		}
 	}
-	inputFile.close();
+	outputFile.close();
 	system("pause");
 	return 0;
 }
-
+void deletePyroblast(ofstream& file, HashTable<Spell>& hash, BST<Spell*>& tree) {
+	Spell* card = new Spell("Pyroblast", 10, Spell::MAGE, Spell::EPIC, "Deal 10 damage.\t\t", Spell::MANA);
+	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
+	else {
+		cout << "Element successfully deleted" << endl;
+		tree.deleteNode(card);
+		if (hash.remove(*(card))) cout << "removed from hashtable" << endl;
+		else cout << "not removed from hashtable" << endl;
+	}
+	readDataToFile(file, hash);
+}
 
 void readDataToFile(ofstream& file, HashTable<Spell>& hash) {
 	hash.printTableInTSVFormat(file);
@@ -359,7 +371,7 @@ void deleteCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
 	else {
 		tree.deleteNode(card);
-		hash.remove(*(card));
+		if(!hash.remove(*(card))) cout << "removed from hashtable" <<endl;
 		cout << "Element successfully deleted" << endl;
 	}
 	readDataToFile(file, hash);
