@@ -43,8 +43,11 @@ int main() {
 	inputFile.open("input.tsv", ios::in);
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	inputFile.close();
-	inputFile.open("input.tsv", ios::app);
+	//inputFile.open("input.tsv", ios::app);
+	inputFile.open("output.txt", ios::app);
+	readDataToFile(inputFile, cardHashtable);
 	cout << "Size of table" << cardHashtable.getNumItems() << endl;
+
 	while (true)
 	{
 		displayMenu();
