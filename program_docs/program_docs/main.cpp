@@ -44,12 +44,12 @@ int main() {
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	inputFile.close();
 	ofstream outputFile;
-	outputFile.open("output.tsv", ios::out|ios::trunc);
+	outputFile.open("input.tsv", ios::out|ios::trunc);
 	cout << "Size of table" << cardHashtable.getNumItems() << endl;
-
+	//deletePyroblast(outputFile, cardHashtable, cardTree);
 	while (true)
 	{
-		deletePyroblast(outputFile, cardHashtable, cardTree);
+		
 		cout << "Size of table" << cardHashtable.getNumItems() << endl;
 		displayMenu();
 		cout << "\nCommand: ";
@@ -371,7 +371,7 @@ void deleteCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
 	else {
 		tree.deleteNode(card);
-		if(!hash.remove(*(card))) cout << "removed from hashtable" <<endl;
+		if(hash.remove(*(card))) cout << "removed from hashtable" <<endl;
 		cout << "Element successfully deleted" << endl;
 	}
 	readDataToFile(file, hash);
