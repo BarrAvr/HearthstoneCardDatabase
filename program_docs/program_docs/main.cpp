@@ -370,6 +370,7 @@ void packOpening(HashTable<Spell>& table)
 	int randomGeneration;
 	string temp;
 	Spell* packArray[5];
+	//One rare card guaranteed in every pack
 	packArray[0] = getRandomSpell(table, Spell::RARE);
 	do {
 		packArray[1] = getRandomSpell(table, getRandomCardRarity());
@@ -388,27 +389,27 @@ void packOpening(HashTable<Spell>& table)
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	cout << packArray[0] << endl;
+	cout << *(packArray[0]) << endl;
 	cout << "Card 2 is ..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	cout << packArray[1] << endl;
+	cout << *(packArray[1]) << endl;
 	cout << "Card 3 is ..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	cout << packArray[2] << endl;
+	cout << *(packArray[2]) << endl;
 	cout << "Card 4 is ..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	cout << packArray[3] << endl;
+	cout << *(packArray[3]) << endl;
 	cout << "Card 5 is ..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	cout << packArray[4] << endl;
+	cout << *(packArray[4]) << endl;
 
 }
 /*

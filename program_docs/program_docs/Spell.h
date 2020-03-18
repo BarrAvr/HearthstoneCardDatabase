@@ -34,8 +34,8 @@ public:
 	void setClass(ClassType);
 	void setRarity(Rarity);
 	void setDescription(std::string);
-	std::string rarityEnumToString(Spell::Rarity);
-	std::string classEnumToString(Spell::ClassType);
+	std::string rarityEnumToString(Spell::Rarity) const;
+	std::string classEnumToString(Spell::ClassType) const;
 	void printToTSVFile(std::ostream& out);
 	//misc
 	virtual void print(std::ostream& out) const;

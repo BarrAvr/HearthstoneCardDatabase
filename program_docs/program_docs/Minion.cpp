@@ -48,8 +48,9 @@ void Minion::print(std::ostream& out) const {
 	out << "CardType: Minion\n" <<
 		"Mana Cost: " << this->getManaCost() << std::endl
 		<< "Name: " << this->getName() << std::endl
-		<< "ClassType: " << this->getClass() << std::endl 
-		<< "Description: " << this->getDescription() << std::endl 
+		<< "ClassType: " << classEnumToString(this->getClass()) << std::endl
+		<< "Description: " << this->getDescription() << std::endl
+		<< "Rarity: " << rarityEnumToString(this->getRarity()) << std::endl
 		<< "Attack/Health: " << this->getAttackValue() << "/" << this->getHealthValue() << std::endl << std::endl;
 }
 

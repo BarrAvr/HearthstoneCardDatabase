@@ -49,8 +49,9 @@ void Weapon::print(std::ostream& out) const {
 	out << "CardType: Weapon\n" <<
 		"Mana Cost: " << this->getManaCost() << std::endl
 		<< "Name: " << this->getName() << std::endl
-		<< "ClassType: " << this->getClass() << std::endl 
+		<< "ClassType: " << classEnumToString(this->getClass()) << std::endl
 		<< "Description: " << this->getDescription() << std::endl
+		<< "Rarity: " << rarityEnumToString(this->getRarity()) << std::endl
 		<< "Attack/Health: " << this->getAttackValue() << "/" << this->getDurability() << std::endl << std::endl;
 }
 

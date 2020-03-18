@@ -126,17 +126,18 @@ void Spell::print(std::ostream& out) const {
 	out << "CardType: Spell\n" <<
 		"Mana Cost: " << this->getManaCost() << std::endl
 		<< "Name: " << this->getName() << std::endl
-		<< "ClassType: " << this->getClass() << std::endl
-		<< "Description: " << this->getDescription() << std::endl << std::endl;
+		<< "ClassType: " << classEnumToString(this->getClass()) << std::endl
+		<< "Description: " << this->getDescription() << std::endl
+		<< "Rarity: " << rarityEnumToString(this->getRarity()) << std::endl << std::endl;
 }
-std::string Spell::rarityEnumToString(Spell::Rarity r) {
+std::string Spell::rarityEnumToString(Spell::Rarity r) const {
 	if (r == Spell::COMMON) return "Common";
 	if (r == Spell::RARE) return "Rare";
 	if (r == Spell::EPIC) return "Epic";
 	if (r == Spell::LEGENDARY) return "Legendary";
 
 }
-std::string Spell::classEnumToString(Spell::ClassType ct) {
+std::string Spell::classEnumToString(Spell::ClassType ct) const{
 	if (ct == Spell::DRUID) return "Druid";
 	else if (ct == Spell::HUNTER) return "Hunter";
 	else if (ct == Spell::MAGE) return "Mage";
