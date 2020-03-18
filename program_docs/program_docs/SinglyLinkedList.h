@@ -242,6 +242,7 @@ template<class T>
 void SinglyLinkedList<T>::printListInTSVFormat(std::ostream& out) {
 	LinkNode<T>* print = head;
 	for (int i = 0; i < count; i++) {
+		if (print == nullptr) break;
 		print->getVal()->printToTSVFile(out);
 		print = print->getNext();
 	}

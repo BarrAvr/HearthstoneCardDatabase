@@ -15,9 +15,9 @@ using namespace std;
 template<typename T>
 T validateType(T input);
 void displayMenu();
-void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
+void addCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void searchCard(HashTable<Spell>&);
-void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
+void deleteCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void printHashTable(HashTable<Spell>&);
 //void printSorted(HashTable<Spell>);
 void printTree(BST<Spell*>&);
@@ -43,36 +43,34 @@ int main() {
 	inputFile.open("input.tsv", ios::in);
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	inputFile.close();
-	//inputFile.open("input.tsv", ios::app);
 	ofstream outputFile;
-	outputFile.open("output.txt", ios::app);
-	readDataToFile(outputFile, cardHashtable);
+	outputFile.open("input.tsv", ios::app);
 	cout << "Size of table" << cardHashtable.getNumItems() << endl;
 
-	//while (true)
-	//{
-	//	displayMenu();
-	//	cout << "\nCommand: ";
-	//	cin >> selection;
-	//	if (selection == "1" || selection == "ADD") addCard(inputFile, cardTree, cardHashtable);
-	//	else if (selection == "2" || selection == "DELETE") deleteCard(inputFile, cardTree, cardHashtable);
-	//	else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
-	//	else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
-	//	else if (selection == "5" || selection == "PRINTTREE") printTree(cardTree);
-	//	else if (selection == "6" || selection == "PACK") packOpening(cardHashtable);
-	//	else if (selection == "7" || selection == "HELP") displayMenu();
-	//	else if (selection == "8" || selection == "EXIT") {
-	//		cout << "Press 0 and enter to confirm you want to exit or any other key to continue" << endl;
-	//		cin >> selection;
-	//		if (selection == "0" ) break;
-	//	}
-	//	else {
-	//		cout << "\nERROR: Improper command. Enter \'5\' or \'HELP\' to display menu " << endl;
-	//	}
-	//}
-	//inputFile.close();
-	//system("pause");
-	//return 0;
+	while (true)
+	{
+		displayMenu();
+		cout << "\nCommand: ";
+		cin >> selection;
+		if (selection == "1" || selection == "ADD") addCard(outputFile, cardTree, cardHashtable);
+		else if (selection == "2" || selection == "DELETE") deleteCard(outputFile, cardTree, cardHashtable);
+		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
+		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
+		else if (selection == "5" || selection == "PRINTTREE") printTree(cardTree);
+		else if (selection == "6" || selection == "PACK") packOpening(cardHashtable);
+		else if (selection == "7" || selection == "HELP") displayMenu();
+		else if (selection == "8" || selection == "EXIT") {
+			cout << "Press 0 and enter to confirm you want to exit or any other key to continue" << endl;
+			cin >> selection;
+			if (selection == "0" ) break;
+		}
+		else {
+			cout << "\nERROR: Improper command. Enter \'5\' or \'HELP\' to display menu " << endl;
+		}
+	}
+	inputFile.close();
+	system("pause");
+	return 0;
 }
 
 
@@ -181,9 +179,11 @@ Spell* createCard() {
 		if (wrongCommand == false) break;
 	}
 	cout << "Please enter a description for the card: " << endl;
-	cin >> description;
+	getline(cin, description);
 
 	if (type == "Spell") {
+		description += "\t";
+		description += "\t";
 		sptr = new Spell(name, cost, ct, r, description, Spell::MANA);
 
 
@@ -219,8 +219,8 @@ Spell* createCard() {
 
 void searchCard(HashTable<Spell>& hash) {
 	Spell* card = createCard();
-	if (hash.find(*(card)) == -1) cout << "Element found in database" << endl;
-	else cout << "Element not found in database" << endl;
+	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
+	else cout << "Element found in database" << endl;
 
 }
 
@@ -264,7 +264,7 @@ void printTree(BST<Spell*>& tree) {
 	
 }
 
-void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
+void addCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	Spell* card = createCard();
 	tree.addNode(card);
 	hash.add(card);
@@ -354,9 +354,9 @@ void packOpening(HashTable<Spell>& table)
 
 }
 
-void deleteCard(ofstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
+void deleteCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	Spell* card = createCard();
-	if (hash.find(*(card)) == -1) cout << "Element found in database" << endl;
+	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
 	else {
 		tree.deleteNode(card);
 		hash.remove(*(card));

@@ -146,6 +146,7 @@ std::string Spell::classEnumToString(Spell::ClassType ct) {
 	else if (ct == Spell::SHAMAN) return "Shaman";
 	else if (ct == Spell::WARLOCK) return "Warlock";
 	else if (ct == Spell::WARRIOR) return "Warrior";
+	else if (ct == Spell::NEUTRAL) return "Neutral";
 }
 void Spell::printToTSVFile(std::ostream& out) {
 	out  << this->getName() << "\t"
