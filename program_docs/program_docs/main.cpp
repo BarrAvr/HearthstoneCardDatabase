@@ -235,13 +235,13 @@ void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 		tree.addNode(mptr);
 		hash.add(mptr);
 
-		file << name << ", "
-			<< cost << ", "
-			<< classType << ", "
-			<< type << ", "
+		file << name << "\t"
+			<< cost << "\t"
+			<< classType << "\t"
+			<< type << "\t"
 			<< rarity << ", "
-			<< description << ", "
-			<< attack << ", "
+			<< description << "\t"
+			<< attack << "\t"
 			<< defense << "\n";
 	}
 	else if (type == "Weapon") {
