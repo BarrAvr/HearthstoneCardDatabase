@@ -34,8 +34,6 @@ string rarityEnumToString(Spell::Rarity);
 string classEnumToString(Spell::ClassType);
 
 //TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
-fstream outputFile;
-
 int main() {
 	int size = 50;
 	string selection;
@@ -43,18 +41,16 @@ int main() {
 	BST<Spell*> cardTree = BST<Spell*>();
 	cout << "Hearthstone Database" << endl;
 	fstream inputFile;
-	fstream outputFile;
-
-	inputFile.open("input.tsv");
-	outputFile.open("input.tsv", ios::app);
-
+	inputFile.open("input.tsv", ios::in);
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
+	inputFile.close();
+	inputFile.open("input.tsv", ios::app);
 	while (true)
 	{
 		displayMenu();
 		cout << "\nCommand: ";
 		getline(cin, selection);
-		if (selection == "1" || selection == "ADD") addCard(outputFile, cardTree, cardHashtable);
+		if (selection == "1" || selection == "ADD") addCard(inputFile, cardTree, cardHashtable);
 		else if (selection == "2" || selection == "DELETE") deleteCard(inputFile, cardTree, cardHashtable);
 		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
 		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
@@ -71,7 +67,6 @@ int main() {
 		}
 	}
 	inputFile.close();
-	outputFile.close();
 	system("pause");
 	return 0;
 }
@@ -278,7 +273,7 @@ void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	Spell* card = createCard();
 	tree.addNode(card);
 	hash.add(card);
-	file << card->getName() << "\t"
+	file << "\n" <<card->getName() << "\t"
 		<< card->getManaCost() << "\t"
 		<< classEnumToString(card->getClass()) << "\t"
 		<< card->getCardType() << "\t"
@@ -330,6 +325,7 @@ Spell::Rarity getRandomCardRarity() {
 	if (randomNum > 94 && randomNum <= 99) return Spell::LEGENDARY;
 
 }
+
 bool isInArray(Spell** arr, Spell* check, int size) {
 	for (int i = 0; i < size; i++) {
 		if (arr[i] == check) return true;
@@ -504,7 +500,6 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 		}
 		else if (type == "Spell"){
 			Spell* sptr;
-
 			if (!failed) {
 				getline(file, h, '\n');
 				sptr = new Spell(name, cost, clt, rar, d, Spell::MANA);
