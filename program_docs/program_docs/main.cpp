@@ -25,37 +25,43 @@ void printIndentedTree(BST<Spell*>);
 void cardCompare(HashTable<Spell>);
 void readFileToDatabase(ifstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void readDataToFile(ofstream& file, HashTable<Spell>& hash);
-int getCount(fstream& file);
 Spell* getRandomSpell(HashTable<Spell>&, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
 void packOpening(HashTable<Spell>&);
 bool isInArray(Spell** arr, Spell* check, int size);
 void deletePyroblast(ofstream& file, HashTable<Spell>& hash, BST<Spell*>& tree);
+int getNumItems(ifstream&);
 
 //TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
 int main() {
-	int size = 50;
+	int size;
 	string selection;
+	ifstream inputFile;
+	inputFile.open("input.tsv", ios::in);
+	size = getNumItems(inputFile);
+	inputFile.close();
 	HashTable<Spell> cardHashtable = HashTable<Spell>(size);
 	BST<Spell*> cardTree = BST<Spell*>();
-	cout << "Hearthstone Database" << endl;
-	ifstream inputFile;
 	inputFile.open("input.tsv", ios::in);
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	inputFile.close();
+	cout << "Hearthstone Database" << endl;
 	ofstream outputFile;
-	outputFile.open("input.tsv", ios::out|ios::trunc);
-	cout << "Size of table" << cardHashtable.getNumItems() << endl;
-	//deletePyroblast(outputFile, cardHashtable, cardTree);
 	while (true)
 	{
-		
-		
 		displayMenu();
 		cout << "\nCommand: ";
 		cin >> selection;
-		if (selection == "1" || selection == "ADD") addCard(outputFile, cardTree, cardHashtable);
-		else if (selection == "2" || selection == "DELETE") deleteCard(outputFile, cardTree, cardHashtable);
+		if (selection == "1" || selection == "ADD") {
+			outputFile.open("input.tsv", ios::out | ios::trunc);
+			addCard(outputFile, cardTree, cardHashtable);
+			outputFile.close();
+		}
+		else if (selection == "2" || selection == "DELETE") {
+			outputFile.open("input.tsv", ios::out | ios::trunc);
+			deleteCard(outputFile, cardTree, cardHashtable);
+			outputFile.close();
+		}
 		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
 		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
 		else if (selection == "5" || selection == "PRINTTREE") printTree(cardTree);
@@ -70,21 +76,11 @@ int main() {
 			cout << "\nERROR: Improper command. Enter \'5\' or \'HELP\' to display menu " << endl;
 		}
 	}
-	outputFile.close();
+	
 	system("pause");
 	return 0;
 }
-void deletePyroblast(ofstream& file, HashTable<Spell>& hash, BST<Spell*>& tree) {
-	Spell* card = new Spell("Pyroblast", 10, Spell::MAGE, Spell::EPIC, "Deal 10 damage.\t\t", Spell::MANA);
-	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
-	else {
-		cout << "Element successfully found" << endl;
-		tree.deleteNode(card);
-		if (hash.remove(*(card))) cout << "removed from hashtable" << endl;
-		else cout << "not removed from hashtable" << endl;
-	}
-	readDataToFile(file, hash);
-}
+
 
 void readDataToFile(ofstream& file, HashTable<Spell>& hash) {
 	hash.printTableInTSVFormat(file);
@@ -382,8 +378,12 @@ void deleteCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	readDataToFile(file, hash);
 }
 
-
-
+int getNumItems(ifstream& file) {
+	string temp;
+	int items = 0;
+	while (getline(file, temp, '\n')) items++;
+	return items;
+}
 
 void readFileToDatabase(ifstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	string name, classType, type, rarity;
