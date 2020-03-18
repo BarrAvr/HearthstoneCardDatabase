@@ -1,5 +1,5 @@
+//BSTNode by Barr
 #pragma once
-
 template <typename T>
 class BSTNode {
 private:

@@ -1,3 +1,4 @@
+//Spell by Barr
 #pragma once
 #include <iostream>
 #include <string>

@@ -1,9 +1,11 @@
 /*
+
 	CIS 22C Final Project
 	By: Santosh Lakshman, Gokul Nair, Barr Avrahamov, Noah Gutierrez
 	Hearthstone Card Database 
 	Program Description:
 	This program sllows you to creae, search, delete and do other interactions with Hearthstone Cards
+	Main: File IO By Noah, All Other functions by Santosh
 	Pseudocode:
 	Read input file
 	Create hashtable based on amount of cards in input file
