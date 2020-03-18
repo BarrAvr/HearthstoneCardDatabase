@@ -98,7 +98,7 @@ Spell* createCard() {
 
 	cout << "Please enter the Mana Cost for the card:" << endl;
 	cost = validateType(cost);
-
+	cin.ignore();
 	while (true) {
 		wrongCommand = false;
 		cout << "Please pick a number corresponding to the Class of the card:" << endl;
@@ -113,7 +113,6 @@ Spell* createCard() {
 		cout << "9: Warlock" << endl;
 		cout << "10: Warrior" << endl;
 		cout << "\nCommand: ";
-		cin.ignore();
 		getline(cin, selection);
 		if (selection == "1") ct = Spell::NEUTRAL;
 		else if (selection == "2") ct = Spell::DRUID;
@@ -131,7 +130,7 @@ Spell* createCard() {
 		}
 		if (wrongCommand == false) break;
 	}
-
+	cin.ignore();
 	while (true) {
 		wrongCommand = false;
 		cout << "Please pick a number corresponding to the Type of the card:" << endl;
@@ -139,7 +138,7 @@ Spell* createCard() {
 		cout << "2: Minion" << endl;
 		cout << "3: Weapon" << endl;
 		cout << "\nCommand: ";
-		cin >> selection;
+		getline(cin, selection);
 		if (selection == "1") type = "Spell";
 		else if (selection == "2") type = "Minion";
 		else if (selection == "3") type = "Weapon";
@@ -150,7 +149,7 @@ Spell* createCard() {
 		if (wrongCommand == false) break;
 	}
 
-
+	cin.ignore();
 	while (true) {
 		wrongCommand = false;
 		cout << "Please pick a number corresponding to the Rarity of the card:" << endl;
@@ -160,7 +159,7 @@ Spell* createCard() {
 		cout << "4: Legendary" << endl;
 
 		cout << "\nCommand: ";
-		cin.ignore();
+		
 		getline(cin, selection);
 		if (selection == "1") {
 			r = Spell::COMMON;
@@ -187,7 +186,6 @@ Spell* createCard() {
 	cout << "Please enter a description for the card: " << endl;
 	getline(cin, description);
 
-	
 	if (type == "Spell") {
 		description += "\t";
 		description += "\t";
