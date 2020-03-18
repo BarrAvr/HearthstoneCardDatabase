@@ -43,9 +43,10 @@ int main() {
 	BST<Spell*> cardTree = BST<Spell*>();
 	cout << "Hearthstone Database" << endl;
 	fstream inputFile;
+	fstream outputFile;
 
 	inputFile.open("input.tsv");
-	outputFile.open("output.tsv", ios::out);
+	outputFile.open("input.tsv", ios::app);
 
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	while (true)
@@ -69,6 +70,7 @@ int main() {
 			cout << "\nERROR: Improper command. Enter \'5\' or \'HELP\' to display menu " << endl;
 		}
 	}
+	inputFile.close();
 	outputFile.close();
 	system("pause");
 	return 0;
@@ -180,7 +182,7 @@ Spell* createCard() {
 			r = Spell::EPIC;
 			rarity = "Epic";
 		}
-		else if (selection == "5") {
+		else if (selection == "4") {
 			r = Spell::LEGENDARY;
 			rarity = "Legendary";
 		}
@@ -190,7 +192,8 @@ Spell* createCard() {
 		}
 		if (wrongCommand == false) break;
 	}
-
+	cout << "Please enter a description for the card: " << endl;
+	cin >> description;
 
 	if (type == "Spell") {
 		sptr = new Spell(name, cost, ct, r, description, Spell::MANA);
@@ -199,29 +202,29 @@ Spell* createCard() {
 	}
 	else if (type == "Minion") {
 		int attack = 0;
-		int defense = 0;
+		int health = 0;
 
 		cout << "Please enter the attack value for the Minion:" << endl;
 		attack = validateType(attack);
 
 		cout << "Please enter the health value for the Minion:" << endl;
-		defense = validateType(defense);
+		health = validateType(health);
 
-		sptr = new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA);
+		sptr = new Minion(name, cost, ct, r, description, attack, health, Minion::MANA);
 	
 
 	}
 	else if (type == "Weapon") {
-		int attack;
-		int defense;
+		int attack = 0;
+		int durability = 0;
 
 		cout << "Please enter the attack value for the Weapon:" << endl;
-		cin >> attack;
+		attack = validateType(attack);
 
 		cout << "Please enter the defense value for the Minion:" << endl;
-		cin >> defense;
+		durability = validateType(durability);
 
-		sptr = new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
+		sptr = new Weapon(name, cost, ct, r, description, attack, durability, Spell::MANA);
 	}
 	return sptr;
 }
