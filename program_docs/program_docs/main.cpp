@@ -52,16 +52,10 @@ int main() {
 		displayMenu();
 		cout << "\nCommand: ";
 		cin >> selection;
-		if (selection == "1" || selection == "ADD") {
-			outputFile.open("input.tsv", ios::out | ios::trunc);
-			addCard(outputFile, cardTree, cardHashtable);
-			outputFile.close();
-		}
-		else if (selection == "2" || selection == "DELETE") {
-			outputFile.open("input.tsv", ios::out | ios::trunc);
-			deleteCard(outputFile, cardTree, cardHashtable);
-			outputFile.close();
-		}
+		if (selection == "1" || selection == "ADD") addCard(outputFile, cardTree, cardHashtable);
+		else if (selection == "2" || selection == "DELETE") deleteCard(outputFile, cardTree, cardHashtable);
+		
+
 		else if (selection == "3" || selection == "SEARCH") searchCard(cardHashtable);
 		else if (selection == "4" || selection == "PRINTHASH") printHashTable(cardHashtable);
 		else if (selection == "5" || selection == "PRINTTREE") printTree(cardTree);
@@ -283,7 +277,9 @@ void addCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	Spell* card = createCard();
 	tree.addNode(card);
 	hash.add(card);
+	file.open("input.tsv", ios::out | ios::trunc);
 	card->printToTSVFile(file);
+	file.close();
 	cout << "Card Sucessfully added" << endl;
 }
 
@@ -374,10 +370,12 @@ void deleteCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
 	else {
 		tree.deleteNode(card);
-		if(hash.remove(*(card))) cout << "removed from hashtable" <<endl;
+		hash.remove(*(card));
 		cout << "Element successfully deleted" << endl;
+		file.open("input.tsv", ios::out | ios::trunc);
+		readDataToFile(file, hash);
+		file.close();
 	}
-	readDataToFile(file, hash);
 }
 
 int getNumItems(ifstream& file) {
