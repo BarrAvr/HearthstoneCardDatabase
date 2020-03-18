@@ -19,20 +19,15 @@ void addCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void searchCard(HashTable<Spell>&);
 void deleteCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void printHashTable(HashTable<Spell>&);
-//void printSorted(HashTable<Spell>);
 void printTree(BST<Spell*>&);
-void printIndentedTree(BST<Spell*>);
-void cardCompare(HashTable<Spell>);
 void readFileToDatabase(ifstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void readDataToFile(ofstream& file, HashTable<Spell>& hash);
 Spell* getRandomSpell(HashTable<Spell>&, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
 void packOpening(HashTable<Spell>&);
 bool isInArray(Spell** arr, Spell* check, int size);
-void deletePyroblast(ofstream& file, HashTable<Spell>& hash, BST<Spell*>& tree);
 int getNumItems(ifstream&);
 
-//TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
 int main() {
 	int size;
 	string selection;
@@ -75,11 +70,20 @@ int main() {
 	return 0;
 }
 
-
+/*
+	Reads the data in the hashtable to the database to make sure they are both in sync
+	Pre: Hashtable exists
+	Post: File is overwritten
+*/
 void readDataToFile(ofstream& file, HashTable<Spell>& hash) {
 	hash.printTableInTSVFormat(file);
 }
 
+/*
+	Prompts user to create a new card
+	Pre: none
+	Post: Spell pointer is returned
+*/
 Spell* createCard() {
 	string selection, name, type, description, rarity, classType;
 	int cost = 0;
@@ -218,7 +222,11 @@ Spell* createCard() {
 	}
 	return sptr;
 }
-
+/*
+	Checks if a card is in the hashtable
+	Pre: Hashtable exists
+	Post: value is outputted
+*/
 void searchCard(HashTable<Spell>& hash) {
 	Spell* card = createCard();
 	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
@@ -226,6 +234,11 @@ void searchCard(HashTable<Spell>& hash) {
 
 }
 
+/*
+	Validates if input type is the expected type for the variable
+	Pre: none
+	Post: value from user input is returned
+*/
 template<typename T>
 T validateType(T input) {
 	while (!(cin >> input)) {
@@ -235,6 +248,11 @@ T validateType(T input) {
 	}
 	return input;
 }
+/*
+	Prints out full hashtable as well as efficiency stats
+	Pre: Hashtable exists
+	Post: values are printed
+*/
 void printHashTable(HashTable<Spell>& table) {
 	cout << table << endl;
 	cout << "Hashtable Efficiency" << endl;
@@ -243,7 +261,11 @@ void printHashTable(HashTable<Spell>& table) {
 	cout << "Longest Linked List length: " << table.getMaxNodes() << " nodes\n";
 	cout << "Average Linked List length: " << table.getAvgNodes() << " nodes\n";
 }
-
+/*
+	Prints out full Binary Search Tree in desired form as well as efficiency stats
+	Pre: BST exists
+	Post: values are printed
+*/
 void printTree(BST<Spell*>& tree) {
 	
 	string selection;
@@ -273,6 +295,11 @@ void printTree(BST<Spell*>& tree) {
 	cout << "Average operations for inserting/searching/deleting in tree: " << tree.getAvgOps() << endl;
 }
 
+/*
+	Adds a card which is specified by the user
+	Pre: none
+	Post: values are updated in the Hashtable, Tree, and file
+*/
 void addCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	Spell* card = createCard();
 	tree.addNode(card);
@@ -282,7 +309,11 @@ void addCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	file.close();
 	cout << "Card Sucessfully added" << endl;
 }
-
+/*
+	Picks a random spell of specified rarity
+	Pre: hashtable values are set
+	Post: Random spell is returned
+*/
 Spell* getRandomSpell(HashTable<Spell>& table, Spell::Rarity rarity) {
 	srand(time(0));
 	int randIndex, randDepth;
@@ -301,7 +332,15 @@ Spell* getRandomSpell(HashTable<Spell>& table, Spell::Rarity rarity) {
 	}
 	return randomSpell;
 }
-
+/*
+	Returns a random rarity based on probabilities from real game
+	Common - 50%
+	Rare - 25% 
+	Epic - 20%
+	Legendary - 5%
+	Pre: none
+	Post: value is returned
+*/
 Spell::Rarity getRandomCardRarity() {
 	srand(time(0));
 	int randomNum = rand()%100;
@@ -311,13 +350,22 @@ Spell::Rarity getRandomCardRarity() {
 	if (randomNum > 94 && randomNum <= 99) return Spell::LEGENDARY;
 
 }
-
+/*
+	Checks if a spell is in the array in the first size elements
+	Pre: array exists
+	Post: bool is returned
+*/
 bool isInArray(Spell** arr, Spell* check, int size) {
 	for (int i = 0; i < size; i++) {
 		if (arr[i] == check) return true;
 	}
 	return false;
 }
+/*
+	Simulates a real card pack opening from the game based on real probabilities
+	Pre: hashtable exists
+	Post: Pack opening is shown (dramatically)
+*/
 void packOpening(HashTable<Spell>& table)
 {
 	int randomGeneration;
@@ -364,7 +412,11 @@ void packOpening(HashTable<Spell>& table)
 	cout << packArray[4] << endl;
 
 }
-
+/*
+	Deletes a card from the hashtable, tree, and updates the file if the specified value is found 
+	Pre: none
+	Post: card is removed
+*/
 void deleteCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	Spell* card = createCard();
 	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
@@ -377,14 +429,22 @@ void deleteCard(ofstream & file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 		file.close();
 	}
 }
-
+/*
+	Returns the number of cards in the file
+	Pre: TSV file with values exists
+	Post: int is returned
+*/
 int getNumItems(ifstream& file) {
 	string temp;
 	int items = 0;
 	while (getline(file, temp, '\n')) items++;
 	return items;
 }
-
+/*
+	Reads in all the values from the file to the hashtable and BST
+	Pre: TSV file with values exists
+	Post: Hashtable and Tree values are synced with file
+*/
 void readFileToDatabase(ifstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	string name, classType, type, rarity;
 	int cost, attack, health;
@@ -465,9 +525,6 @@ void readFileToDatabase(ifstream& file, BST<Spell*>& tree, HashTable<Spell>& has
 			failed = true;
 		}
 
-		
-
-
 		if (type == "Minion") {
 			getline(file, d, '\t');
 			getline(file, a, '\t');
@@ -508,7 +565,11 @@ void readFileToDatabase(ifstream& file, BST<Spell*>& tree, HashTable<Spell>& has
 		}
 	}
 }
-
+/*
+	Outputs all menu options
+	Pre: None
+	Post: Values are printed
+*/
 void displayMenu()
 {
 	cout << "\nMenu: " << endl;
