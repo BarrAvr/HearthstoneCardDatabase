@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "BSTNode.h"
+#include "Spell.h"
 
 template < class T > class BST {
 private:
@@ -98,6 +99,7 @@ private:
 	Return: nothing
 	*/
 	void recurBreadthFirst(BSTNode<T>*, std::ostream& out) const;
+	void recurPrintCardsIndent(BSTNode<T>*, int, std::ostream& out) const;
 	/* for void recurEmpty(BSTNode<T>*&)
 
 	Pre: root - BSTNode to empty from BST.
@@ -126,7 +128,6 @@ public:
 	Return: true if found, false otherwise
 	*/
 	bool deleteNode(T);
-
 	/* for void addNode(T)
 
 	Pre: data - data to be added
@@ -187,6 +188,7 @@ public:
 	Return: nothing
 	*/
 	void breadthFirstTraversalPrint(std::ostream& out) const;
+	void printCardsIndent(std::ostream& out) const;
 	/* for void empty()
 
 	Pre: rootPtr - BSTNode in BST to be emptied
@@ -437,4 +439,19 @@ void BST<T>::recurEmpty(BSTNode<T>*& root) {
 template < class T >
 bool BST<T>::isEmpty() const {
 	return rootPtr == nullptr;
+}
+
+template < class T >
+void BST<T>::printCardsIndent(std::ostream& out) const {
+	recurPrintCardsIndent(rootPtr, 0, out);
+}
+
+template < class T >
+void BST<T>::recurPrintCardsIndent(BSTNode<T>* root, int numIndents, std::ostream& out) const {
+	if (root->getRightChild() != nullptr) recurPrintCardsIndent(root->getRightChild(), numIndents + 1, out);
+	for (int i = 0; i < numIndents; i++) {
+		out << '\t';
+	}
+	out << root->getName() << endl;
+	if (root->getLeftChild() != nullptr) recurPrintCardsIndent(root->getLeftChild(), numIndents + 1, out);
 }
