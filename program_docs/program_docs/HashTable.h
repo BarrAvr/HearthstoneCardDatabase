@@ -20,8 +20,8 @@ class HashTable
 		~HashTable();
 		
 		int getSize() const;
-		int getMaxNodes();
-		int getNumItems();
+		int getMaxNodes() const;
+		int getNumItems() const;
 		SinglyLinkedList<T>* operator[](int index) const;
 		template<class U>
 		friend std::ostream& operator<<(std::ostream& out, const HashTable<U>& list);
@@ -77,7 +77,7 @@ int HashTable<T>::getSize() const {
 }
 
 template<class T>
-int HashTable<T>::getNumItems() {
+int HashTable<T>::getNumItems() const {
 	return numItems;
 }
 
@@ -114,7 +114,7 @@ std::ostream& operator<<(std::ostream& out, const HashTable<U>& table)
  * Post: Returns the maximum length of a linked list used for collision resolution
  */
 template<class T>
-int HashTable<T>::getMaxNodes() {
+int HashTable<T>::getMaxNodes() const {
 	int currMax;
 	int max = 0;
 	for (int i = 0; i < size; i++) {
