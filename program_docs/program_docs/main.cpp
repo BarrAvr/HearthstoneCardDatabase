@@ -19,7 +19,7 @@ void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
 void printHashTable(HashTable<Spell>&);
 //void printSorted(HashTable<Spell>);
-void printTree(BST<Spell*>);
+void printTree(BST<Spell*>&);
 void printIndentedTree(BST<Spell*>);
 void cardCompare(HashTable<Spell>);
 void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash);
@@ -73,7 +73,7 @@ void printHashTable(HashTable<Spell>& table) {
 	cout << table << endl;
 }
 
-void printTree(BST<Spell*> tree) {
+void printTree(BST<Spell*>& tree) {
 	string selection;
 	bool wrongCommand = false;
 	while (true) {
@@ -235,13 +235,13 @@ void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 		tree.addNode(mptr);
 		hash.add(mptr);
 
-		file << name << ", "
-			<< cost << ", "
-			<< classType << ", "
-			<< type << ", "
+		file << name << "\t"
+			<< cost << "\t"
+			<< classType << "\t"
+			<< type << "\t"
 			<< rarity << ", "
-			<< description << ", "
-			<< attack << ", "
+			<< description << "\t"
+			<< attack << "\t"
 			<< defense << "\n";
 	}
 	else if (type == "Weapon") {
