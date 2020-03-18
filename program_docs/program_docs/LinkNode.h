@@ -10,6 +10,7 @@ private:
 public:
 	LinkNode();
 	LinkNode(LinkNode<T>*, T*);
+	~LinkNode();
 
 	T* getVal() const;
 	LinkNode* getNext() const;
@@ -27,7 +28,7 @@ LinkNode<T>::LinkNode() {
 }
 
 //Creates a LinkedNode object 
-//Pre: none
+//Pre: Pointer to dynamically created passed in
 //Post: LinkedNode object created with specified values
 template<class T>
 LinkNode<T>::LinkNode(LinkNode<T>* n, T* v) {
@@ -35,7 +36,16 @@ LinkNode<T>::LinkNode(LinkNode<T>* n, T* v) {
 	val = v;
 }
 
-
+//Creates a LinkedNode object 
+//Pre: val member is initalized to dynamically allocated memory
+//Post: LinkNode object and data member destroyed
+template<class T>
+LinkNode<T>::~LinkNode()
+{
+	delete val;
+	val = nullptr;
+	next = nullptr;
+}
 
 //Returns pointer to value of node
 //Pre: LinkNode Object exists
