@@ -30,6 +30,8 @@ Spell* getRandomSpell(HashTable<Spell>&, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
 void packOpening(HashTable<Spell>&);
 bool isInArray(Spell** arr, Spell* check, int size);
+string rarityEnumToString(Spell::Rarity);
+string classEnumToString(Spell::ClassType);
 
 //TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
 fstream outputFile;
@@ -43,7 +45,7 @@ int main() {
 	fstream inputFile;
 
 	inputFile.open("input.tsv");
-	outputFile.open("output.tsv");
+	outputFile.open("output.tsv", ios::out);
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	while (true)
 	{
@@ -69,6 +71,25 @@ int main() {
 
 	system("pause");
 	return 0;
+}
+
+string rarityEnumToString(Spell::Rarity r) {
+	if (r = Spell::COMMON) return "Common";
+	if (r = Spell::RARE) return "Rare";
+	if (r = Spell::EPIC) return "Epic";
+	if (r = Spell::LEGENDARY) return "Legendary";
+	
+}
+string classEnumToString(Spell::ClassType ct){
+	if (ct = Spell::DRUID) return "Druid";
+	else if (ct = Spell::HUNTER) return "Hunter";
+	else if (ct = Spell::MAGE) return "Mage";
+	else if (ct = Spell::PALADIN) return "Paladin";
+	else if (ct = Spell::PRIEST) return "Priest";
+	else if (ct = Spell::ROGUE) return "Rogue";
+	else if (ct = Spell::SHAMAN) return "Shaman";
+	else if (ct = Spell::WARLOCK) return "Warlock";
+	else if (ct = Spell::WARRIOR) return "Warrior";
 }
 Spell* createCard() {
 	string selection, name, type, description, rarity, classType;
@@ -248,164 +269,29 @@ void printTree(BST<Spell*>& tree) {
 	
 }
 void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
-	//Storing information from the user into temporary variables
-	string selection, name, type, description, rarity, classType;
-	int cost = 0;
-	Spell::ClassType ct;
-	Spell::Rarity r;
-	bool wrongCommand;
-
-	//We should probably add input validation
-	cout << "Please enter the name for the card:" << endl;
-	cin >> name;
-
-	cout << "Please enter the Mana Cost for the card:" << endl;
-	cost = validateType(cost);
-
-	while (true) {
-		wrongCommand = false;
-		cout << "Please pick a number corresponding to the Class of the card:" << endl;
-		cout << "1: Neutral" << endl;
-		cout << "2: Druid" << endl;
-		cout << "3: Hunter" << endl;
-		cout << "4: Mage" << endl;
-		cout << "5: Paladin" << endl;
-		cout << "6: Priest" << endl;
-		cout << "7: Rogue" << endl;
-		cout << "8: Shaman" << endl;
-		cout << "9: Warlock" << endl;
-		cout << "10: Warrior" << endl;
-		cout << "\nCommand: ";
-		getline(cin, selection);
-		if (selection == "1") ct = Spell::NEUTRAL;
-		else if (selection == "2") ct = Spell::DRUID;
-		else if (selection == "3") ct = Spell::HUNTER;
-		else if (selection == "4") ct = Spell::MAGE;
-		else if (selection == "5") ct = Spell::PALADIN;
-		else if (selection == "6") ct = Spell::PRIEST;
-		else if (selection == "7") ct = Spell::ROGUE;
-		else if (selection == "8") ct = Spell::SHAMAN;
-		else if (selection == "9") ct = Spell::WARLOCK;
-		else if (selection == "10") ct = Spell::WARRIOR;
-		else {
-			cout << "Improper command" << endl;
-			wrongCommand = true;
-		}
-		if (wrongCommand == false) break;
+	Spell* card = createCard();
+	tree.addNode(card);
+	hash.add(card);
+	file << card->getName() << "\t"
+		<< card->getManaCost() << "\t"
+		<< classEnumToString(card->getClass()) << "\t"
+		<< card->getCardType() << "\t"
+		<< rarityEnumToString(card->getRarity()) << "\t"
+		<< card->getDescription();
+	if (card->getCardType() == "Spell") {
+		file << "\n";
 	}
-
-	while (true) {
-		wrongCommand = false;
-		cout << "Please pick a number corresponding to the Type of the card:" << endl;
-		cout << "1: Spell" << endl;
-		cout << "2: Minion" << endl;
-		cout << "3: Weapon" << endl;
-		cout << "\nCommand: ";
-		getline(cin, selection);
-		if (selection == "1") type = "Spell";
-		else if (selection == "2") type = "Minion";
-		else if (selection == "3") type = "Weapon";
-		else {
-			cout << "Improper command" << endl;
-			wrongCommand = true;
-		}
-		if (wrongCommand == false) break;
+	else if (card->getCardType() == "Minion") {
+		file << "\t"  
+			<< dynamic_cast<Minion&>(*card).getAttackValue() << "\t"
+			<< dynamic_cast<Minion&>(*card).getHealthValue() << "\t"
+			<< "\n";
 	}
-
-	
-	while (true) {
-		wrongCommand = false;
-		cout << "Please pick a number corresponding to the Rarity of the card:" << endl;
-		cout << "1: Common" << endl;
-		cout << "2: Rare" << endl;
-		cout << "3: Epic" << endl;
-		cout << "4: Legendary" << endl;
-		
-		cout << "\nCommand: ";
-		getline(cin, selection);
-		if (selection == "1") {
-			r = Spell::COMMON;
-			rarity = "Common";
-		}
-		else if (selection == "2") {
-			r = Spell::RARE;
-			rarity = "Rare";
-		}
-		else if (selection == "3") {
-			r = Spell::EPIC;
-			rarity = "Epic";
-		}
-		else if (selection == "5") {
-			r = Spell::LEGENDARY;
-			rarity = "Legendary";
-		}
-		else {
-			cout << "Improper command" << endl;
-			wrongCommand = true;
-		}
-		if (wrongCommand == false) break;
-	}
-	
-
-	if (type == "Spell") {
-		Spell* sptr;
-		sptr = new Spell(name, cost, ct, r, description, Spell::MANA);
-		tree.addNode(sptr);
-		hash.add(sptr);
-		file << name << "\t"
-			<< cost << "\t"
-			<< classType << "\t"
-			<< type << "\t"
-			<< rarity << "\t"
-			<< description << "\n";
-	}
-	else if (type == "Minion") {
-		int attack = 0;
-		int defense = 0;
-
-		cout << "Please enter the attack value for the Minion:" << endl;
-		attack = validateType(attack);
-
-		cout << "Please enter the health value for the Minion:" << endl;
-		defense = validateType(defense);
-
-		Spell* mptr;
-		mptr = new Minion(name, cost, ct, r, description, attack, defense, Minion::MANA);
-		tree.addNode(mptr);
-		hash.add(mptr);
-
-		file << name << "\t"
-			<< cost << "\t"
-			<< classType << "\t"
-			<< type << "\t"
-			<< rarity << ", "
-			<< description << "\t"
-			<< attack << "\t"
-			<< defense << "\n";
-	}
-	else if (type == "Weapon") {
-		int attack;
-		int defense;
-
-		cout << "Please enter the attack value for the Weapon:" << endl;
-		cin >> attack;
-
-		cout << "Please enter the defense value for the Minion:" << endl;
-		cin >> defense;
-
-		Spell* wptr;
-		wptr = new Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
-		tree.addNode(wptr);
-		hash.add(wptr);
-
-		file << name << "\t"
-			<< cost << "\t"
-			<< classType << "\t"
-			<< type << "\t"
-			<< rarity << "\t"
-			<< description << "\t"
-			<< attack << "\t"
-			<< defense << "\n";
+	else if (card->getCardType() == "Weapon") {
+		file << "\t"
+			<< dynamic_cast<Weapon&>(*card).getAttackValue() << "\t"
+			<< dynamic_cast<Weapon&>(*card).getDurability() << "\t"
+			<< "\n";
 	}
 	cout << "Card Sucessfully added" << endl;
 }
@@ -492,52 +378,7 @@ void packOpening(HashTable<Spell>& table)
 }
 
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
-	string name;
-	int cost = 0;
-	
-	//We should probably add input validation
-	cout << "Please enter the name for the card:" << endl;
-	cin >> name;
-	Spell search = Spell(name, 0, Spell::NEUTRAL, Spell::COMMON, "", Spell::MANA);
-	hash.find(search);
-	
-	if (type == "Spell") {
 
-		Spell sptr = Spell(name, cost, ct, r, description, Spell::MANA);
-		tree.deleteNode(&sptr);
-		hash.remove(sptr);
-	}
-	else if (type == "Minion") {
-		int attack;
-		int defense;
-
-		cout << "Please enter the attack value for the Minion:" << endl;
-		cin >> attack;
-
-		cout << "Please enter the health value for the Minion:" << endl;
-		cin >> defense;
-
-		Spell mptr = Minion(name, cost, ct, r, description, attack, defense, Minion::MANA);
-		tree.deleteNode(&mptr);
-		hash.remove(mptr);
-
-	}
-	else if (type == "Weapon") {
-		int attack;
-		int defense;
-
-		cout << "Please enter the attack value for the Weapon:" << endl;
-		cin >> attack;
-
-		cout << "Please enter the defense value for the Minion:" << endl;
-		cin >> defense;
-
-		Spell wptr = Weapon(name, cost, ct, r, description, attack, defense, Spell::MANA);
-		tree.deleteNode(&wptr);
-		hash.remove(wptr);
-	}
-	
-	readDataToFile(outputFile, tree);
 
 }
 
