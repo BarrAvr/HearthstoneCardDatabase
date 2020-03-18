@@ -129,6 +129,47 @@ void Spell::print(std::ostream& out) const {
 		<< "ClassType: " << this->getClass() << std::endl
 		<< "Description: " << this->getDescription() << std::endl << std::endl;
 }
+std::string Spell::rarityEnumToString(Spell::Rarity r) {
+	if (r == Spell::COMMON) return "Common";
+	if (r == Spell::RARE) return "Rare";
+	if (r == Spell::EPIC) return "Epic";
+	if (r == Spell::LEGENDARY) return "Legendary";
+
+}
+std::string Spell::classEnumToString(Spell::ClassType ct) {
+	if (ct = Spell::DRUID) return "Druid";
+	else if (ct == Spell::HUNTER) return "Hunter";
+	else if (ct == Spell::MAGE) return "Mage";
+	else if (ct == Spell::PALADIN) return "Paladin";
+	else if (ct == Spell::PRIEST) return "Priest";
+	else if (ct == Spell::ROGUE) return "Rogue";
+	else if (ct == Spell::SHAMAN) return "Shaman";
+	else if (ct == Spell::WARLOCK) return "Warlock";
+	else if (ct == Spell::WARRIOR) return "Warrior";
+}
+void Spell::printToTSVFile(std::ostream& out) {
+	out  << this->getName() << "\t"
+		<< this->getManaCost() << "\t"
+		<< classEnumToString(this->getClass()) << "\t"
+		<< this->getCardType() << "\t"
+		<< rarityEnumToString(this->getRarity()) << "\t"
+		<< this->getDescription();
+	if (this->getCardType() == "Spell") {
+		out << "\n";
+	}
+	else if (this->getCardType() == "Minion") {
+		out << "\t"
+			<< dynamic_cast<Minion&>(*this).getAttackValue() << "\t"
+			<< dynamic_cast<Minion&>(*this).getHealthValue() << "\t"
+			<< "\n";
+	}
+	else if (this->getCardType() == "Weapon") {
+		out << "\t"
+			<< dynamic_cast<Weapon&>(*this).getAttackValue() << "\t"
+			<< dynamic_cast<Weapon&>(*this).getDurability() << "\t"
+			<< "\n";
+	}
+}
 
 std::ostream& operator<<(std::ostream& out, Spell*& toPrint) {
 	if (toPrint->getCardType() == "Spell") {

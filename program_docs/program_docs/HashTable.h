@@ -13,6 +13,7 @@ class HashTable
 	int size; // Member that is depended on load factor
 	const double LOAD_FACTOR = 0.75; // Intended ratio of max # of elements in hash table to size of hash table
 	int hashFunc(const T&) const;
+	int numItems;
 
 	public:
 		HashTable(int);
@@ -20,6 +21,7 @@ class HashTable
 		
 		int getSize() const;
 		int getMaxNodes();
+		int getNumItems();
 		SinglyLinkedList<T>* operator[](int index) const;
 		template<class U>
 		friend std::ostream& operator<<(std::ostream& out, const HashTable<U>& list);
@@ -44,6 +46,7 @@ HashTable<T>::HashTable(int count)
 	for (int i = 0; i < size; i++) {
 		table[i] = nullptr;
 	}
+	numItems = 0;
 }
 
 
@@ -72,6 +75,12 @@ template<class T>
 int HashTable<T>::getSize() const {
 	return size;
 }
+
+template<class T>
+int HashTable<T>::getNumItems() {
+	return numItems;
+}
+
 
 /* Overloaded subscript operator for HashTable
  * Pre: Valid index is passed in
@@ -147,6 +156,7 @@ void HashTable<T>::add(T* obj)
 		table[index] = new SinglyLinkedList<T>(UNSORTED, obj);
 	else
 		curr->add(obj);
+	numItems++;
 }
 
 /* Find method for Hash Table
@@ -179,6 +189,6 @@ bool HashTable<T>::remove(const T& obj)
 		curr = nullptr;
 	}
 	else curr->remove(obj);
-
+	numItems--;
 	return true;
 }

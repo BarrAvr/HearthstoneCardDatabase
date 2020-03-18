@@ -30,8 +30,7 @@ Spell* getRandomSpell(HashTable<Spell>&, Spell::Rarity);
 Spell::Rarity getRandomCardRarity();
 void packOpening(HashTable<Spell>&);
 bool isInArray(Spell** arr, Spell* check, int size);
-string rarityEnumToString(Spell::Rarity);
-string classEnumToString(Spell::ClassType);
+
 
 //TEMPORARY, BE SURE TO HAVE ONE FILE FOR FINAL BUILD
 int main() {
@@ -45,6 +44,7 @@ int main() {
 	readFileToDatabase(inputFile, cardTree, cardHashtable);
 	inputFile.close();
 	inputFile.open("input.tsv", ios::app);
+	cout << "Size of table" << cardHashtable.getNumItems() << endl;
 	while (true)
 	{
 		displayMenu();
@@ -245,6 +245,7 @@ void printHashTable(HashTable<Spell>& table) {
 }
 
 void printTree(BST<Spell*>& tree) {
+	
 	string selection;
 	bool wrongCommand = false;
 	while (true) {
@@ -269,31 +270,12 @@ void printTree(BST<Spell*>& tree) {
 	}
 	
 }
+
 void addCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
 	Spell* card = createCard();
 	tree.addNode(card);
 	hash.add(card);
-	file << "\n" <<card->getName() << "\t"
-		<< card->getManaCost() << "\t"
-		<< classEnumToString(card->getClass()) << "\t"
-		<< card->getCardType() << "\t"
-		<< rarityEnumToString(card->getRarity()) << "\t"
-		<< card->getDescription();
-	if (card->getCardType() == "Spell") {
-		file << "\n";
-	}
-	else if (card->getCardType() == "Minion") {
-		file << "\t"  
-			<< dynamic_cast<Minion&>(*card).getAttackValue() << "\t"
-			<< dynamic_cast<Minion&>(*card).getHealthValue() << "\t"
-			<< "\n";
-	}
-	else if (card->getCardType() == "Weapon") {
-		file << "\t"
-			<< dynamic_cast<Weapon&>(*card).getAttackValue() << "\t"
-			<< dynamic_cast<Weapon&>(*card).getDurability() << "\t"
-			<< "\n";
-	}
+	card->printToTSVFile(file);
 	cout << "Card Sucessfully added" << endl;
 }
 
@@ -380,8 +362,13 @@ void packOpening(HashTable<Spell>& table)
 }
 
 void deleteCard(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash) {
-
-
+	Spell* card = createCard();
+	if (hash.find(*(card)) == -1) cout << "Element found in database" << endl;
+	else {
+		tree.deleteNode(card);
+		hash.remove(*(card));
+		cout << "Element successfully deleted" << endl;
+	}
 }
 
 
@@ -469,10 +456,11 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 			failed = true;
 		}
 
-		getline(file, d, '\t');
+		
 
 
 		if (type == "Minion") {
+			getline(file, d, '\t');
 			getline(file, a, '\t');
 			attack = stoi(a);
 			getline(file, h, '\n');
@@ -486,6 +474,7 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 			}
 		}
 		else if (type == "Weapon") {
+			getline(file, d, '\t');
 			getline(file, a, '\t');
 			attack = stoi(a);
 			getline(file, h, '\n');
@@ -499,9 +488,10 @@ void readFileToDatabase(fstream& file, BST<Spell*>& tree, HashTable<Spell>& hash
 			}
 		}
 		else if (type == "Spell"){
+			getline(file, d, '\n');
 			Spell* sptr;
 			if (!failed) {
-				getline(file, h, '\n');
+				//getline(file, h, '\n');
 				sptr = new Spell(name, cost, clt, rar, d, Spell::MANA);
 				tree.addNode(sptr);
 				hash.add(sptr);
