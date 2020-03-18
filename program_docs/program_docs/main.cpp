@@ -78,7 +78,7 @@ void deletePyroblast(ofstream& file, HashTable<Spell>& hash, BST<Spell*>& tree) 
 	Spell* card = new Spell("Pyroblast", 10, Spell::MAGE, Spell::EPIC, "Deal 10 damage.\t\t", Spell::MANA);
 	if (hash.find(*(card)) == -1) cout << "Element not found in database" << endl;
 	else {
-		cout << "Element successfully deleted" << endl;
+		cout << "Element successfully found" << endl;
 		tree.deleteNode(card);
 		if (hash.remove(*(card))) cout << "removed from hashtable" << endl;
 		else cout << "not removed from hashtable" << endl;
