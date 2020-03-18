@@ -26,6 +26,7 @@ Alexstrasza	9	Neutral	Minion	Legendary	Battlecry: Set a hero's remaining Health 
 Argent Protector	2	Paladin	Minion	Common	Battlecry: Give a friendly minion Divine Shield.	2	2
 Blessing of Wisdom	1	Paladin	Spell	Common	Choose a minion. Whenever it attacks, draw a card.		
 Equality	4	Paladin	Spell	Rare	Change the Health of ALL minions to 1.		
+Sword of Justice	3	Paladin	Weapon	Epic	After you summon a minion, give it +1/+1 and this loses 1 Durability.	1	5
 Lay on Hands	8	Paladin	Spell	Epic	Restore 8 Health. Draw 3 cards.		
 Circle of Healing	0	Priest	Spell	Common	Resore 4 Health to ALL minions.		
 Mass Dispel	4	Priest	Spell	Rare	Silence all enemy minions. Draw a card.		
@@ -46,3 +47,4 @@ Flame Imp	1	Warlock	Minion	Common	Battlecry: Deal 3 damage to your hero.	3	2
 Inner Rage	0	Warrior	Spell	Common	Deal 1 damage to a minion and give it +2 Attack.		
 Frothing Berserker	2	Warrior	Minion	Rare	Whenever a minion takes damage, gain +1 Attack.	2	4
 Brawl	5	Warrior	Spell	Epic	Destroy all minions except one. (chosen randomly)		
+asd	1	Druid	Spell	Rare	dfhjasf
