@@ -419,27 +419,27 @@ void packOpening(HashTable<Spell>& table)
 	} while (isInArray(packArray, packArray[4], 4) == true);
 
 	cout << "Card 1 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << *(packArray[0]) << endl;
 	cout << "Card 2 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << *(packArray[1]) << endl;
 	cout << "Card 3 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << *(packArray[2]) << endl;
 	cout << "Card 4 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << *(packArray[3]) << endl;
 	cout << "Card 5 is ..." << endl;
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+
 	cout << "..." << endl;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	cout << *(packArray[4]) << endl;
